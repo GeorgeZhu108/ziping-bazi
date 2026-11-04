@@ -14,8 +14,10 @@
 """
 import json
 import os
+import re
 import subprocess
 import sys
+import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
@@ -50,6 +52,16 @@ SCRIPTED = {
 # 无确定性脚本的技能（实测目录内无 .py/.js/.ts/.sh）
 UNSCRIPTED = ["zhouyi-sizhu-bazi", "bazi-diviner", "ziqidonglai-bazi-reading"]
 
+# GitHub 开源独立引擎（纯 Python from-scratch，不依赖 lunar_python）
+# tianji: Zijian-Ni/tianji —— 自带历法/五虎遁/五鼠遁/节气实现，与本项目 lunar_python 后端完全独立
+# 声明口径：date-only 节气（无时分精度）、无真太阳时校正、晚子时不做时干移位
+# 注意：Windows 下 /tmp 不被 Python 识别，统一用 tempfile.gettempdir() 定位克隆目录
+_TIANJI_SRC = os.path.join(tempfile.gettempdir(), "tianji", "src")
+GITHUB = {
+    "tianji": (_TIANJI_SRC, "纯 Python from-scratch，无 lunar_python 依赖"),
+}
+GITHUB_EVIDENCE = os.path.join(ROOT, "corpus", "github_xcheck")
+
 
 def ours(case, rule="current-day"):
     cid, y, m, d, h, mi, gender, lon = case
@@ -64,6 +76,42 @@ def save(skill, cid, text):
     os.makedirs(d, exist_ok=True)
     with open(os.path.join(d, cid + ".txt"), "w", encoding="utf-8") as f:
         f.write(text)
+
+
+def save_github(skill, cid, text):
+    d = os.path.join(GITHUB_EVIDENCE, skill)
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, cid + ".txt"), "w", encoding="utf-8") as f:
+        f.write(text)
+
+
+def run_tianji(src_dir, case):
+    """用 GitHub 开源纯 Python 引擎 tianji 计算四柱，作为第三条独立交叉验证。
+
+    重要口径差异（必须如实标注，不能拿不同口径硬比）：
+      - tianji 节气按「日期」切分，无时分精度（寒露/立春只看日期，不看几点几分）；
+      - tianji 无真太阳时校正、不接收经度；
+      - tianji 晚子时（23 点）日柱不换、时干用「当日」日干（不做时干移位）。
+    因此对齐本项目 current-day 基准（日柱不换），晚子时差异为流派口径，非缺陷。
+    """
+    cid, y, m, d, h, mi, gender, lon = case
+    code = (
+        "import sys\n"
+        "sys.path.insert(0, {src!r})\n"
+        "from tianji.bazi.chart import create_chart\n"
+        "c = create_chart({y}, {m}, {d}, {h}, {g!r})\n"
+        "print('TIANJI_PILLARS=' + ' '.join(str(p) for p in c.pillars))\n"
+    ).format(src=src_dir, y=y, m=m, d=d, h=h, g=("male" if gender == "男" else "female"))
+    env = dict(os.environ)
+    env["PYTHONPATH"] = src_dir
+    p = subprocess.run([PY, "-c", code], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", env=env)
+    out = (p.stdout or "") + (("\n[STDERR]\n" + p.stderr) if p.stderr else "")
+    save_github("tianji", cid, out)
+    mobj = re.search(r"TIANJI_PILLARS=(.+)", out)
+    if mobj:
+        return mobj.group(1).strip(), p.returncode
+    return "PARSE_FAILED", p.returncode
 
 
 def run_nextscm(script, case):
@@ -119,7 +167,7 @@ def run_personality(script, case):
 
 def main():
     os.makedirs(EVIDENCE, exist_ok=True)
-    results = {"ours": {}, "ours_next_day": {}, "skills": {}, "unscripted": {}}
+    results = {"ours": {}, "ours_next_day": {}, "skills": {}, "unscripted": {}, "github": {}}
 
     for c in CASES:
         results["ours"][c[0]] = ours(c)
@@ -178,7 +226,46 @@ def main():
     print("\n=== 无确定性脚本技能（如实登记，不臆造结果）===")
     for name, e in results["unscripted"].items():
         print(f"  {name}: installed={e['installed']} status={e['status']} scripts={e['deterministic_scripts']}")
-    print(f"\n证据目录: {EVIDENCE}")
+
+    # GitHub 开源独立引擎（tianji）交叉验证
+    for name, (src_dir, desc) in GITHUB.items():
+        if not os.path.isdir(src_dir):
+            results["github"][name] = {"status": "SRC_MISSING", "desc": desc}
+            continue
+        entry = {
+            "status": "ran", "desc": desc,
+            "conventions": "date-only 节气(无时分精度), 无真太阳时, 晚子时不做时干移位",
+            "aligned_to": "current-day", "cases": {},
+        }
+        base = results["ours"]
+        for c in CASES:
+            got, rc = run_tianji(src_dir, c)
+            expected = base[c[0]]
+            entry["cases"][c[0]] = {
+                "tianji_pillars": got, "our_pillars": expected,
+                "match": got == expected, "returncode": rc,
+            }
+        results["github"][name] = entry
+
+    print("\n=== GitHub 开源引擎 tianji 交叉验证（对齐 current-day 基准）===")
+    for name, entry in results["github"].items():
+        if entry.get("status") != "ran":
+            print(f"  {name}: {entry.get('status')}")
+            continue
+        ok = sum(1 for c in entry["cases"].values() if c["match"])
+        print(f"  {name}: {ok}/7 一致 | {entry['desc']} | 口径={entry['conventions']}")
+        for cid, c in entry["cases"].items():
+            flag = "OK  " if c["match"] else "DIFF"
+            diff_reason = ""
+            if not c["match"]:
+                if cid in ("C1", "C3"):
+                    diff_reason = " ← 节气时分精度差异(tianji 按日期切,无时分)"
+                elif cid in ("C4", "C5"):
+                    diff_reason = " ← 晚子时口径差异(tianji 时干用当日日干)"
+                else:
+                    diff_reason = " ← 需核查"
+            print(f"    {flag} {cid} tianji={c['tianji_pillars']} ours={c['our_pillars']}{diff_reason}")
+    print(f"\n证据目录: {EVIDENCE}\nGitHub 证据: {GITHUB_EVIDENCE}")
 
 
 if __name__ == "__main__":

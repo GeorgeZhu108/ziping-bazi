@@ -1,0 +1,1 @@
+TIANJI_PILLARS=庚午 壬午 丁卯 庚子
