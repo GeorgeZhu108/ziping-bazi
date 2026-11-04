@@ -773,6 +773,15 @@ def step9_pattern(pillars: Dict, tenshen: Dict) -> Dict:
 # 第10步：用神推荐
 # ============================================================
 
+def _join_stems(elements):
+    """将若干五行元素展开为对应天干，并以顿号连接（安全展开，避免 join 接收列表）。"""
+    stems = []
+    for e in elements:
+        if e:
+            stems.extend(ELEMENT_TO_STEMS.get(e, []))
+    return "、".join(stems)
+
+
 def step10_yongshen(day_gan: str, month_zhi: str, wuxing: Dict, pattern: Dict) -> Dict:
     """
     三源合参取用神：穷通宝鉴调候 + 滴天髓扶抑 + 格局用神。
@@ -866,12 +875,12 @@ def step10_yongshen(day_gan: str, month_zhi: str, wuxing: Dict, pattern: Dict) -
     if qiongtong_yong and qiongtong_aligned and pattern_aligned:
         final_advice = f"三源同向：以{qiongtong_yong}（{qiongtong_element}）调候扶抑，格局亦顺。"
         final_yong = qiongtong_yong
-        final_xi = qiongtong_xi or "、".join(ELEMENT_TO_STEMS.get(e, []) for e in fuyi_elements if e)
+        final_xi = qiongtong_xi or _join_stems(fuyi_elements)
         final_ji = qiongtong_ji
     elif qiongtong_yong and qiongtong_aligned:
         final_advice = f"调候用神{qiongtong_yong}与扶抑方向一致，可优先考虑；格局用神{pattern_yong}作为辅助。"
         final_yong = qiongtong_yong
-        final_xi = qiongtong_xi or "、".join(ELEMENT_TO_STEMS.get(e, []) for e in fuyi_elements if e)
+        final_xi = qiongtong_xi or _join_stems(fuyi_elements)
         final_ji = qiongtong_ji
     elif qiongtong_yong:
         final_advice = (
@@ -883,8 +892,8 @@ def step10_yongshen(day_gan: str, month_zhi: str, wuxing: Dict, pattern: Dict) -
         final_ji = qiongtong_ji
     else:
         final_advice = f"穷通宝鉴未载此组合，以扶抑为主：{fuyi_desc}。"
-        final_yong = "、".join(ELEMENT_TO_STEMS.get(e, []) for e in fuyi_elements if e) or "需人工细断"
-        final_xi = "、".join(ELEMENT_TO_STEMS.get(e, []) for e in fuyi_elements if e) or "需人工细断"
+        final_yong = _join_stems(fuyi_elements) or "需人工细断"
+        final_xi = _join_stems(fuyi_elements) or "需人工细断"
         final_ji = ""
 
     return {
@@ -1081,6 +1090,121 @@ def step11_liunian(dayun_result: Dict, current_year: int, birth_year: int,
 # 第12步：综合报告
 # ============================================================
 
+
+def build_plain_language(day_gan: str, day_element: str, strength: str, month_zhi: str,
+                         pattern: Dict, yongshen: Dict, liunian: Dict,
+                         shensha: Dict, relations: Dict) -> Dict:
+    """
+    生成「大白话」解读：用通俗语言解释专业术语，并标注古籍出处。
+    让不懂命理的人也能看懂综合报告。
+    """
+    # —— 日主强弱（通俗）——
+    if strength in ("身旺", "中和偏旺"):
+        strength_plain = (
+            f"您的「日主{day_gan}」（代表您自己）{strength}。通俗说，您天生底气较足、精力旺，"
+            f"能扛事、也担得起财富与事业（命理上叫“能担财官”）。不过太旺也像水满则溢，"
+            f"有时需要适当“泄”掉一点过剩能量——比如多发挥才华、多输出、多助人，反而更顺。"
+        )
+    elif strength in ("身弱", "中和偏弱"):
+        strength_plain = (
+            f"您的「日主{day_gan}」（代表您自己）{strength}。通俗说，您天生底子偏薄，"
+            f"更需要外界助力——贵人、朋友、学习充电、稳定平台，来为您“补强”。"
+            f"遇大事宜借力、不宜硬扛；命理上把这叫“喜印比生扶”（印星、比肩劫财来帮您）。"
+        )
+    else:
+        strength_plain = (
+            f"您的「日主{day_gan}」（代表您自己）属于中和状态，强弱比较均衡，"
+            f"适应力强、可塑性好，喜忌要看具体大运流年再定。"
+        )
+
+    # —— 月令与格局（通俗）——
+    pattern_plain = (
+        f"八字里的“格局”，相当于给您的命局定一个基本类型与气质倾向。它主要看您出生的"
+        f"“月令”（出生那个月的地支，这里是「{month_zhi}」）。月令就像当季的气候，"
+        f"决定哪种五行最旺，是定格局的“提纲”。您构成「{pattern['pattern']}」：{pattern['description']}"
+    )
+
+    # —— 用神喜忌（通俗）——
+    fy = yongshen.get("final_yong") or ""
+    fx = yongshen.get("final_xi") or ""
+    fj = yongshen.get("final_ji") or ""
+    syn = yongshen.get("synthesis", {})
+    yong_plain = (
+        "取“用神”是八字的核心：用神就是对您最有帮助的五行/十神，相当于您的“补药”；"
+        "喜神是帮用神一臂之力的；忌神是给您添乱的，逢之宜谨慎。\n"
+        "古法有三套体系合参——穷通宝鉴看寒暖燥湿（调候用神）、滴天髓看强弱（扶抑用神）、"
+        f"三命通会看格局（格局用神）。三者合参后：您的用神是「{fy or '需结合大运细断'}」；"
+        f"喜神「{fx or '—'}」；忌神「{fj or '—'}」。"
+    )
+    if syn.get("综合建议"):
+        yong_plain += f"\n综合建议：{syn['综合建议']}"
+
+    # —— 大运流年（通俗）——
+    age = liunian.get("age")
+    dayun = liunian.get("current_dayun", {})
+    dayun_gz = dayun.get("ganzhi", "")
+    dayun_j = liunian.get("dayun_judgment", "")
+    ly = liunian.get("liunian", {}).get("ganzhi", "")
+    ly_j = liunian.get("overall_judgment", "")
+    ly_comment = liunian.get("liunian_comment", "")
+    ly_rels = liunian.get("liunian_relations", [])
+    liunian_plain = (
+        "“大运”是十年一换的人生阶段大环境，“流年”是具体某一年。\n"
+        f"您现年约 {age} 岁，正行「{dayun_gz}」大运，这十年基调{dayun_j}；"
+        f"{liunian.get('current_year')} 年流年为「{ly}」，整体{ly_j}。"
+    )
+    if ly_comment:
+        liunian_plain += f"{ly_comment}"
+    if ly_rels:
+        liunian_plain += f"（今年地支与命局关系：{', '.join(ly_rels)}）"
+
+    # —— 命局特殊信号（神煞 / 刑冲合害）——
+    sha_names = [s.get("name", "") for s in shensha.get("shensha", [])][:5]
+    rel_types = list(set([r.get("type", "") for r in relations.get("relations", [])]))
+    if sha_names or rel_types:
+        signal_parts = []
+        if sha_names:
+            signal_parts.append(f"传统神煞有：{', '.join(sha_names)}")
+        if rel_types:
+            signal_parts.append(f"地支间存在：{', '.join(rel_types)}")
+        signal_plain = "；".join(signal_parts) + "。这些属于传统附加信息，可作参考，不必过度担忧。"
+    else:
+        signal_plain = "命局暂无显著的神煞与刑冲合害标记。"
+
+    sections = [
+        {"term": "您是谁（日主）", "plain": (
+            f"八字由四柱八个字组成，其中“日干”（出生那天的天干）代表您本人，叫「日主」。"
+            f"您的日主是「{day_gan}」，五行属{day_element}。看命，首先就是看这个“您”"
+            f"在整盘里的强弱与处境。"
+        ), "source": "三命通会·论日干；滴天髓·体象"},
+        {"term": "您的强弱（身旺 / 身弱）", "plain": strength_plain,
+         "source": "滴天髓·体象；三命通会·五行旺相休囚"},
+        {"term": "您出生的时令与格局", "plain": pattern_plain, "source": pattern.get("source", "三命通会·论格局")},
+        {"term": "对您最有利的“补药”（用神 / 喜神 / 忌神）", "plain": yong_plain,
+         "source": "穷通宝鉴；滴天髓·体象；三命通会·论用神"},
+        {"term": "您的大运与今年流年", "plain": liunian_plain, "source": "三命通会·论大运流年；滴天髓·体用"},
+        {"term": "命局里的特殊信号", "plain": signal_plain, "source": "三命通会·论神煞 / 论刑冲合害"},
+    ]
+
+    overview = (
+        f"简单来说：您是「{day_gan}」日主（五行属{day_element}），{strength}；"
+        f"生于「{month_zhi}」月令，构成「{pattern['pattern']}」格局；"
+        f"对您最有利的用神是「{fy or '需结合大运细断'}」（喜{fx or '—'}、忌{fj or '—'}）。"
+        f"现年约 {age} 岁，行「{dayun_gz}」大运，今年（{liunian.get('current_year')}）流年「{ly}」整体{ly_j}。"
+        f"下面分条用大白话给您讲清楚每个术语是什么意思。"
+    )
+
+    glossary = [
+        {"term": "十神", "plain": "以“日主”为中心，其余七个字与您的关系角色（如比肩=同辈、正财=稳定收入、正官=事业规矩等）。就像您身边不同身份的人。"},
+        {"term": "神煞", "plain": "古人在干支组合上附加的一些吉凶标记（如天乙贵人、文昌等），属于传统辅助信息，仅供参考，不必迷信。"},
+        {"term": "刑冲合害", "plain": "地支之间的几种互动关系：“合”像亲近合作，“冲”像对冲冲突，“刑/害”像暗中摩擦。用来判断人际与事件的顺逆。"},
+        {"term": "纳音五行", "plain": "六十甲子每对干支被赋予的另一个五行名称（如丙午=天河水），常用于象义辅助，与“正五行”并行，不可混为一谈。"},
+        {"term": "真太阳时", "plain": "因经度不同，各地的“真实太阳时”和钟表时间有差（约每差1度差4分钟）。出生地越偏西，真太阳时越晚。校正后才排得准。"},
+    ]
+
+    return {"overview": overview, "sections": sections, "glossary": glossary}
+
+
 def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
                   shensha: Dict, wuxing: Dict, pattern: Dict, yongshen: Dict,
                   liunian: Dict) -> Dict:
@@ -1137,6 +1261,19 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
         )
     if liunian.get("liunian_relations"):
         report["cautions"].append(f"流年地支关系：{', '.join(liunian['liunian_relations'])}。")
+
+    # 大白话解读（基于古籍，通俗化）
+    report["plain_language"] = build_plain_language(
+        day_gan=day_gan,
+        day_element=wuxing["day_element"],
+        strength=wuxing["strength"],
+        month_zhi=month_zhi,
+        pattern=pattern,
+        yongshen=yongshen,
+        liunian=liunian,
+        shensha=shensha,
+        relations=relations,
+    )
 
     return report
 

@@ -748,3 +748,69 @@ button:hover {
         margin: 6px 0 0 0;
     }
 }
+
+/* 大白话解读卡片 */
+.plain-card {
+    margin-top: 24px;
+    padding: 24px;
+    background: linear-gradient(180deg, rgba(212, 168, 83, 0.10), rgba(212, 168, 83, 0.04));
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+}
+.plain-card h2 {
+    margin-top: 0;
+    color: var(--accent);
+}
+.plain-overview {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+}
+.plain-section {
+    margin-bottom: 18px;
+}
+.plain-section h3 {
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 1.05rem;
+}
+.plain-section p {
+    margin: 0;
+    line-height: 1.85;
+    white-space: pre-line;
+}
+.plain-section .src {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+.plain-glossary {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+}
+.plain-glossary summary {
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+}
+.plain-glossary dl {
+    margin: 10px 0 0;
+}
+.plain-glossary dt {
+    font-weight: 600;
+    margin-top: 8px;
+    color: var(--accent);
+}
+.plain-glossary dd {
+    margin: 2px 0 0;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+.hint-ok { color: #4caf50 !important; }
+.hint-warn { color: #ff9800 !important; font-size: 0.82rem; }

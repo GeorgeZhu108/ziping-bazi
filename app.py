@@ -9,6 +9,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 
 from engine import calculate_bazi
+import city_coords
 
 app = Flask(__name__)
 
@@ -53,6 +54,15 @@ def api_calculate():
             except (TypeError, ValueError):
                 longitude = None
 
+        # 出生地城市：手动输入后由后台查询经纬度（真太阳时校正）
+        city = (data.get("city") or "").strip()
+        resolved_city = None
+        if longitude is None and city:
+            geo = city_coords.lookup(city)
+            if geo.get("found"):
+                longitude = geo["longitude"]
+                resolved_city = geo["name"]
+
         # 晚子时口径，默认 current-day 与 lunar-python 一致
         late_zishi_rule = data.get("late_zishi_rule", "current-day")
 
@@ -60,9 +70,25 @@ def api_calculate():
                                 gender=gender, current_year=current_year,
                                 longitude=longitude, late_zishi_rule=late_zishi_rule)
         result = make_serializable(result)
+        # 回写解析到的城市信息，便于前端展示
+        if resolved_city:
+            result["input"]["city"] = resolved_city
+            result["input"]["longitude"] = longitude
+            result["input"]["city_resolved"] = True
+        elif city:
+            result["input"]["city"] = city
+            result["input"]["city_resolved"] = bool(longitude is not None)
         return jsonify({"success": True, "data": result})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 400
+
+
+@app.route("/api/geocode")
+def api_geocode():
+    """后台查询城市经纬度：GET /api/geocode?city=北京"""
+    city = (request.args.get("city") or "").strip()
+    geo = city_coords.lookup(city)
+    return jsonify(geo)
 
 
 @app.route("/api/example")

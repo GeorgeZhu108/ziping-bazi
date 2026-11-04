@@ -21,7 +21,7 @@
                 <summary>一、快速开始</summary>
                 <ol>
                     <li>填写<strong>公历（阳历）</strong>出生年 / 月 / 日 / 时 / 分（受理 1900–2100 年），选择性别与当前年份。</li>
-                    <li>在「出生地」选择城市预设，或手动填写经度（如 <code>116.41</code>）。留空则按钟表时间直接排盘。</li>
+                    <li>在「出生地」<strong>手动输入城市名</strong>（如 北京、成都、乌鲁木齐），软件后台会自动查出经纬度做<strong>真太阳时校正</strong>；也可直接在右侧手填经度（如 <code>116.41</code>）。留空则按钟表时间直接排盘。</li>
                     <li>点击「开始推演」，下方展开 12 步演算卡片；「载入示例」可一键填入案例，「导出JSON」可保存结果。</li>
                 </ol>
                 <p>本地启动：<code>python app.py</code>，浏览器访问 <code>http://127.0.0.1:5000</code>。</p>
@@ -99,30 +99,14 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="city">出生地（城市）</label>
-                        <select id="city" name="city">
-                            <option value="">不确定 / 不校正</option>
-                            <option value="116.41">北京</option>
-                            <option value="121.47">上海</option>
-                            <option value="113.26">广州</option>
-                            <option value="114.06">武汉</option>
-                            <option value="108.95">西安</option>
-                            <option value="104.07">成都</option>
-                            <option value="106.55">重庆</option>
-                            <option value="123.43">沈阳</option>
-                            <option value="126.53">哈尔滨</option>
-                            <option value="102.83">昆明</option>
-                            <option value="87.62">乌鲁木齐</option>
-                            <option value="91.11">拉萨</option>
-                            <option value="114.17">香港</option>
-                            <option value="121.56">台北</option>
-                        </select>
-                        <small>选城市自动填经度，也可手动填</small>
+                        <label for="city">出生地（城市，可手动输入）</label>
+                        <input type="text" id="city" name="city" placeholder="如 北京、上海、成都、乌鲁木齐…" autocomplete="off">
+                        <small id="cityHint">输入城市名，软件后台自动查经纬度做真太阳时校正；也可直接手填经度</small>
                     </div>
                     <div class="form-group">
                         <label for="longitude">经度（°E，可选）</label>
                         <input type="number" id="longitude" name="longitude" step="0.01" min="-180" max="180" placeholder="如 116.41">
-                        <small>东经为正；留空则不校正真太阳时</small>
+                        <small>东经为正；留空且不填城市则不校正真太阳时</small>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -155,6 +139,16 @@
                 <h2>综合概览</h2>
                 <div class="summary-grid" id="summaryGrid"></div>
                 <div class="interpretation-box" id="summaryInterpretation"></div>
+            </section>
+
+            <section class="plain-card">
+                <h2>📖 大白话解读（通俗版 · 基于古籍）</h2>
+                <p class="plain-overview" id="plainOverview"></p>
+                <div class="plain-sections" id="plainSections"></div>
+                <details class="plain-glossary">
+                    <summary>术语小词典（看不懂的词点这里）</summary>
+                    <dl id="plainGlossary"></dl>
+                </details>
             </section>
 
             <section class="pillars-card">
@@ -206,12 +200,50 @@
             await runCalculation();
         });
 
-        // 城市选择自动同步经度；手动改经度后城市回到"不确定"
-        document.getElementById('city').addEventListener('change', (e) => {
-            document.getElementById('longitude').value = e.target.value;
+        // 城市手动输入：失焦/回车时后台查询经纬度并自动回填
+        const cityInput = document.getElementById('city');
+        const lonInput = document.getElementById('longitude');
+        const cityHint = document.getElementById('cityHint');
+        let cityTimer = null;
+
+        async function resolveCity() {
+            const city = cityInput.value.trim();
+            if (!city) {
+                cityHint.textContent = '输入城市名，软件后台自动查经纬度做真太阳时校正；也可直接手填经度';
+                cityHint.className = '';
+                return;
+            }
+            try {
+                const resp = await fetch('/api/geocode?city=' + encodeURIComponent(city));
+                const geo = await resp.json();
+                if (geo.found) {
+                    lonInput.value = geo.longitude;
+                    cityHint.textContent = `已匹配「${geo.name}」：经度 ${geo.longitude}°，纬度 ${geo.latitude}°（真太阳时校正已启用）`;
+                    cityHint.className = 'hint-ok';
+                } else {
+                    cityHint.textContent = `未找到「${city}」的经纬度，请检查拼写，或直接在右侧手动填写经度`;
+                    cityHint.className = 'hint-warn';
+                }
+            } catch (err) {
+                cityHint.textContent = '查询经纬度失败，可手动填写经度';
+                cityHint.className = 'hint-warn';
+            }
+        }
+
+        cityInput.addEventListener('blur', resolveCity);
+        cityInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') resolveCity();
         });
-        document.getElementById('longitude').addEventListener('input', () => {
-            document.getElementById('city').value = '';
+        cityInput.addEventListener('input', () => {
+            // 用户手动编辑城市时，清除之前的匹配提示，但不清空经度（避免误删手动值）
+            if (cityTimer) clearTimeout(cityTimer);
+        });
+        // 手动改经度后，提示用户该值优先
+        lonInput.addEventListener('input', () => {
+            if (lonInput.value) {
+                cityHint.textContent = '已手动设定经度，将优先用于真太阳时校正';
+                cityHint.className = 'hint-ok';
+            }
         });
 
         document.getElementById('btnExample').addEventListener('click', async () => {
@@ -222,8 +254,9 @@
             document.getElementById('minute').value = 0;
             document.getElementById('gender').value = '男';
             document.getElementById('current_year').value = 2026;
-            document.getElementById('city').value = '116.41';
-            document.getElementById('longitude').value = 116.41;
+            cityInput.value = '北京';
+            lonInput.value = '';
+            await resolveCity();
             await runCalculation();
         });
 
@@ -268,8 +301,34 @@
 
         function renderResult(data) {
             renderSummary(data);
+            renderPlainLanguage(data);
             renderPillars(data);
             renderSteps(data);
+        }
+
+        function renderPlainLanguage(data) {
+            const step12 = data.steps.find(s => s.step === 12);
+            const pl = step12 && step12.plain_language;
+            const overviewEl = document.getElementById('plainOverview');
+            const sectionsEl = document.getElementById('plainSections');
+            const glossaryEl = document.getElementById('plainGlossary');
+            if (!pl) {
+                overviewEl.textContent = '（暂无大白话解读）';
+                sectionsEl.innerHTML = '';
+                glossaryEl.innerHTML = '';
+                return;
+            }
+            overviewEl.textContent = pl.overview || '';
+            sectionsEl.innerHTML = (pl.sections || []).map(s => `
+                <div class="plain-section">
+                    <h3>${s.term}</h3>
+                    <p>${s.plain}</p>
+                    <span class="src">古籍依据：${s.source || ''}</span>
+                </div>
+            `).join('');
+            glossaryEl.innerHTML = (pl.glossary || []).map(g => `
+                <dt>${g.term}</dt><dd>${g.plain}</dd>
+            `).join('');
         }
 
         function renderSummary(data) {
