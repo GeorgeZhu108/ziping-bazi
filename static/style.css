@@ -12,6 +12,65 @@
     --info: #64b5f6;
 }
 
+/* 开始界面：使用说明书 */
+.manual-card {
+    margin: 0 0 20px;
+    padding: 18px 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+}
+.manual-card h2 {
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-size: 1.15rem;
+}
+.manual-lead {
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.manual-card details {
+    margin: 8px 0;
+    padding: 9px 12px;
+    background: var(--card-bg-hover);
+    border-radius: 6px;
+}
+.manual-card summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+}
+.manual-card ul, .manual-card ol {
+    margin: 8px 0 4px;
+    padding-left: 22px;
+}
+.manual-card li {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+.manual-card p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+.manual-card code {
+    background: #0d0f13;
+    color: var(--accent);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+}
+.manual-card strong { color: var(--text); }
+.manual-disclaimer {
+    color: var(--text-secondary);
+    border-top: 1px dashed var(--border);
+    padding-top: 10px;
+    margin-top: 12px !important;
+}
+
 /* 历法校正透明化 */
 .correction-box {
     margin: 12px 0;

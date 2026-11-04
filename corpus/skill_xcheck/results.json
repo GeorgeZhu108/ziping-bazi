@@ -1,0 +1,151 @@
+{
+  "ours": {
+    "C1": "庚午 乙酉 丙午 癸巳",
+    "C2": "癸未 戊午 己未 辛未",
+    "C3": "己巳 丁丑 庚子 辛巳",
+    "C4": "庚午 壬午 丁卯 壬子",
+    "C5": "乙丑 乙酉 丁巳 壬子",
+    "C6": "庚辰 戊寅 丁巳 丙午",
+    "C7": "庚午 辛巳 庚辰 癸未"
+  },
+  "ours_next_day": {
+    "C1": "庚午 乙酉 丙午 癸巳",
+    "C2": "癸未 戊午 己未 辛未",
+    "C3": "己巳 丁丑 庚子 辛巳",
+    "C4": "庚午 壬午 戊辰 壬子",
+    "C5": "乙丑 乙酉 戊午 壬子",
+    "C6": "庚辰 戊寅 丁巳 丙午",
+    "C7": "庚午 辛巳 庚辰 癸未"
+  },
+  "skills": {
+    "nextscm-mingli-analysis": {
+      "status": "ran",
+      "desc": "Meeus 节气 + 加权量化",
+      "late_zishi_rule": "current-day",
+      "cases": {
+        "C1": {
+          "skill_pillars": "庚午 乙酉 丙午 癸巳",
+          "our_pillars": "庚午 乙酉 丙午 癸巳",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C2": {
+          "skill_pillars": "癸未 戊午 己未 辛未",
+          "our_pillars": "癸未 戊午 己未 辛未",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C3": {
+          "skill_pillars": "己巳 丁丑 庚子 辛巳",
+          "our_pillars": "己巳 丁丑 庚子 辛巳",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C4": {
+          "skill_pillars": "庚午 壬午 丁卯 壬子",
+          "our_pillars": "庚午 壬午 丁卯 壬子",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C5": {
+          "skill_pillars": "乙丑 乙酉 丁巳 壬子",
+          "our_pillars": "乙丑 乙酉 丁巳 壬子",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C6": {
+          "skill_pillars": "庚辰 戊寅 丁巳 丙午",
+          "our_pillars": "庚辰 戊寅 丁巳 丙午",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 未传经度",
+          "returncode": 0
+        },
+        "C7": {
+          "skill_pillars": "庚午 辛巳 庚辰 癸未",
+          "our_pillars": "庚午 辛巳 庚辰 癸未",
+          "match": true,
+          "note": "sect=2(子正换日/23点归当日), 真太阳时 --lon=114.17",
+          "returncode": 0
+        }
+      }
+    },
+    "bazi-personality": {
+      "status": "ran",
+      "desc": "纯标准库天文节气，无经度参数",
+      "late_zishi_rule": "next-day",
+      "cases": {
+        "C1": {
+          "skill_pillars": "庚午 乙酉 丙午 癸巳",
+          "our_pillars": "庚午 乙酉 丙午 癸巳",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C2": {
+          "skill_pillars": "癸未 戊午 己未 辛未",
+          "our_pillars": "癸未 戊午 己未 辛未",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C3": {
+          "skill_pillars": "己巳 丁丑 庚子 辛巳",
+          "our_pillars": "己巳 丁丑 庚子 辛巳",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C4": {
+          "skill_pillars": "庚午 壬午 戊辰 壬子",
+          "our_pillars": "庚午 壬午 戊辰 壬子",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C5": {
+          "skill_pillars": "乙丑 乙酉 戊午 壬子",
+          "our_pillars": "乙丑 乙酉 戊午 壬子",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C6": {
+          "skill_pillars": "庚辰 戊寅 丁巳 丙午",
+          "our_pillars": "庚辰 戊寅 丁巳 丙午",
+          "match": true,
+          "note": "无经度参数",
+          "returncode": 0
+        },
+        "C7": {
+          "skill_pillars": "庚午 辛巳 庚辰 癸未",
+          "our_pillars": "庚午 辛巳 庚辰 癸未",
+          "match": true,
+          "note": "无经度参数（C7 本技能无法做真太阳时校正，用原始钟表时间）",
+          "returncode": 0
+        }
+      }
+    }
+  },
+  "unscripted": {
+    "zhouyi-sizhu-bazi": {
+      "installed": true,
+      "deterministic_scripts": [],
+      "status": "NO_DETERMINISTIC_SCRIPT"
+    },
+    "bazi-diviner": {
+      "installed": true,
+      "deterministic_scripts": [],
+      "status": "NO_DETERMINISTIC_SCRIPT"
+    },
+    "ziqidonglai-bazi-reading": {
+      "installed": true,
+      "deterministic_scripts": [],
+      "status": "NO_DETERMINISTIC_SCRIPT"
+    }
+  }
+}

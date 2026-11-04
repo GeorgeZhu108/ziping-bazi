@@ -60,11 +60,14 @@ def test_zishi_current_day():
 
 
 # 6) 晚子时 next-day 口径：23:00-23:59 归次日（日柱顺移到次日丁未）
-#    注：时柱由 lunar-python 晚子时口径决定（23:xx 的时柱按次日日干遁），不在此约束
+#    2026-11-04 修复：日期进位后必须把 23:xx 归一为次日 00:xx（早子时），
+#    否则 getBaZi() 会二次套用晚子时，时柱错成甲子。
+#    客观基准：lunar-python 1990-10-09 00:30 -> 庚午 丙戌 丁未 庚子
 def test_zishi_next_day_rule():
     r = calculate_bazi(1990, 10, 8, 23, 30, gender="男", late_zishi_rule="next-day", current_year=2026)
-    assert r["input"]["corrected_birth"] == "1990-10-09 23:30"
+    assert r["input"]["corrected_birth"] == "1990-10-09 00:30"
     assert r["pillars"]["day"] == "丁未"   # 次日
+    assert r["pillars"]["time"] == "庚子"  # 与 lunar-python 次日早子时一致
     assert r["steps"][0]["历法校正"]["排盘日偏移"] == 1
 
 

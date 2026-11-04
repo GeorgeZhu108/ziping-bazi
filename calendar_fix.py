@@ -244,10 +244,19 @@ def preprocess_birth_time(year: int, month: int, day: int, hour: int, minute: in
         normalized_minutes = second_of_day / 60.0
 
     # 4) 晚子时口径合并跨日偏移
+    is_late_zishi = (result["branch"] == 0 and normalized_minutes >= 1380)
     day_shift = resolve_late_zishi(day_offset, normalized_minutes, result["branch"], late_zishi_rule)
     result["day_shift"] = day_shift
 
     cy, cm, cd = shift_gregorian_date(year, month, day, day_shift)
+    # 子时换日派（next-day）必修：日期进位后，晚子时 23:xx 必须归一为次日 00:xx
+    # （早子时）再喂 getBaZi()。否则会把「次日 23:xx」再套一次晚子时规则，
+    # 时柱由正确的壬子错成甲子。客观基准：
+    #   lunar-python 1990-07-01 23:30 -> 庚午 壬午 丁卯 壬子
+    #   lunar-python 1990-07-02 00:30 -> 庚午 壬午 戊辰 壬子  ← 子时换日派应得
+    #   lunar-python 1990-07-02 23:30 -> 庚午 壬午 戊辰 甲子  ← 修复前的错误输入
+    if late_zishi_rule == "next-day" and is_late_zishi:
+        h2 = 0
     result["corrected"] = (cy, cm, cd, h2, m2)
     return result
 
