@@ -1,0 +1,4 @@
+month_zhi: 寅
+day_gan: 己
+yong: 丙
+yong_note: 正月己土，田园寒冻，先取丙火暖土，次取癸水。

@@ -1,0 +1,682 @@
+{
+  "data": {
+    "input": {
+      "birth": "1990-07-15 10:00",
+      "current_year": 2026,
+      "gender": "\u7537"
+    },
+    "pillars": {
+      "day": "\u8f9b\u5df3",
+      "month": "\u7678\u672a",
+      "time": "\u7678\u5df3",
+      "year": "\u5e9a\u5348"
+    },
+    "steps": [
+      {
+        "input": {
+          "\u516c\u5386": "1990-07-15 10:00",
+          "\u5386\u6cd5": "\u516c\u5386/\u683c\u91cc\u5386"
+        },
+        "name": "\u5386\u6cd5\u8f6c\u6362",
+        "output": {
+          "\u516b\u5b57": "\u5e9a\u5348 \u7678\u672a \u8f9b\u5df3 \u7678\u5df3",
+          "\u519c\u5386": "\u4e00\u4e5d\u4e5d\u3007\u5e74\u95f0\u4e94\u6708\u5eff\u4e09",
+          "\u5e74\u67f1": "\u5e9a\u5348",
+          "\u65e5\u67f1": "\u8f9b\u5df3",
+          "\u65f6\u67f1": "\u7678\u5df3",
+          "\u6708\u67f1": "\u7678\u672a",
+          "\u751f\u8096": "\u9a6c",
+          "\u8282\u6c14\u4fe1\u606f": {
+            "\u4e0a\u4e00\u8282\u6c14": "\u5c0f\u6691",
+            "\u4e0b\u4e00\u8282\u6c14": "\u5927\u6691",
+            "\u5f53\u524d\u8282\u6c14": "\u65e0"
+          }
+        },
+        "source": "\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u6392\u516b\u5b57\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u8282\u5019",
+        "step": 1
+      },
+      {
+        "baizi": "\u5e9a\u5348 \u7678\u672a \u8f9b\u5df3 \u7678\u5df3",
+        "details": {
+          "day": {
+            "\u5730\u652f": "\u5df3",
+            "\u5730\u652f\u5c5e\u6027": {
+              "element": "\u706b",
+              "order": 6,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f",
+              "yin": true
+            },
+            "\u5929\u5e72": "\u8f9b",
+            "\u5929\u5e72\u5c5e\u6027": {
+              "element": "\u91d1",
+              "order": 8,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72",
+              "yin": true
+            },
+            "\u7eb3\u97f3": "\u767d\u8721\u91d1"
+          },
+          "month": {
+            "\u5730\u652f": "\u672a",
+            "\u5730\u652f\u5c5e\u6027": {
+              "element": "\u571f",
+              "order": 8,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f",
+              "yin": true
+            },
+            "\u5929\u5e72": "\u7678",
+            "\u5929\u5e72\u5c5e\u6027": {
+              "element": "\u6c34",
+              "order": 10,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72",
+              "yin": true
+            },
+            "\u7eb3\u97f3": "\u6768\u67f3\u6728"
+          },
+          "time": {
+            "\u5730\u652f": "\u5df3",
+            "\u5730\u652f\u5c5e\u6027": {
+              "element": "\u706b",
+              "order": 6,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f",
+              "yin": true
+            },
+            "\u5929\u5e72": "\u7678",
+            "\u5929\u5e72\u5c5e\u6027": {
+              "element": "\u6c34",
+              "order": 10,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72",
+              "yin": true
+            },
+            "\u7eb3\u97f3": "\u957f\u6d41\u6c34"
+          },
+          "year": {
+            "\u5730\u652f": "\u5348",
+            "\u5730\u652f\u5c5e\u6027": {
+              "element": "\u706b",
+              "order": 7,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f",
+              "yin": false
+            },
+            "\u5929\u5e72": "\u5e9a",
+            "\u5929\u5e72\u5c5e\u6027": {
+              "element": "\u91d1",
+              "order": 7,
+              "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72",
+              "yin": false
+            },
+            "\u7eb3\u97f3": "\u8def\u65c1\u571f"
+          }
+        },
+        "name": "\u56db\u67f1\u6392\u76d8",
+        "nayin": "\u8def\u65c1\u571f \u6768\u67f3\u6728 \u767d\u8721\u91d1 \u957f\u6d41\u6c34",
+        "pillars": {
+          "day": "\u8f9b\u5df3",
+          "month": "\u7678\u672a",
+          "time": "\u7678\u5df3",
+          "year": "\u5e9a\u5348"
+        },
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u56db\u67f1\uff1b\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u516b\u5b57\u6392\u6cd5",
+        "step": 2
+      },
+      {
+        "dayun": [
+          {
+            "end_age": 12,
+            "gan": "\u7532",
+            "ganzhi": "\u7532\u7533",
+            "number": 1,
+            "start_age": 3,
+            "zhi": "\u7533"
+          },
+          {
+            "end_age": 22,
+            "gan": "\u4e59",
+            "ganzhi": "\u4e59\u9149",
+            "number": 2,
+            "start_age": 13,
+            "zhi": "\u9149"
+          },
+          {
+            "end_age": 32,
+            "gan": "\u4e19",
+            "ganzhi": "\u4e19\u620c",
+            "number": 3,
+            "start_age": 23,
+            "zhi": "\u620c"
+          },
+          {
+            "end_age": 42,
+            "gan": "\u4e01",
+            "ganzhi": "\u4e01\u4ea5",
+            "number": 4,
+            "start_age": 33,
+            "zhi": "\u4ea5"
+          },
+          {
+            "end_age": 52,
+            "gan": "\u620a",
+            "ganzhi": "\u620a\u5b50",
+            "number": 5,
+            "start_age": 43,
+            "zhi": "\u5b50"
+          },
+          {
+            "end_age": 62,
+            "gan": "\u5df1",
+            "ganzhi": "\u5df1\u4e11",
+            "number": 6,
+            "start_age": 53,
+            "zhi": "\u4e11"
+          },
+          {
+            "end_age": 72,
+            "gan": "\u5e9a",
+            "ganzhi": "\u5e9a\u5bc5",
+            "number": 7,
+            "start_age": 63,
+            "zhi": "\u5bc5"
+          },
+          {
+            "end_age": 82,
+            "gan": "\u8f9b",
+            "ganzhi": "\u8f9b\u536f",
+            "number": 8,
+            "start_age": 73,
+            "zhi": "\u536f"
+          },
+          {
+            "end_age": 92,
+            "gan": "\u58ec",
+            "ganzhi": "\u58ec\u8fb0",
+            "number": 9,
+            "start_age": 83,
+            "zhi": "\u8fb0"
+          },
+          {
+            "end_age": 102,
+            "gan": "\u7678",
+            "ganzhi": "\u7678\u5df3",
+            "number": 10,
+            "start_age": 93,
+            "zhi": "\u5df3"
+          },
+          {
+            "end_age": 112,
+            "gan": "\u7532",
+            "ganzhi": "\u7532\u5348",
+            "number": 11,
+            "start_age": 103,
+            "zhi": "\u5348"
+          },
+          {
+            "end_age": 122,
+            "gan": "\u4e59",
+            "ganzhi": "\u4e59\u672a",
+            "number": 12,
+            "start_age": 113,
+            "zhi": "\u672a"
+          }
+        ],
+        "direction": "\u987a\u884c",
+        "direction_reason": "\u5e74\u5e72\u5e9a\u4e3a\u9633\u5e72\uff0c\u7537\u547d\u987a\u884c",
+        "jieqi": {
+          "days_to_jieqi": 8.01,
+          "forward": true,
+          "reference": "\u5927\u6691",
+          "start_age": 3
+        },
+        "name": "\u5927\u8fd0\u6392\u5217",
+        "source": "\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u5927\u8fd0\u6392\u6cd5\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5927\u8fd0",
+        "step": 3
+      },
+      {
+        "day_branch": "\u5df3",
+        "day_stem": "\u8f9b",
+        "details": {
+          "day": {
+            "\u5341\u795e": "\u65e5\u4e3b",
+            "\u5341\u795e\u4ee3\u7801": "ri_zhu",
+            "\u5730\u652f": "\u5df3",
+            "\u5929\u5e72": "\u8f9b"
+          },
+          "month": {
+            "\u5341\u795e": "\u98df\u795e",
+            "\u5341\u795e\u4ee3\u7801": "shi_shen",
+            "\u5730\u652f": "\u672a",
+            "\u5929\u5e72": "\u7678"
+          },
+          "time": {
+            "\u5341\u795e": "\u98df\u795e",
+            "\u5341\u795e\u4ee3\u7801": "shi_shen",
+            "\u5730\u652f": "\u5df3",
+            "\u5929\u5e72": "\u7678"
+          },
+          "year": {
+            "\u5341\u795e": "\u52ab\u8d22",
+            "\u5341\u795e\u4ee3\u7801": "jie_cai",
+            "\u5730\u652f": "\u5348",
+            "\u5929\u5e72": "\u5e9a"
+          }
+        },
+        "hidden_tenshen": {
+          "day": [
+            {
+              "\u5341\u795e": "\u6b63\u5b98",
+              "\u6743\u91cd": 0.6,
+              "\u85cf\u5e72": "\u4e19"
+            },
+            {
+              "\u5341\u795e": "\u52ab\u8d22",
+              "\u6743\u91cd": 0.3,
+              "\u85cf\u5e72": "\u5e9a"
+            },
+            {
+              "\u5341\u795e": "\u6b63\u5370",
+              "\u6743\u91cd": 0.1,
+              "\u85cf\u5e72": "\u620a"
+            }
+          ],
+          "month": [
+            {
+              "\u5341\u795e": "\u504f\u5370",
+              "\u6743\u91cd": 0.6,
+              "\u85cf\u5e72": "\u5df1"
+            },
+            {
+              "\u5341\u795e": "\u4e03\u6740",
+              "\u6743\u91cd": 0.3,
+              "\u85cf\u5e72": "\u4e01"
+            },
+            {
+              "\u5341\u795e": "\u504f\u8d22",
+              "\u6743\u91cd": 0.1,
+              "\u85cf\u5e72": "\u4e59"
+            }
+          ],
+          "time": [
+            {
+              "\u5341\u795e": "\u6b63\u5b98",
+              "\u6743\u91cd": 0.6,
+              "\u85cf\u5e72": "\u4e19"
+            },
+            {
+              "\u5341\u795e": "\u52ab\u8d22",
+              "\u6743\u91cd": 0.3,
+              "\u85cf\u5e72": "\u5e9a"
+            },
+            {
+              "\u5341\u795e": "\u6b63\u5370",
+              "\u6743\u91cd": 0.1,
+              "\u85cf\u5e72": "\u620a"
+            }
+          ],
+          "year": [
+            {
+              "\u5341\u795e": "\u4e03\u6740",
+              "\u6743\u91cd": 0.7,
+              "\u85cf\u5e72": "\u4e01"
+            },
+            {
+              "\u5341\u795e": "\u504f\u5370",
+              "\u6743\u91cd": 0.3,
+              "\u85cf\u5e72": "\u5df1"
+            }
+          ]
+        },
+        "name": "\u5341\u795e\u6807\u6ce8",
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u5341\u795e\u8bba\uff1b\u6ef4\u5929\u9ad3\u00b7\u516d\u4eb2\u8bba",
+        "step": 4
+      },
+      {
+        "element_weight_from_hidden": {
+          "\u571f": 1.0999999999999999,
+          "\u6728": 0.1,
+          "\u6c34": 0.0,
+          "\u706b": 2.2,
+          "\u91d1": 0.6
+        },
+        "hidden": {
+          "day": {
+            "\u5730\u652f": "\u5df3",
+            "\u85cf\u5e72": [
+              {
+                "\u4e94\u884c": "\u706b",
+                "\u5e72": "\u4e19",
+                "\u6743\u91cd": 0.6
+              },
+              {
+                "\u4e94\u884c": "\u91d1",
+                "\u5e72": "\u5e9a",
+                "\u6743\u91cd": 0.3
+              },
+              {
+                "\u4e94\u884c": "\u571f",
+                "\u5e72": "\u620a",
+                "\u6743\u91cd": 0.1
+              }
+            ]
+          },
+          "month": {
+            "\u5730\u652f": "\u672a",
+            "\u85cf\u5e72": [
+              {
+                "\u4e94\u884c": "\u571f",
+                "\u5e72": "\u5df1",
+                "\u6743\u91cd": 0.6
+              },
+              {
+                "\u4e94\u884c": "\u706b",
+                "\u5e72": "\u4e01",
+                "\u6743\u91cd": 0.3
+              },
+              {
+                "\u4e94\u884c": "\u6728",
+                "\u5e72": "\u4e59",
+                "\u6743\u91cd": 0.1
+              }
+            ]
+          },
+          "time": {
+            "\u5730\u652f": "\u5df3",
+            "\u85cf\u5e72": [
+              {
+                "\u4e94\u884c": "\u706b",
+                "\u5e72": "\u4e19",
+                "\u6743\u91cd": 0.6
+              },
+              {
+                "\u4e94\u884c": "\u91d1",
+                "\u5e72": "\u5e9a",
+                "\u6743\u91cd": 0.3
+              },
+              {
+                "\u4e94\u884c": "\u571f",
+                "\u5e72": "\u620a",
+                "\u6743\u91cd": 0.1
+              }
+            ]
+          },
+          "year": {
+            "\u5730\u652f": "\u5348",
+            "\u85cf\u5e72": [
+              {
+                "\u4e94\u884c": "\u706b",
+                "\u5e72": "\u4e01",
+                "\u6743\u91cd": 0.7
+              },
+              {
+                "\u4e94\u884c": "\u571f",
+                "\u5e72": "\u5df1",
+                "\u6743\u91cd": 0.3
+              }
+            ]
+          }
+        },
+        "name": "\u85cf\u5e72\u5c55\u5f00",
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u5730\u652f\u85cf\u5e72",
+        "step": 5
+      },
+      {
+        "branches": {
+          "\u5e74\u652f": "\u5348",
+          "\u65e5\u652f": "\u5df3",
+          "\u65f6\u652f": "\u5df3",
+          "\u6708\u652f": "\u672a"
+        },
+        "name": "\u5211\u51b2\u5408\u5bb3",
+        "relations": [
+          {
+            "branches": [
+              "\u5348",
+              "\u672a"
+            ],
+            "meaning": "\u548c\u5408\u3001\u4eb2\u8fd1\u3001\u5408\u4f5c\u3001\u7a33\u5b9a\u3001\u7275\u7eca\u3002",
+            "pair": [
+              "\u5e74\u652f",
+              "\u6708\u652f"
+            ],
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f\u516d\u5408",
+            "type": "\u516d\u5408"
+          },
+          {
+            "branches": [
+              "\u672a",
+              "\u5df3",
+              "\u5348"
+            ],
+            "meaning": "\u65b9\u5c40\u4f1a\u805a\uff0c\u529b\u91cf\u66f4\u5f3a\u4e8e\u4e09\u5408\u3002",
+            "name": "\u706b\u65b9",
+            "positions": [
+              "\u5e74\u652f",
+              "\u6708\u652f",
+              "\u65e5\u652f",
+              "\u65f6\u652f"
+            ],
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f\u4e09\u4f1a",
+            "type": "\u4e09\u4f1a"
+          }
+        ],
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u5730\u652f\u5211\u51b2\u5408\u5bb3\u8bba\uff1b\u6ef4\u5929\u9ad3\u00b7\u77e5\u547d",
+        "step": 6
+      },
+      {
+        "name": "\u795e\u715e\u8ba1\u7b97",
+        "shensha": [
+          {
+            "matched": [
+              "\u65e5\u5e72\u8f9b \u2192 \u5e74\u652f\u5348"
+            ],
+            "name": "\u5929\u4e59\u8d35\u4eba",
+            "rule": "\u4ee5\u65e5\u5e72\u67e5\u56db\u67f1\u5730\u652f",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u5929\u4e59\u8d35\u4eba"
+          },
+          {
+            "matched": [
+              "\u65e5\u652f\u5df3 \u2192 \u5e74\u652f\u5348"
+            ],
+            "name": "\u6843\u82b1",
+            "rule": "\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u7684\u6c90\u6d74\u4f4d",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u6843\u82b1"
+          },
+          {
+            "matched": [
+              "\u5e74\u652f\u5348 \u2192 \u5e74\u652f\u5348"
+            ],
+            "name": "\u5c06\u661f",
+            "rule": "\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u7684\u4e2d\u4f4d",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u5c06\u661f"
+          },
+          {
+            "matched": [
+              "\u5e74\u652f\u5348 \u2192 \u65e5\u652f\u5df3",
+              "\u5e74\u652f\u5348 \u2192 \u65f6\u652f\u5df3"
+            ],
+            "name": "\u4ea1\u795e",
+            "rule": "\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u4e34\u5b98\u4f4d",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u4ea1\u795e"
+          },
+          {
+            "matched": [
+              "\u6708\u652f\u672a \u2192 \u5e74\u652f\u5348"
+            ],
+            "name": "\u5929\u533b",
+            "rule": "\u4ee5\u6708\u652f\u67e5\u540e\u4e00\u4f4d",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u5929\u533b"
+          },
+          {
+            "matched": [
+              "\u65e5\u5e72\u8f9b \u2192 \u65e5\u652f\u5df3",
+              "\u65e5\u5e72\u8f9b \u2192 \u65f6\u652f\u5df3"
+            ],
+            "name": "\u798f\u661f\u8d35\u4eba",
+            "rule": "\u4ee5\u65e5\u5e72\u67e5\u5730\u652f",
+            "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u798f\u661f\u8d35\u4eba"
+          }
+        ],
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u7bc7",
+        "step": 7
+      },
+      {
+        "condition": {
+          "\u5f97\u4ee4": true,
+          "\u5f97\u52bf": true,
+          "\u5f97\u5730": true,
+          "\u5f97\u5730\u4f4d\u7f6e": [
+            "day",
+            "time"
+          ]
+        },
+        "day_element": "\u91d1",
+        "day_score": 40.27,
+        "name": "\u4e94\u884c\u5f3a\u5f31",
+        "raw_weight": {
+          "\u571f": 1.6,
+          "\u6728": 0.1,
+          "\u6c34": 2.0,
+          "\u706b": 2.2,
+          "\u91d1": 2.6
+        },
+        "scores": {
+          "\u571f": 35.4,
+          "\u6728": 0.44,
+          "\u6c34": 4.42,
+          "\u706b": 19.47,
+          "\u91d1": 40.27
+        },
+        "season": "\u56db\u5b63",
+        "source": "\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u4e94\u884c\u65fa\u76f8\u4f11\u56da",
+        "step": 8,
+        "strength": "\u8eab\u65fa",
+        "strength_reason": "\u5f97\u4ee4\uff08\u6708\u4ee4\u76f8\uff09\uff1b\u5f97\u5730\uff08\u5730\u652f\u901a\u6839\uff09\uff1b\u5f97\u52bf\uff08\u5929\u5e72\u6709\u5370\u6bd4\uff09\u3002",
+        "support_vs_consume": {
+          "\u514b\u6cc4\u8017\u65e5\u4e3b": 24.33,
+          "\u751f\u52a9\u65e5\u4e3b": 75.67
+        },
+        "wangshuai": {
+          "\u571f": "\u65fa",
+          "\u6728": "\u56da",
+          "\u6c34": "\u6b7b",
+          "\u706b": "\u4f11",
+          "\u91d1": "\u76f8"
+        }
+      },
+      {
+        "description": "\u6708\u652f\u504f\u5370\u900f\u51fa\uff0c\u4e3b\u4e13\u624d\u3001\u7075\u611f\u3001\u5b64\u72ec\u3002",
+        "name": "\u683c\u5c40\u5224\u5b9a",
+        "pattern": "\u504f\u5370\u683c",
+        "reason": {
+          "\u6708\u652f": "\u672a",
+          "\u6708\u652f\u672c\u6c14\u5341\u795e": "\u504f\u5370",
+          "\u6708\u652f\u672c\u6c14\u85cf\u5e72": "\u5df1",
+          "\u900f\u51fa\u5929\u5e72": []
+        },
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5370\u7ef6\u683c",
+        "step": 9
+      },
+      {
+        "components": {
+          "\u683c\u5c40\u7528\u795e": {
+            "\u51fa\u5904": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5370\u7ef6\u683c",
+            "\u683c\u5c40": "\u504f\u5370\u683c",
+            "\u683c\u5c40\u7528\u795e": "\u8d22",
+            "\u8bf4\u660e": "\u5370\u683c\u8eab\u65fa\u559c\u8d22\u7834\u5370\uff0c\u8eab\u5f31\u559c\u5b98\u6740\u751f\u5370"
+          },
+          "\u6ef4\u5929\u9ad3\u6276\u6291": {
+            "\u51fa\u5904": "\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61",
+            "\u559c\u7528\u4e94\u884c": [
+              "\u6728",
+              "\u6c34",
+              "\u706b"
+            ],
+            "\u6276\u6291\u65b9\u5411": "\u65e5\u4e3b\u8eab\u65fa\uff0c\u559c\u8d22\u5b98\u98df\u4f24\u514b\u6cc4\u8017",
+            "\u6276\u6291\u7528\u795e": "\u8d22\u5b98\u98df\u4f24\uff08\u6b63\u5b98\u3001\u4e03\u6740\u3001\u6b63\u8d22\u3001\u504f\u8d22\u3001\u98df\u795e\u3001\u4f24\u5b98\uff09",
+            "\u65e5\u4e3b\u5f3a\u5f31": "\u8eab\u65fa"
+          },
+          "\u7a77\u901a\u5b9d\u9274": {
+            "\u51fa\u5904": "\u7a77\u901a\u5b9d\u9274\u00b7\u8f9b\u65e5\u516d\u6708",
+            "\u559c\u795e": "\u5df1",
+            "\u5fcc\u795e": "\u4e01",
+            "\u7528\u795e": "\u58ec",
+            "\u7528\u795e\u4e94\u884c": "\u6c34",
+            "\u8bf4\u660e": "\u516d\u6708\u8f9b\u91d1\uff0c\u571f\u65fa\u57cb\u91d1\uff0c\u5148\u53d6\u58ec\u6c34\u6dd8\u6d17\u3002"
+          }
+        },
+        "final_ji": "\u4e01",
+        "final_xi": "\u5df1",
+        "final_yong": "\u58ec",
+        "method": "\u4e09\u6e90\u5408\u53c2\uff1a\u7a77\u901a\u5b9d\u9274\u8c03\u5019 + \u6ef4\u5929\u9ad3\u6276\u6291 + \u683c\u5c40\u7528\u795e",
+        "name": "\u7528\u795e\u63a8\u8350",
+        "source": "\u7a77\u901a\u5b9d\u9274\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u7528\u795e",
+        "step": 10,
+        "synthesis": {
+          "\u6276\u6291\u7528\u795e": "\u8d22\u5b98\u98df\u4f24\uff08\u6b63\u5b98\u3001\u4e03\u6740\u3001\u6b63\u8d22\u3001\u504f\u8d22\u3001\u98df\u795e\u3001\u4f24\u5b98\uff09",
+          "\u662f\u5426\u540c\u5411": {
+            "\u683c\u5c40\u4e0e\u6276\u6291\u4e00\u81f4": true,
+            "\u8c03\u5019\u4e0e\u6276\u6291\u4e00\u81f4": true
+          },
+          "\u683c\u5c40\u7528\u795e": "\u8d22",
+          "\u7efc\u5408\u5efa\u8bae": "\u4e09\u6e90\u540c\u5411\uff1a\u4ee5\u58ec\uff08\u6c34\uff09\u8c03\u5019\u6276\u6291\uff0c\u683c\u5c40\u4ea6\u987a\u3002",
+          "\u8c03\u5019\u7528\u795e": "\u58ec"
+        }
+      },
+      {
+        "age": 36,
+        "comment": "\u5927\u8fd0\u4e0e\u6d41\u5e74\u7686\u5229\uff0c\u5b9c\u79ef\u6781\u8fdb\u53d6\u3002 \u672c\u547d\u5e74\uff08\u503c\u592a\u5c81\uff09\uff0c\u5b9c\u7a33\u5b88\uff0c\u6ce8\u610f\u662f\u975e\u3002",
+        "current_dayun": {
+          "end_age": 42,
+          "gan": "\u4e01",
+          "ganzhi": "\u4e01\u4ea5",
+          "number": 4,
+          "start_age": 33,
+          "zhi": "\u4ea5"
+        },
+        "current_year": 2026,
+        "dayun_comment": "\u5f53\u524d\u5927\u8fd0\u5929\u5e72\u4e3a\u559c\u7528\uff0c\u5341\u5e74\u6574\u4f53\u8fd0\u52bf\u504f\u987a\u3002",
+        "dayun_judgment": "\u5409",
+        "judgment": "\u5409",
+        "liunian": {
+          "gan": "\u4e19",
+          "ganzhi": "\u4e19\u5348",
+          "zhi": "\u5348"
+        },
+        "liunian_comment": "\u6d41\u5e74\u5929\u5e72\u4e3a\u559c\u7528\uff0c\u6574\u4f53\u987a\u9042\uff0c\u5b9c\u79ef\u6781\u8fdb\u53d6\u3002",
+        "liunian_judgment": "\u5409",
+        "liunian_relations": [
+          "\u503c\u592a\u5c81\uff08\u672c\u547d\u5e74\uff09"
+        ],
+        "name": "\u5927\u8fd0\u6d41\u5e74",
+        "overall_judgment": "\u5409",
+        "source": "\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5927\u8fd0\u6d41\u5e74\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u7528",
+        "step": 11
+      },
+      {
+        "cautions": [
+          "\u5fcc\u795e\uff1a\u4e01\uff0c\u6d41\u5e74\u9022\u4e4b\u591a\u9700\u6536\u655b\u3002",
+          "\u6d41\u5e74\u5730\u652f\u5173\u7cfb\uff1a\u503c\u592a\u5c81\uff08\u672c\u547d\u5e74\uff09\u3002"
+        ],
+        "key_observations": [
+          "\u65e5\u4e3b\u8f9b\uff08\u91d1\uff09\u8eab\u65fa\u3002\u5f97\u4ee4\uff08\u6708\u4ee4\u76f8\uff09\uff1b\u5f97\u5730\uff08\u5730\u652f\u901a\u6839\uff09\uff1b\u5f97\u52bf\uff08\u5929\u5e72\u6709\u5370\u6bd4\uff09\u3002",
+          "\u6708\u4ee4\u672a\u4e3a\u63d0\u7eb2\uff0c\u504f\u5370\u683c\uff1a\u6708\u652f\u504f\u5370\u900f\u51fa\uff0c\u4e3b\u4e13\u624d\u3001\u7075\u611f\u3001\u5b64\u72ec\u3002",
+          "\u7528\u795e\u4e09\u6e90\uff1a\u8c03\u5019\u58ec\uff0c\u6276\u6291\u8d22\u5b98\u98df\u4f24\uff08\u6b63\u5b98\u3001\u4e03\u6740\u3001\u6b63\u8d22\u3001\u504f\u8d22\u3001\u98df\u795e\u3001\u4f24\u5b98\uff09\uff0c\u683c\u5c40\u8d22\u3002\u4e09\u6e90\u540c\u5411\uff1a\u4ee5\u58ec\uff08\u6c34\uff09\u8c03\u5019\u6276\u6291\uff0c\u683c\u5c40\u4ea6\u987a\u3002",
+          "\u547d\u5c40\u5b58\u5728\uff1a\u4e09\u4f1a, \u516d\u5408",
+          "\u4e3b\u8981\u795e\u715e\uff1a\u5929\u4e59\u8d35\u4eba, \u6843\u82b1, \u5c06\u661f, \u4ea1\u795e, \u5929\u533b"
+        ],
+        "name": "\u7efc\u5408\u62a5\u544a",
+        "source": "\u516d\u90e8\u8457\u4f5c\u7efc\u5408\uff08\u7a77\u901a\u5b9d\u9274\u3001\u6ef4\u5929\u9ad3\u3001\u4e09\u547d\u901a\u4f1a\u3001\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\uff09",
+        "step": 12,
+        "summary": {
+          "\u559c\u795e": "\u5df1",
+          "\u5f53\u524d\u5927\u8fd0": "\u4e01\u4ea5",
+          "\u5fcc\u795e": "\u4e01",
+          "\u65e5\u4e3b": "\u8f9b",
+          "\u65e5\u4e3b\u5f3a\u5f31": "\u8eab\u65fa",
+          "\u65e5\u67f1": "\u8f9b\u5df3",
+          "\u6708\u4ee4": "\u672a",
+          "\u683c\u5c40": "\u504f\u5370\u683c",
+          "\u7528\u795e": "\u58ec"
+        }
+      }
+    ]
+  },
+  "success": true
+}

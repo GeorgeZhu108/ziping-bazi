@@ -1,0 +1,4 @@
+month_zhi: 寅
+day_gan: 己
+yong: 癸
+yong_note: 四月己土，火炎土燥，先取癸水调候。

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+    test(1984, 2, 5, 10)
+    ~~~~^^^^^^^^^^^^^^^^
+  File "<string>", line 10, in test
+    print(f'{year}-{month:02d}-{day:02d} {gender}: 日主{data["summary"]["日主"]} 月支{data["summary"]["月令"]} 格局{data["summary"]["格局"]} 用神{data["summary"]["用神"]} 强弱{data["summary"]["日主强弱"]}')
+                                                        ~~~~^^^^^^^^^^^
+KeyError: 'summary'

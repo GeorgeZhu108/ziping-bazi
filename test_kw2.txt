@@ -1,0 +1,9 @@
+day pillar: 戊辰
+name: 太极贵人
+name: 学堂
+name: 驿马
+name: 将星
+name: 华盖
+name: 劫煞
+name: 红艳煞
+name: 孤辰

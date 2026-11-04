@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子平推演 - 八字命理分析程序</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>子平推演</h1>
+            <p class="subtitle">综合《穷通宝鉴》《滴天髓》《三命通会》《中国古代算命术》等古籍的八字命理分析程序</p>
+        </header>
+
+        <section class="input-section">
+            <h2>输入出生信息</h2>
+            <p class="input-hint">本程序使用公历（阳历）输入，自动转换为干支历。如需输入农历，请先自行换算为公历。</p>
+            <p class="input-hint">时间注意事项：① 请尽量填写<strong>出生地（城市/经度）</strong>，程序将自动做<strong>真太阳时校正</strong>（经度差×4分钟 + 天文均时差），西部或时辰边界出生者尤其重要；② 1986-1991 年中国实行夏令时，程序会<strong>提示</strong>但不自动减小时（请据出生证判断）；③ 晚子时（23:00-24:00）默认按出生日当天排盘，如需"进次日"口径请告知。</p>
+            <form id="baziForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="year">公历出生年份</label>
+                        <input type="number" id="year" name="year" min="1900" max="2100" value="1990" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="month">月</label>
+                        <input type="number" id="month" name="month" min="1" max="12" value="7" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="day">日</label>
+                        <input type="number" id="day" name="day" min="1" max="31" value="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hour">时（0-23）</label>
+                        <input type="number" id="hour" name="hour" min="0" max="23" value="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="minute">分</label>
+                        <input type="number" id="minute" name="minute" min="0" max="59" value="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">性别</label>
+                        <select id="gender" name="gender">
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
+                        </select>
+                        <small>性别决定大运顺逆排列</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="current_year">流年年份</label>
+                        <input type="number" id="current_year" name="current_year" min="1900" max="2100" value="2026">
+                        <small>用于推算当前所处大运与流年吉凶，通常填写今年或您想查看的年份</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">出生地（城市）</label>
+                        <select id="city" name="city">
+                            <option value="">不确定 / 不校正</option>
+                            <option value="116.41">北京</option>
+                            <option value="121.47">上海</option>
+                            <option value="113.26">广州</option>
+                            <option value="114.06">武汉</option>
+                            <option value="108.95">西安</option>
+                            <option value="104.07">成都</option>
+                            <option value="106.55">重庆</option>
+                            <option value="123.43">沈阳</option>
+                            <option value="126.53">哈尔滨</option>
+                            <option value="102.83">昆明</option>
+                            <option value="87.62">乌鲁木齐</option>
+                            <option value="91.11">拉萨</option>
+                            <option value="114.17">香港</option>
+                            <option value="121.56">台北</option>
+                        </select>
+                        <small>选城市自动填经度，也可手动填</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">经度（°E，可选）</label>
+                        <input type="number" id="longitude" name="longitude" step="0.01" min="-180" max="180" placeholder="如 116.41">
+                        <small>东经为正；留空则不校正真太阳时</small>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">开始推演</button>
+                    <button type="button" class="btn-secondary" id="btnExample">载入示例</button>
+                    <button type="button" class="btn-secondary" id="btnExport">导出JSON</button>
+                </div>
+            </form>
+        </section>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>正在排盘演算...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <main id="result" class="result hidden">
+            <section class="info-card">
+                <h2>五行体系说明</h2>
+                <p>命理分析中存在两套“五行”体系，本界面均会展示，但用途不同，不可混为一谈：</p>
+                <ul>
+                    <li><strong>正五行</strong>：天干、地支本身的五行属性。例如：丙属火、午属火，丙午的正五行就是火。这是判断十神、旺衰、生克、用神的核心依据。来源：三命通会·论五行；滴天髓·体象。</li>
+                    <li><strong>纳音五行</strong>：六十甲子（每对干支）被赋予的另一种五行名称，常用于象义、音色辅助。例如：丙午虽正五行属火，但纳音为<strong>天河水</strong>；丁未亦然。来源：三命通会·纳音取象；中国古代算命术·纳音篇。</li>
+                </ul>
+                <p class="step-note">本程序的核心推演（十神、强弱、格局、用神）以<strong>正五行</strong>为准；纳音五行仅作为四柱的附加信息供参考。</p>
+            </section>
+
+            <section class="summary-card">
+                <h2>综合概览</h2>
+                <div class="summary-grid" id="summaryGrid"></div>
+                <div class="interpretation-box" id="summaryInterpretation"></div>
+            </section>
+
+            <section class="pillars-card">
+                <h2>四柱排盘与解读</h2>
+                <div class="pillars-table" id="pillarsTable"></div>
+                <div class="interpretation-box" id="pillarsInterpretation"></div>
+            </section>
+
+            <section class="steps-card">
+                <h2>十二步演算详情（每步均可展开，含可视化与理论依据）</h2>
+                <div id="stepsList"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const PILLAR_MEANINGS = {
+            year: { title: '年柱', meaning: '代表祖上、父母、早年根基与出身环境。', source: '三命通会·论年柱；中国古代算命术·论四柱' },
+            month: { title: '月柱', meaning: '代表父母、兄弟、事业根基、青年运势，亦称为“提纲”，是定格局、取用神的关键。', source: '三命通会·论月柱；中国古代算命术·论四柱' },
+            day: { title: '日柱', meaning: '日干为命主自身，日支为配偶宫，代表中年婚姻与自身状态。', source: '三命通会·论日柱；中国古代算命术·论四柱' },
+            time: { title: '时柱', meaning: '代表子女、晚年归宿、事业最终成就。', source: '三命通会·论时柱；中国古代算命术·论四柱' }
+        };
+
+        const TEN_GOD_MEANINGS = {
+            '比肩': '自我意识、独立、同辈助力，亦主竞争。',
+            '劫财': '行动力、破耗、争夺、冒险。',
+            '食神': '才华、福气、口福、表达、温和。',
+            '伤官': '创意、叛逆、才艺、口舌、傲气。',
+            '偏财': '横财、流动财、交际、大方。',
+            '正财': '稳定收入、节俭、务实、妻缘。',
+            '七杀': '压力、权威、魄力、挑战、小人。',
+            '正官': '规矩、地位、责任、事业、名誉。',
+            '偏印': '灵感、专技、孤独、偏门、思考。',
+            '正印': '学识、庇护、贵人、母亲、文书。'
+        };
+
+        const ELEMENT_COLORS = {
+            '木': '#4caf50',
+            '火': '#f44336',
+            '土': '#ff9800',
+            '金': '#9e9e9e',
+            '水': '#2196f3'
+        };
+
+        let currentResult = null;
+
+        document.getElementById('baziForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await runCalculation();
+        });
+
+        // 城市选择自动同步经度；手动改经度后城市回到"不确定"
+        document.getElementById('city').addEventListener('change', (e) => {
+            document.getElementById('longitude').value = e.target.value;
+        });
+        document.getElementById('longitude').addEventListener('input', () => {
+            document.getElementById('city').value = '';
+        });
+
+        document.getElementById('btnExample').addEventListener('click', async () => {
+            document.getElementById('year').value = 1990;
+            document.getElementById('month').value = 7;
+            document.getElementById('day').value = 15;
+            document.getElementById('hour').value = 10;
+            document.getElementById('minute').value = 0;
+            document.getElementById('gender').value = '男';
+            document.getElementById('current_year').value = 2026;
+            document.getElementById('city').value = '116.41';
+            document.getElementById('longitude').value = 116.41;
+            await runCalculation();
+        });
+
+        document.getElementById('btnExport').addEventListener('click', () => {
+            if (!currentResult) return;
+            const blob = new Blob([JSON.stringify(currentResult, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `子平推演_${currentResult.input.birth}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        async function runCalculation() {
+            const form = document.getElementById('baziForm');
+            const data = Object.fromEntries(new FormData(form));
+            data.current_year = data.current_year || undefined;
+
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
+
+            try {
+                const resp = await fetch('/api/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const json = await resp.json();
+                if (!json.success) throw new Error(json.error || '计算失败');
+                currentResult = json.data;
+                renderResult(json.data);
+                document.getElementById('result').classList.remove('hidden');
+            } catch (err) {
+                document.getElementById('error').textContent = err.message;
+                document.getElementById('error').classList.remove('hidden');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function renderResult(data) {
+            renderSummary(data);
+            renderPillars(data);
+            renderSteps(data);
+        }
+
+        function renderSummary(data) {
+            const summary = data.steps.find(s => s.step === 12).summary;
+            const wuxing = data.steps.find(s => s.step === 8);
+            const yongshen = data.steps.find(s => s.step === 10);
+            const liunian = data.steps.find(s => s.step === 11);
+            const pattern = data.steps.find(s => s.step === 9);
+            const grid = document.getElementById('summaryGrid');
+            grid.innerHTML = `
+                <div class="summary-item"><span class="label">日主</span><span class="value">${summary.日主}</span></div>
+                <div class="summary-item"><span class="label">日柱</span><span class="value">${summary.日柱}</span></div>
+                <div class="summary-item"><span class="label">月令</span><span class="value">${summary.月令}</span></div>
+                <div class="summary-item"><span class="label">格局</span><span class="value">${summary.格局}</span></div>
+                <div class="summary-item"><span class="label">日主强弱</span><span class="value">${summary.日主强弱}</span></div>
+                <div class="summary-item"><span class="label">用神</span><span class="value highlight">${summary.用神}</span></div>
+                <div class="summary-item"><span class="label">喜神</span><span class="value">${summary.喜神 || '-'}</span></div>
+                <div class="summary-item"><span class="label">忌神</span><span class="value">${summary.忌神 || '-'}</span></div>
+                <div class="summary-item"><span class="label">当前大运</span><span class="value">${summary.当前大运}</span></div>
+                <div class="summary-item"><span class="label">流年${liunian.current_year}</span><span class="value">${liunian.liunian.ganzhi} (${liunian.overall_judgment})</span></div>
+            `;
+
+            const interp = document.getElementById('summaryInterpretation');
+            const syn = yongshen.synthesis;
+            interp.innerHTML = `
+                <h3>综合解读</h3>
+                <ul>
+                    <li><strong>日主 ${summary.日主}（正五行：${wuxing.day_element}）</strong>：${wuxing.strength_reason}
+                        <span class="source-tag">来源：滴天髓·体象</span></li>
+                    <li><strong>月令 ${summary.月令}</strong>：月支为提纲，决定五行当令旺衰与格局方向。
+                        <span class="source-tag">来源：三命通会·论月柱</span></li>
+                    <li><strong>格局 ${summary.格局}</strong>：${pattern.description}
+                        <span class="source-tag">来源：${pattern.source}</span></li>
+                    <li><strong>用神</strong>：${syn.综合建议}
+                        <span class="source-tag">来源：${yongshen.components['穷通宝鉴'].出处}；${yongshen.components['滴天髓扶抑'].出处}；${yongshen.components['格局用神'].出处}</span></li>
+                    <li><strong>当前大运 ${summary.当前大运}</strong>：命主现年 ${liunian.age} 岁，大运十年基调为${liunian.dayun_judgment}。
+                        <span class="source-tag">来源：三命通会·论大运</span></li>
+                    <li><strong>流年 ${liunian.current_year}（${liunian.liunian.ganzhi}）</strong>：${liunian.comment}
+                        <span class="source-tag">来源：三命通会·论大运流年</span></li>
+                </ul>
+                <p class="step-note">说明：本程序分析主要使用<strong>正五行</strong>（天干地支本身的五行属性）判断十神、强弱与用神；<strong>纳音五行</strong>（如丙午天河水）仅作辅助参考，二者不可混为一谈。来源：三命通会·论纳音取象。</p>
+            `;
+        }
+
+        function renderPillars(data) {
+            const step2 = data.steps.find(s => s.step === 2);
+            const step4 = data.steps.find(s => s.step === 4);
+            const table = document.getElementById('pillarsTable');
+            const labels = { year: '年柱', month: '月柱', day: '日柱', time: '时柱' };
+            let html = '<p class="step-note">说明：天干、地支的五行属于<strong>正五行</strong>，是子平命理判断十神、旺衰、用神的核心依据；纳音五行属于<strong>纳音五行</strong>（六十甲子纳音），仅作辅助参考。例如丙午：天干丙属火、地支午属火，但纳音为<strong>天河水</strong>。二者并行不悖。</p><table><thead><tr><th>柱位</th><th>天干<br><small>正五行</small></th><th>地支<br><small>正五行</small></th><th>纳音<br><small>纳音五行</small></th><th>天干十神</th><th>地支藏干十神</th></tr></thead><tbody>';
+            for (const pos of ['year', 'month', 'day', 'time']) {
+                const p = step2.pillars[pos];
+                const det = step2.details[pos];
+                const ts = step4.details[pos];
+                const hiddenTs = step4.hidden_tenshen[pos].map(h => `${h.藏干}(${h.十神})`).join('，');
+                html += `<tr>
+                    <td><strong>${labels[pos]}</strong></td>
+                    <td>${p[0]}<br><small>${det.天干属性.五行}</small></td>
+                    <td>${p[1]}<br><small>${det.地支属性.五行}</small></td>
+                    <td>${det.纳音}</td>
+                    <td>${ts.十神}</td>
+                    <td>${hiddenTs}</td>
+                </tr>`;
+            }
+            html += '</tbody></table>';
+            table.innerHTML = html;
+
+            const interp = document.getElementById('pillarsInterpretation');
+            let interpHtml = '<h3>四柱解读</h3><ul>';
+            for (const pos of ['year', 'month', 'day', 'time']) {
+                const info = PILLAR_MEANINGS[pos];
+                interpHtml += `<li><strong>${info.title} ${step2.pillars[pos]}</strong>：${info.meaning}
+                    <span class="source-tag">来源：${info.source}</span></li>`;
+            }
+            interpHtml += '</ul>';
+            interp.innerHTML = interpHtml;
+        }
+
+        function renderSteps(data) {
+            const container = document.getElementById('stepsList');
+            container.innerHTML = '';
+            const liunianStep = data.steps.find(s => s.step === 11);
+            const currentAge = liunianStep ? liunianStep.age : null;
+            for (const step of data.steps) {
+                if (step.step === 12) continue;
+                const card = document.createElement('div');
+                card.className = 'step-card';
+                const bodyHtml = getStepBody(step, currentAge);
+                card.innerHTML = `
+                    <div class="step-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="step-title">
+                            <span class="step-number">步骤 ${step.step}</span>
+                            <span class="step-name">${step.name}</span>
+                        </div>
+                        <div class="step-source">来源：${step.source}</div>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="step-body">
+                        ${bodyHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            }
+        }
+
+        function getStepBody(step, currentAge) {
+            switch (step.step) {
+                case 1: return renderStep1(step);
+                case 2: return renderStep2(step);
+                case 3: return renderStep3(step, currentAge);
+                case 4: return renderStep4(step);
+                case 5: return renderStep5(step);
+                case 6: return renderStep6(step);
+                case 7: return renderStep7(step);
+                case 8: return renderStep8(step);
+                case 9: return renderStep9(step);
+                case 10: return renderStep10(step);
+                case 11: return renderStep11(step);
+                default: return `<pre>${JSON.stringify(step, null, 2)}</pre>`;
+            }
+        }
+
+        function renderStep1(step) {
+            const o = step.output;
+            const clockInput = step.input['公历(钟表时间)'];
+            const corrected = currentResult.input.corrected_birth;
+            const c = step.历法校正;
+            let corrHtml = '';
+            if (c) {
+                const dst = c.中国夏令时 || {};
+                corrHtml = `
+                    <div class="correction-box">
+                        <h4>历法校正透明化（真太阳时 / 夏令时 / 晚子时口径）</h4>
+                        <p>真太阳时校正：<strong>${c.是否校正真太阳时 ? '已启用' : '未启用（未填经度，按钟表时间）'}</strong></p>
+                        ${c.是否校正真太阳时 ? `
+                            <p>经度修正 <strong>${c['经度修正(分)']}</strong> 分 ＋ 均时差 <strong>${c['均时差(分)']}</strong> 分 ＝ 总修正 <strong>${c['总修正(分)']}</strong> 分</p>
+                            <p>排盘日偏移：<strong>${c['排盘日偏移']}</strong> 天（按真太阳时重排四柱）</p>
+                            <p>晚子时口径：<strong>${c['晚子时口径']}</strong></p>
+                        ` : ''}
+                        ${dst.is_dst ? `<p class="dst-warning">⚠ 该日期处于中国夏令时（${dst.range}）。若您填写的是夏令时钟表读数，请自行减 1 小时后再排盘。</p>` : ''}
+                    </div>
+                `;
+            }
+            return `
+                <p><strong>输入（钟表时间）：</strong>${clockInput}</p>
+                ${corrected && corrected !== clockInput ? `<p><strong>校正后排盘时间（真太阳时）：</strong><span class="highlight">${corrected}</span></p>` : ''}
+                <p><strong>转换结果：</strong>${o.八字}</p>
+                <p><strong>农历：</strong>${o.农历}</p>
+                <p><strong>生肖：</strong>${o.生肖}</p>
+                <p><strong>节气：</strong>上一节气 ${o.节气信息.上一节气}，下一节气 ${o.节气信息.下一节气}</p>
+                <p class="step-note">说明：以公历输入，按节气划分月份，转换为干支历。${o.节气信息.当前节气 !== '无' ? '出生时刻处于' + o.节气信息.当前节气 + '期间。' : ''}</p>
+                ${corrHtml}
+                <div class="raw-data-toggle" onclick="this.nextElementSibling.classList.toggle('hidden')">查看原始数据 ▼</div>
+                <pre class="hidden">${JSON.stringify(step, null, 2)}</pre>
+            `;
+        }
+
+        function renderStep2(step) {
+            return `
+                <p><strong>八字：</strong>${step.baizi}</p>
+                <p><strong>纳音：</strong>${step.nayin}</p>
+                <p class="step-note">说明：四柱由年、月、日、时天干地支组成。天干地支本身的五行称为<strong>正五行</strong>，是判断十神、旺衰、用神的依据；括号内或单独列出的“纳音”属于<strong>纳音五行</strong>（六十甲子纳音），仅作辅助参考。如丙午：正五行为火，纳音为<strong>天河水</strong>。</p>
+                <div class="raw-data-toggle" onclick="this.nextElementSibling.classList.toggle('hidden')">查看原始数据 ▼</div>
+                <pre class="hidden">${JSON.stringify(step.details, null, 2)}</pre>
+            `;
+        }
+
+        function renderStep3(step, currentAge) {
+            const timeline = step.dayun.map(dy => `
+                <div class="dayun-item ${currentAge !== null && dy.start_age <= currentAge && currentAge <= dy.end_age ? 'active' : ''}">
+                    <div class="dayun-age">${dy.start_age}-${dy.end_age}岁</div>
+                    <div class="dayun-gz">${dy.ganzhi}</div>
+                </div>
+            `).join('');
+            return `
+                <p><strong>大运方向：</strong>${step.direction}（${step.direction_reason}）</p>
+                <p><strong>起运：</strong>出生距${step.jieqi.reference}约 ${step.jieqi.days_to_jieqi} 天，约 ${step.jieqi.start_age} 岁起运。</p>
+                <div class="dayun-timeline">${timeline}</div>
+                <p class="step-note">说明：大运每十年一柱，顺逆由年干阴阳与性别决定，是人生阶段运势的框架。</p>
+                <div class="raw-data-toggle" onclick="this.nextElementSibling.classList.toggle('hidden')">查看原始数据 ▼</div>
+                <pre class="hidden">${JSON.stringify(step, null, 2)}</pre>
+            `;
+        }
+
+        function renderStep4(step) {
+            const labels = { year: '年干', month: '月干', day: '日干（日主）', time: '时干' };
+            let html = '<table class="step-table"><thead><tr><th>位置</th><th>天干</th><th>十神</th><th>心性释义</th></tr></thead><tbody>';
+            for (const pos of ['year', 'month', 'day', 'time']) {
+                const d = step.details[pos];
+                const meaning = TEN_GOD_MEANINGS[d.十神] || '';
+                html += `<tr><td>${labels[pos]}</td><td>${d.天干}</td><td>${d.十神}</td><td>${meaning}</td></tr>`;
+            }
+            html += '</tbody></table>';
+            html += '<h4>地支藏干十神</h4>';
+            for (const pos of ['year', 'month', 'day', 'time']) {
+                const hidden = step.hidden_tenshen[pos].map(h => `${h.藏干}(${h.十神})`).join('，');
+                html += `<p><strong>${labels[pos].replace('干', '支')}：</strong>${hidden}</p>`;
+            }
+            html += '<p class="step-note">说明：十神以日干为我，按生克关系与阴阳差异命名，是解读六亲、事业、性格的核心符号。</p>';
+            return html;
+        }
+
+        function renderStep5(step) {
+            let html = '<table class="step-table"><thead><tr><th>地支</th><th>藏干</th><th>五行</th><th>权重</th></tr></thead><tbody>';
+            for (const pos of ['year', 'month', 'day', 'time']) {
+                const h = step.hidden[pos];
+                h.藏干.forEach((item, idx) => {
+                    html += `<tr><td>${idx === 0 ? h.地支 : ''}</td><td>${item.干}</td><td>${item.五行}</td><td>${item.权重}</td></tr>`;
+                });
+            }
+            html += '</tbody></table>';
+            html += '<p class="step-note">说明：地支藏干反映地支内部能量分布，是五行强弱计算与取用神的重要依据。<strong>注：藏干权重为程序化的经验近似（本气 0.6、中气 0.3、余气 0.1 或单气 1.0），古籍原无精确数字，仅作相对比较。</strong></p>';
+            return html;
+        }
+
+        function renderStep6(step) {
+            if (!step.relations.length) return '<p>本局未发现明显刑冲合害关系。</p>';
+            let html = '<div class="relation-list">';
+            for (const r of step.relations) {
+                html += `<div class="relation-item">
+                    <span class="relation-type">${r.type}${r.name ? ' · ' + r.name : ''}</span>
+                    <span class="relation-detail">${r.pair ? r.pair.join(' 与 ') : r.positions.join('、')}</span>
+                    <span class="relation-meaning">${r.meaning}</span>
+                </div>`;
+            }
+            html += '</div>';
+            html += '<p class="step-note">说明：地支关系影响命局稳定性、人际与合作、冲突与变动。</p>';
+            return html;
+        }
+
+        function renderStep7(step) {
+            if (!step.shensha.length) return '<p>本局未发现主要神煞。</p>';
+            let html = '<div class="shensha-list">';
+            for (const s of step.shensha) {
+                html += `<div class="shensha-item">
+                    <span class="shensha-name">${s.name}</span>
+                    <span class="shensha-rule">${s.rule}</span>
+                    <span class="shensha-matched">命中：${s.matched.join('、')}</span>
+                </div>`;
+            }
+            html += '</div>';
+            html += '<p class="step-note">说明：神煞为辅助参考，主看贵人、桃花、驿马、文昌等对人生各领域的影响。</p>';
+            return html;
+        }
+
+        function renderStep8(step) {
+            const maxScore = Math.max(...Object.values(step.scores));
+            let html = `<p><strong>月令季节：</strong>${step.season}，五行旺衰状态如下：</p>`;
+            html += '<div class="wuxing-bars">';
+            for (const e of ['木', '火', '土', '金', '水']) {
+                const pct = (step.scores[e] / (maxScore || 1) * 100).toFixed(1);
+                html += `<div class="wuxing-bar">
+                    <span class="wuxing-label">${e}</span>
+                    <div class="wuxing-track"><div class="wuxing-fill" style="width:${pct}%; background:${ELEMENT_COLORS[e]}"></div></div>
+                    <span class="wuxing-score">${step.scores[e]}分（${step.wangshuai[e]}）</span>
+                </div>`;
+            }
+            html += '</div>';
+            html += `<p><strong>日主 ${step.day_element} 强弱：</strong>${step.strength}（${step.day_score}分）。</p>`;
+            html += `<p><strong>判断理由：</strong>${step.strength_reason}</p>`;
+            html += `<p><strong>生助 vs 克泄耗：</strong>生助日主 ${step.support_vs_consume['生助日主']}分，克泄耗日主 ${step.support_vs_consume['克泄耗日主']}分。</p>`;
+            html += '<p class="step-note">说明：五行强弱以天干地支本气、藏干权重及月令旺衰综合计算，是扶抑取用神的基础。<strong>注：此为程序化的简化打分模型，未考虑天干五合、地支合化、刑冲对力量的转化与损耗，结果仅供辅助参考。</strong></p>';
+            return html;
+        }
+
+        function renderStep9(step) {
+            return `
+                <p><strong>判定格局：</strong>${step.pattern}</p>
+                <p><strong>格局含义：</strong>${step.description}</p>
+                <p><strong>判定理由：</strong>月支为 ${step.reason.月支}，月支本气藏干 ${step.reason.月支本气藏干}，对应十神为 ${step.reason.月支本气十神}。
+                    ${step.reason.透出天干.length ? '月支藏干透出天干：' + step.reason.透出天干.map(t => t.位置 + t.天干).join('、') : '月支藏干未透出天干，故以月支本气定格。'}</p>
+                <p class="step-note">说明：格局以月令提纲为主，参看透干，决定命局主线与喜忌方向。<strong>注：本程序采用常见的"月支透干取格"法（月干优先），实际命理还需考虑人元司令、成格破格、特殊格局等复杂情形。</strong></p>
+            `;
+        }
+
+        function renderStep10(step) {
+            const qt = step.components['穷通宝鉴'];
+            const fy = step.components['滴天髓扶抑'];
+            const gj = step.components['格局用神'];
+            const syn = step.synthesis;
+            return `
+                <div class="yongshen-sources">
+                    <div class="yongshen-source">
+                        <h4>一、穷通宝鉴（调候用神）</h4>
+                        <p>用神：${qt.用神 || '未指定'}（${qt.用神五行 || '-'}）；喜神：${qt.喜神 || '未指定'}；忌神：${qt.忌神 || '未指定'}</p>
+                        <p>${qt.说明}</p>
+                        <span class="source-tag">来源：${qt.出处}</span>
+                    </div>
+                    <div class="yongshen-source">
+                        <h4>二、滴天髓（扶抑用神）</h4>
+                        <p>${fy.说明}。喜用五行：${fy.喜用五行.join('、') || fy.扶抑用神}。</p>
+                        <p>扶抑用神：${fy.扶抑用神}</p>
+                        <span class="source-tag">来源：${fy.出处}</span>
+                    </div>
+                    <div class="yongshen-source">
+                        <h4>三、格局用神</h4>
+                        <p>格局为 ${gj.格局}，格局用神方向：${gj.格局用神}。</p>
+                        <p>${gj.说明}</p>
+                        <span class="source-tag">来源：${gj.出处}</span>
+                    </div>
+                </div>
+                <div class="yongshen-synthesis">
+                    <h4>合参分析</h4>
+                    <p>调候用神：${syn.调候用神 || '无'}</p>
+                    <p>扶抑用神：${syn.扶抑用神}</p>
+                    <p>格局用神：${syn.格局用神}</p>
+                    <p>调候与扶抑是否一致：${syn.是否同向.调候与扶抑一致 ? '是' : '否'}</p>
+                    <p>格局与扶抑是否一致：${syn.是否同向.格局与扶抑一致 ? '是' : '否'}</p>
+                    <p><strong>${syn.综合建议}</strong></p>
+                </div>
+                <div class="yongshen-final">
+                    <strong>综合结论：</strong>用神取 <span class="highlight">${step.final_yong}</span>，喜神 ${step.final_xi || '-'}，忌神 ${step.final_ji || '-'}。
+                </div>
+                <p class="step-note">说明：用神是平衡命局、趋吉避凶的关键。本程序三源合参，先列明三套体系，再给出综合建议。<strong>注：穷通宝鉴表为古籍核心规则的精简版；实际取用神还需结合全局组合、干支位置、大运走势等综合判断。</strong></p>
+            `;
+        }
+
+        function renderStep11(step) {
+            const relationText = step.liunian_relations && step.liunian_relations.length
+                ? '流年地支关系：' + step.liunian_relations.join('、')
+                : '流年地支与原局无特殊冲合刑害。';
+            return `
+                <p><strong>当前年份：</strong>${step.current_year}，命主年龄 ${step.age} 岁。</p>
+                <p><strong>当前大运：</strong>${step.current_dayun.ganzhi}（${step.current_dayun.start_age}-${step.current_dayun.end_age}岁）— 十年基调：<span class="judgment-${step.dayun_judgment}">${step.dayun_judgment}</span>，${step.dayun_comment}</p>
+                <p><strong>流年干支：</strong>${step.liunian.ganzhi} — 流年天干：<span class="judgment-${step.liunian_judgment}">${step.liunian_judgment}</span>，${step.liunian_comment}</p>
+                <p><strong>流年地支关系：</strong>${relationText}</p>
+                <p><strong>综合判断：</strong><span class="judgment-${step.overall_judgment}">${step.overall_judgment}</span> — ${step.comment}</p>
+                <p class="step-note">说明：大运是人生十年阶段的运势框架，流年是每年的具体触发。吉凶需结合用神喜忌综合判断。<strong>注：起运岁数按"3天折1岁"经验法计算；流年吉凶仅为天干五行与用神的简化对比，详细断事需结合大运干支、原局组合及具体十神。</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
