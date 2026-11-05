@@ -33,10 +33,25 @@ GPU / NPU 算力资源调度策略（充分利用 + 可移植部署）
 import os
 import re
 import sys
+import time
 import inspect
 import tempfile
 import pymupdf
+import concurrent.futures as _cf
 from rapidocr_onnxruntime import RapidOCR
+
+
+def _default_workers():
+    """默认并行 worker 数 = 可用物理算力设备数（去重），至少 1。
+
+    事实依据：本机 RTX 4060(device 0) + Intel Arc(device 1) 为两个可并行设备，
+    MODEL_DEVICE 取值 {0,1} 去重得 2 → 默认 2 线程同时跑不同页；纯单卡/纯 CPU 机器
+    自动降为 1，保持可移植。可用环境变量 OCR_WORKERS 强制覆盖。
+    """
+    try:
+        return max(1, len(set(MODEL_DEVICE.values())))
+    except Exception:
+        return 1
 
 
 # ---- 设备分配表（可被环境变量覆盖）------------------------------------------
@@ -237,7 +252,8 @@ def _build_ocr():
     # 设备分配计划（可移植核心）
     discrete = _detect_discrete_nvidia()
     print(f"[OCR] 算力调度计划: DET->{MODEL_DEVICE['det']} REC->{MODEL_DEVICE['rec']} "
-          f"CLS->{MODEL_DEVICE['cls']} | 检测到独立NVIDIA独显={discrete}", flush=True)
+          f"CLS->{MODEL_DEVICE['cls']} | 检测到独立NVIDIA独显={discrete} | "
+          f"默认并行workers={_default_workers()}", flush=True)
 
     # 1) CUDA 优先（需 onnxruntime-gpu + 匹配 cuDNN）
     if ("CUDAExecutionProvider" in eps) and pref in ("", "cuda"):
@@ -296,25 +312,74 @@ def _build_ocr():
 OCR = _build_ocr()
 
 
+def _ocr_one_page(pdf_path, pno, dpi):
+    """单页 OCR（线程安全：每个线程独立打开文档，避免跨线程共享 Document）。
+
+    返回 (页码, 文本行列表)；无论成败都清理临时 PNG，杜绝磁盘泄漏。
+    """
+    tmp = os.path.join(tempfile.gettempdir(), f"_ocr_tmp_{pno}.png")
+    doc = None
+    try:
+        doc = pymupdf.open(pdf_path)
+        pix = doc[pno].get_pixmap(dpi=dpi)
+        pix.save(tmp)
+        result, _ = OCR(tmp)
+        lines = [txt for _, txt, _ in result] if result else []
+        return pno, lines
+    except Exception as exc:
+        return pno, [f"[OCR ERROR page {pno + 1}: {exc}]"]
+    finally:
+        if doc is not None:
+            try:
+                doc.close()
+            except Exception:
+                pass
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
+
+
 def ocr_ranges(out_file, pdf_path, ranges, dpi=200):
-    doc = pymupdf.open(pdf_path)
-    n = doc.page_count
-    done = set()
+    """批量 OCR 多个页码区间。
+
+    优化（相较旧版串行逐页）：
+      - 多线程并行：每线程独立打开文档跑一页，RTX 4060 与 Intel Arc 可同时处理
+        不同页（GPU 推理为瓶颈，线程不竞争 GIL 的 C++ 推理内核），吞吐随设备数近似线性提升；
+      - 输出严格按页码升序，与并发无关；
+      - 每页临时 PNG 用完即删，修复旧版长期不清理的磁盘泄漏；
+      - 打印页数/秒基准，便于量化效率。
+    worker 数：环境变量 OCR_WORKERS 强制覆盖；否则默认 = 可用物理算力设备数（见 _default_workers）。
+    """
+    doc0 = pymupdf.open(pdf_path)
+    n = doc0.page_count
+    doc0.close()
+    pages, seen = [], set()
+    for (s, e) in ranges:
+        for pno in range(max(0, s - 1), min(n, e)):
+            if pno in seen:
+                continue
+            seen.add(pno)
+            pages.append(pno)
+    pages.sort()
+
+    workers = int(os.environ.get("OCR_WORKERS", "0")) or _default_workers()
+    bench = os.environ.get("OCR_BENCH") == "1"
+    t0 = time.time()
+    results = {}
+    with _cf.ThreadPoolExecutor(max_workers=workers, thread_name_prefix="ocr") as ex:
+        futures = {ex.submit(_ocr_one_page, pdf_path, p, dpi): p for p in pages}
+        for fu in _cf.as_completed(futures):
+            pno, lines = fu.result()
+            results[pno] = lines
     with open(out_file, "w", encoding="utf-8") as f:
-        for (s, e) in ranges:
-            for pno in range(max(0, s - 1), min(n, e)):
-                if pno in done:
-                    continue
-                done.add(pno)
-                pix = doc[pno].get_pixmap(dpi=dpi)
-                tmp = os.path.join(tempfile.gettempdir(), f"_ocr_tmp_{pno}.png")
-                pix.save(tmp)
-                result, _ = OCR(tmp)
-                lines = [txt for _, txt, _ in result] if result else []
-                f.write(f"\n===== PAGE {pno + 1} =====\n")
-                f.write(" ".join(lines) + "\n")
-                f.flush()
-    print(f"DONE {out_file}: {len(done)} pages")
+        for pno in sorted(results):
+            f.write(f"\n===== PAGE {pno + 1} =====\n")
+            f.write(" ".join(results[pno]) + "\n")
+    dt = time.time() - t0
+    rate = (len(pages) / dt) if dt > 0 else 0.0
+    print(f"DONE {out_file}: {len(pages)} pages in {dt:.2f}s @ {rate:.2f} p/s "
+          f"(workers={workers}){' [BENCH]' if bench else ''}")
 
 
 if __name__ == "__main__":

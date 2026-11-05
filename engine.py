@@ -19,7 +19,7 @@ from data import (
     SHENG_XIAO, GAN_HE, GAN_HE_ELEMENT, RELATION_MEANINGS,
     TEN_GOD_MEANINGS, LIUNIAN_TEMPLATES, MONTH_ZHI_TO_SOLAR_MONTH,
     ELEMENT_TO_STEMS, YONGSHEN_PRIORITY, NAYIN, DITIANSUI_TIXIANG,
-    DITIANSUI_XINGXIANG, ZIPING_GE, ziping_ge_category, SHENFENG
+    DITIANSUI_XINGXIANG, ZIPING_GE, ziping_ge_category, SHENFENG, SANMINGTONGHUI
 )
 import chengu
 
@@ -1098,7 +1098,8 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
                          shensha: Dict, relations: Dict,
                          chengu_result: Dict = None, year_pillar: str = "",
                          day_pillar: str = "", year_nayin: str = "",
-                         day_nayin: str = "") -> Dict:
+                         day_nayin: str = "", pillars: Dict = None,
+                         gender: str = "男") -> Dict:
     """
     生成「大白话」解读：用通俗语言解释专业术语，并标注古籍出处。
     让不懂命理的人也能看懂综合报告。
@@ -1249,6 +1250,53 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         sections.append({"term": "袁天罡称骨", "plain": chengu_result.get("song", "（称骨数据暂不全）"),
                          "source": "袁天罡称骨歌"})
 
+    # —— 三命通会·寄生十二宫（十二长生）——
+    if pillars:
+        cs = SANMINGTONGHUI["CHANGSHENG_12"]
+        _zhi_order = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+        _dg = day_gan
+        _start = cs["changsheng_zhi"].get(_dg)
+        if _start:
+            _dir = cs["yinyang"].get(_dg, 1)
+
+            def _state(zhi):
+                i0 = _zhi_order.index(_start)
+                i = _zhi_order.index(zhi)
+                dist = (i - i0) % 12 if _dir == 1 else (i0 - i) % 12
+                return cs["stages"][dist]
+
+            _pz = []
+            for _k in ("year", "month", "day", "time"):
+                _g = pillars.get(_k, "")
+                if isinstance(_g, str) and len(_g) == 2:
+                    _label = {"year": "年柱", "month": "月柱", "day": "日支", "time": "时柱"}[_k]
+                    _pz.append(f"{_label}「{_g[1]}」为{_state(_g[1])}")
+            _cs_plain = (
+                f"《三命通会·卷二》立『寄生十二宫』专说，把五行之气在十二地支里的生命节律分成十二阶段："
+                f"长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝、胎、养，循环无端。"
+                f"推法以日干为主：您的日干是「{_dg}」，长生在「{_start}」（长生诀：{cs['koujue']}），"
+                f"{'阳干顺行' if _dir == 1 else '阴干逆行'}。\n据此看您四柱地支所处的气数阶段——"
+                f"{'；'.join(_pz)}。"
+                f"\n十二宫中长生、临官(禄)、帝旺为『旺相』，好比人生当打之年；墓、绝、胎、养为收藏孕育，并非凶险。"
+                f"古诀云『生旺太过宜制伏，死绝不及宜生扶』，重在识其通变，不可执一而论。"
+            )
+            sections.append({"term": "您的生命节律：十二长生（三命通会·寄生十二宫）",
+                             "plain": _cs_plain, "source": cs["source"]})
+
+    # —— 三命通会·论六亲 ——
+    _lq = SANMINGTONGHUI["LIUQIN"]
+    _side = _lq["male"] if gender == "男" else _lq["female"]
+    _lq_plain = (
+        f"《三命通会·卷七·论六亲》以日干（您是「{day_gan}」）为中心，把五行生克转成亲人关系："
+        f"克我者官杀、生我者印星、我生者食伤、我克者财星、同我者比劫，再分正偏对应六亲。\n"
+        f"您为{gender}命，对应如下——"
+        + "；".join([f"{k}：{v}" for k, v in _side.items() if k != "source"])
+        + f"。\n推六亲须『星宫同参』：十神为『星』主关系好坏，四柱位置（年祖上、月父母兄弟、"
+          f"日妻妾己身、时子孙）为『宫』主条件优劣，二者合看方准。"
+    )
+    sections.append({"term": "您的六亲与人际（三命通会·论六亲）", "plain": _lq_plain,
+                     "source": _lq["source"]})
+
     overview = (
         f"简单来说：您是「{day_gan}」日主（五行属{day_element}），{strength}；"
         f"生于「{month_zhi}」月令，构成「{pattern['pattern']}」格局；"
@@ -1274,7 +1322,8 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
 
 def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
                   shensha: Dict, wuxing: Dict, pattern: Dict, yongshen: Dict,
-                  liunian: Dict, birth_month: int = None, birth_day: int = None) -> Dict:
+                  liunian: Dict, birth_month: int = None, birth_day: int = None,
+                  gender: str = "男") -> Dict:
     """
     综合各步结果，生成结构化报告。
     """
@@ -1358,6 +1407,8 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
         day_pillar=pillars["day"],
         year_nayin=year_nayin,
         day_nayin=day_nayin,
+        pillars=pillars,
+        gender=gender,
     )
     # 称骨结果一并附于报告（API / JSON 可取用）
     report["chengu"] = chengu_result
@@ -1416,7 +1467,7 @@ def calculate_bazi(year: int, month: int, day: int, hour: int, minute: int = 0,
     s10 = step10_yongshen(s4["day_stem"], month_zhi, s8, s9)
     s11 = step11_liunian(s3, current_year, year, s2["pillars"], s8, s10)
     s12 = step12_report(s2["pillars"], s3, s4, s6, s7, s8, s9, s10, s11,
-                        birth_month=cm, birth_day=cd)
+                        birth_month=cm, birth_day=cd, gender=gender)
 
     return {
         "input": {
