@@ -18,8 +18,10 @@ from data import (
     QIONGTONG_RULES, PATTERN_RULES, LU_POSITION, DIWANG_POSITION,
     SHENG_XIAO, GAN_HE, GAN_HE_ELEMENT, RELATION_MEANINGS,
     TEN_GOD_MEANINGS, LIUNIAN_TEMPLATES, MONTH_ZHI_TO_SOLAR_MONTH,
-    ELEMENT_TO_STEMS, YONGSHEN_PRIORITY
+    ELEMENT_TO_STEMS, YONGSHEN_PRIORITY, NAYIN, DITIANSUI_TIXIANG,
+    DITIANSUI_XINGXIANG, ZIPING_GE, ziping_ge_category, SHENFENG
 )
+import chengu
 
 # ============================================================
 # 工具函数
@@ -1093,7 +1095,10 @@ def step11_liunian(dayun_result: Dict, current_year: int, birth_year: int,
 
 def build_plain_language(day_gan: str, day_element: str, strength: str, month_zhi: str,
                          pattern: Dict, yongshen: Dict, liunian: Dict,
-                         shensha: Dict, relations: Dict) -> Dict:
+                         shensha: Dict, relations: Dict,
+                         chengu_result: Dict = None, year_pillar: str = "",
+                         day_pillar: str = "", year_nayin: str = "",
+                         day_nayin: str = "") -> Dict:
     """
     生成「大白话」解读：用通俗语言解释专业术语，并标注古籍出处。
     让不懂命理的人也能看懂综合报告。
@@ -1117,12 +1122,38 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
             f"适应力强、可塑性好，喜忌要看具体大运流年再定。"
         )
 
+    # 引《滴天髓·论十天干》形象描摹日主性情（事实依据：data.DITIANSUI_XINGXIANG）
+    _xg = DITIANSUI_XINGXIANG.get(day_gan, "")
+    if _xg:
+        strength_plain += (
+            f"\n\n古书《滴天髓·论十天干》对「{day_gan}」有一番形象的描摹：「{_xg}」。"
+            f"这把{day_element}的天然禀赋与脾气写活了——{day_gan}如{day_element}之体，"
+            f"有其专属的喜与忌。您{strength}的判定，正可从这番古诀里读出底气从何而来、又该如何顺势而为。"
+        )
+
+    # 神峰通考·病药说 的病药判定（事实依据：data.SHENFENG），供下方格局/用神段落复用
+    if strength in ("身弱", "中和偏弱"):
+        _bing = "您身弱为『病』，宜取印星、比劫来『扶』，这便是治病的『药』。"
+    elif strength in ("身旺", "中和偏旺"):
+        _bing = "您身强（或偏旺）为『病』，宜取克、泄、耗来『抑』，这便是治病的『药』。"
+    else:
+        _bing = "您中和，病药之象不显，宜随大运流年再辨旺衰。"
+
     # —— 月令与格局（通俗）——
     pattern_plain = (
         f"八字里的“格局”，相当于给您的命局定一个基本类型与气质倾向。它主要看您出生的"
         f"“月令”（出生那个月的地支，这里是「{month_zhi}」）。月令就像当季的气候，"
         f"决定哪种五行最旺，是定格局的“提纲”。您构成「{pattern['pattern']}」：{pattern['description']}"
     )
+    # 引《子平真诠·论用神》格局顺逆（事实依据：data.ZIPING_GE / ziping_ge_category）
+    _ge = ziping_ge_category(pattern.get("pattern", ""))
+    if _ge:
+        pattern_plain += (
+            f"\n\n《子平真诠·论用神》把格局分作『善格』与『不善格』：您这「{pattern['pattern']}」属"
+            f"「{_ge['category']}」中的「{_ge['type']}」，论其“取用之法”当『{_ge['policy']}』——{_ge['note']}"
+            f"（注：此处的『顺用/逆用』是《子平真诠》对各格“如何取用神”的特定说法，指顺其性而"
+            f"生护、或逆其性而制约；与上方“格局用神与扶抑方向一致”所说的“顺”是不同层面的含义，并非矛盾。）"
+        )
 
     # —— 用神喜忌（通俗）——
     fy = yongshen.get("final_yong") or ""
@@ -1138,6 +1169,11 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
     )
     if syn.get("综合建议"):
         yong_plain += f"\n综合建议：{syn['综合建议']}"
+    # 引《神峰通考·病药说》以药喻用神（事实依据：data.SHENFENG）
+    yong_plain += (
+        f"\n\n若用明代张楠《神峰通考·病药说》来打比方：命局中『不妥当之处』便是『病』，"
+        f"所取用神便是治病的『药』。{_bing}"
+    )
 
     # —— 大运流年（通俗）——
     age = liunian.get("age")
@@ -1186,6 +1222,33 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         {"term": "命局里的特殊信号", "plain": signal_plain, "source": "三命通会·论神煞 / 论刑冲合害"},
     ]
 
+    # —— 纳音五行（渊海子平 / 三命通会·纳音）——
+    if year_nayin or day_nayin:
+        nayin_plain = (
+            f"纳音五行，是六十甲子每对干支被赋予的另一个“五行别称”，渊海子平与三命通会同载此表，与“正五行”并行不悖。"
+            f"您年柱「{year_pillar}」的纳音为「{year_nayin or '—'}」，日柱「{day_pillar}」的纳音为「{day_nayin or '—'}」。"
+            f"打个比方：正五行是您的“本色”，纳音是您的“雅号”，两者合看，命局意象更丰满生动。"
+        )
+        sections.append({"term": "您的纳音五行（年命 / 日柱）", "plain": nayin_plain,
+                         "source": "渊海子平·纳音；三命通会·纳音"})
+
+    # —— 袁天罡称骨（事实依据：chengu.calculate_chengu / 袁天罡称骨歌）——
+    if chengu_result and chengu_result.get("total_str"):
+        cg = chengu_result
+        chengu_plain = (
+            f"唐代星命家袁天罡留下一部《称骨歌》，把人的出生年、月、日、时各配一个“骨重”（以钱计，十钱为一两），"
+            f"四柱相加便是您一生的“总重量”。您的四柱骨重分别是——年柱 {cg['year_w']} 钱、月柱 {cg['month_w']} 钱、"
+            f"日柱 {cg['day_w']} 钱、时柱 {cg['hour_w']} 钱，合计 {cg['total_str']}。"
+            f"\n袁天罡据此批曰：「{cg['song']}」"
+            f"\n这便是传统称骨法对您命格气质的一句古批。需说明：称骨与八字是两套并行的古老算法，"
+            f"一个称“重量”、一个论“五行生克”，可互为映照；均属古人的经验总结，宜以文化视角欣赏，不必奉为定论。"
+        )
+        sections.append({"term": "袁天罡称骨：您命中几两几钱", "plain": chengu_plain,
+                         "source": cg.get("source", "袁天罡称骨歌")})
+    elif chengu_result:
+        sections.append({"term": "袁天罡称骨", "plain": chengu_result.get("song", "（称骨数据暂不全）"),
+                         "source": "袁天罡称骨歌"})
+
     overview = (
         f"简单来说：您是「{day_gan}」日主（五行属{day_element}），{strength}；"
         f"生于「{month_zhi}」月令，构成「{pattern['pattern']}」格局；"
@@ -1193,6 +1256,10 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         f"现年约 {age} 岁，行「{dayun_gz}」大运，今年（{liunian.get('current_year')}）流年「{ly}」整体{ly_j}。"
         f"下面分条用大白话给您讲清楚每个术语是什么意思。"
     )
+    if chengu_result and chengu_result.get("total_str"):
+        overview += (
+            f"；另有唐代袁天罡《称骨歌》算得您命重 {chengu_result['total_str']}，古批已附于下方分条解读中。"
+        )
 
     glossary = [
         {"term": "十神", "plain": "以“日主”为中心，其余七个字与您的关系角色（如比肩=同辈、正财=稳定收入、正官=事业规矩等）。就像您身边不同身份的人。"},
@@ -1207,12 +1274,25 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
 
 def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
                   shensha: Dict, wuxing: Dict, pattern: Dict, yongshen: Dict,
-                  liunian: Dict) -> Dict:
+                  liunian: Dict, birth_month: int = None, birth_day: int = None) -> Dict:
     """
     综合各步结果，生成结构化报告。
     """
     day_gan, day_zhi = parse_pillar(pillars["day"])
     month_gan, month_zhi = parse_pillar(pillars["month"])
+    year_gan, year_zhi = parse_pillar(pillars["year"])
+    hour_gan, hour_zhi = parse_pillar(pillars["time"])
+
+    # 袁天罡称骨（事实依据：chengu.calculate_chengu；四源交叉验证）
+    chengu_result = chengu.calculate_chengu(
+        year_ganzhi=pillars["year"],
+        month=birth_month,
+        day=birth_day,
+        hour_zhi=hour_zhi,
+    )
+    # 纳音五行（渊海子平 / 三命通会·纳音）
+    year_nayin = NAYIN.get(pillars["year"], "")
+    day_nayin = NAYIN.get(pillars["day"], "")
 
     report = {
         "step": 12,
@@ -1262,7 +1342,7 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
     if liunian.get("liunian_relations"):
         report["cautions"].append(f"流年地支关系：{', '.join(liunian['liunian_relations'])}。")
 
-    # 大白话解读（基于古籍，通俗化）
+    # 大白话解读（基于古籍，通俗化，引经据典）
     report["plain_language"] = build_plain_language(
         day_gan=day_gan,
         day_element=wuxing["day_element"],
@@ -1273,7 +1353,14 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
         liunian=liunian,
         shensha=shensha,
         relations=relations,
+        chengu_result=chengu_result,
+        year_pillar=pillars["year"],
+        day_pillar=pillars["day"],
+        year_nayin=year_nayin,
+        day_nayin=day_nayin,
     )
+    # 称骨结果一并附于报告（API / JSON 可取用）
+    report["chengu"] = chengu_result
 
     return report
 
@@ -1328,7 +1415,8 @@ def calculate_bazi(year: int, month: int, day: int, hour: int, minute: int = 0,
     month_gan, month_zhi = parse_pillar(s2["pillars"]["month"])
     s10 = step10_yongshen(s4["day_stem"], month_zhi, s8, s9)
     s11 = step11_liunian(s3, current_year, year, s2["pillars"], s8, s10)
-    s12 = step12_report(s2["pillars"], s3, s4, s6, s7, s8, s9, s10, s11)
+    s12 = step12_report(s2["pillars"], s3, s4, s6, s7, s8, s9, s10, s11,
+                        birth_month=cm, birth_day=cd)
 
     return {
         "input": {

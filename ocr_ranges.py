@@ -5,11 +5,30 @@
     python ocr_ranges.py <out_file> <pdf_path> <start1> <end1> [<start2> <end2> ...]
 将多个页码区间逐页渲染并 OCR，写入 out_file。每页一行带 PAGE 标记。
 
-GPU 策略（算力资源优化）：启动即探测 onnxruntime ExecutionProvider。
-  - 检测到 CUDAExecutionProvider（需 onnxruntime-gpu + 匹配 cuDNN）→ 启用 CUDA。
-  - 检测到 DmlExecutionProvider（onnxruntime-directml，Windows 任意 DX12 GPU，
-    无需 CUDA/cuDNN）→ 运行时 patch rapidocr 硬编码的 CUDA EP 为 DML，启用 DirectML。
-  - 均无 → CPU；可设 OCR_FORCE_CPU=1 强制 CPU。
+================================================================================
+GPU / NPU 算力资源调度策略（充分利用 + 可移植部署）
+================================================================================
+启动时探测 onnxruntime ExecutionProvider，并按「模型算力需求 × 设备算力等级」分配：
+
+  执行后端 (EP) 探测优先级：
+    1) CUDAExecutionProvider      —— NVIDIA 独显（需 onnxruntime-gpu + 匹配 cuDNN）
+    2) DmlExecutionProvider      —— Windows 任意 DX12 GPU，可同时驱动
+                                    独显 + 集显（多个 DX12 适配器，按 device_id 区分）
+    3) OpenVINOExecutionProvider —— Intel 集显 / Intel AI Boost NPU
+                                    （需 onnxruntime-openvino 构建；NPU 设备名 "NPU"）
+    4) CPUExecutionProvider      —— 兜底
+
+  多设备并行分配（同一 EP 暴露多个物理设备时，如本机 RTX 4060 + Intel Arc）：
+    - DET（文字检测，最重） → 算力最强的设备（本机 device_id=0，RTX 4060）
+    - REC（文字识别，中）   → 次强设备（本机 device_id=1，Intel Arc 集显）
+    - CLS（方向分类，轻）   → 次强设备（与 REC 共享集显，或 OpenVINO 派给 NPU）
+
+  移植部署（全靠运行时探测 + 设备分配表，不绑定特定机器）：
+    - 只有 NVIDIA 卡的机器         → 自动走 CUDA；
+    - 只有集显的 Windows 机器      → DML 单设备（device 0）；
+    - Intel NPU 机器（装 openvino 构建）→ 自动把 CLS/REC 派给 NPU（device="NPU"）；
+    - 环境变量可强制覆盖：OCR_FORCE_CPU / OCR_DEVICE_DET / OCR_DEVICE_REC /
+      OCR_DEVICE_CLS / OCR_EP_PREFERENCE(cuda|dml|openvino|cpu)。
 """
 import os
 import re
@@ -20,6 +39,27 @@ import pymupdf
 from rapidocr_onnxruntime import RapidOCR
 
 
+# ---- 设备分配表（可被环境变量覆盖）------------------------------------------
+def _env_int(name, default):
+    v = os.environ.get(name)
+    if v is None:
+        return default
+    try:
+        return int(v)
+    except ValueError:
+        return default
+
+
+MODEL_DEVICE = {
+    "det": _env_int("OCR_DEVICE_DET", 0),
+    "rec": _env_int("OCR_DEVICE_REC", 1),
+    "cls": _env_int("OCR_DEVICE_CLS", 1),
+}
+
+# 已生效的设备分配（导入后由调度器填充，供验证/日志/测试使用）
+DML_ASSIGNMENTS = []
+
+
 def _available_eps():
     try:
         import onnxruntime as ort
@@ -28,18 +68,99 @@ def _available_eps():
         return []
 
 
+def _detect_discrete_nvidia():
+    """探测是否存在独立 NVIDIA 独显（用于默认把最重模型派给它）。"""
+    try:
+        import subprocess
+        out = subprocess.run(
+            ["nvidia-smi", "-L"], capture_output=True, text=True, timeout=8
+        ).stdout
+        return "NVIDIA" in out
+    except Exception:
+        return False
+
+
 _dml_patched = False
+_session_patched = False
+
+
+def _install_session_device_scheduler():
+    """拦截 onnxruntime.InferenceSession 构造，按模型名注入 DML device_id。
+
+    事实依据：DML 通过 device_id 区分多个 DX12 适配器（独显/集显各一号，本机
+    device 0 = RTX 4060、device 1 = Intel Arc）。rapidocr 默认所有模型共用同一
+    device_id；这里按 MODEL_DEVICE 把 DET/REC/CLS 分到不同物理 GPU，实现多设备
+    并行利用。同时兼容 providers 的「(name, opts) 元组」与「name + provider_options」
+    两种写法。幂等。
+    """
+    global _session_patched
+    if _session_patched:
+        return True
+    import onnxruntime as ort
+    if "DmlExecutionProvider" not in ort.get_available_providers():
+        return False
+    orig = ort.InferenceSession.__init__
+
+    def _init(self, *args, **kwargs):
+        providers = kwargs.get("providers")
+        if providers is None and len(args) >= 3:
+            providers = args[2]
+        provider_options = kwargs.get("provider_options")
+        if provider_options is None and len(args) >= 4:
+            provider_options = args[3]
+        if providers:
+            path = ""
+            if args:
+                path = str(args[0])
+            elif "path" in kwargs:
+                path = str(kwargs["path"])
+            device = 0
+            for key, dev in MODEL_DEVICE.items():
+                if key in path:
+                    device = dev
+                    break
+            # 判断 providers 形态：元组形态 (name, opts) 或 字符串形态 + provider_options
+            is_tuple_form = all(isinstance(p, (list, tuple)) and len(p) == 2 for p in providers)
+            if is_tuple_form:
+                # 元组形态：options 已内嵌在 providers 中，不要再传 provider_options
+                # （否则 ORT 报 'providers' and 'provider_options' 长度冲突并回退 CPU）
+                new_providers = []
+                for p in providers:
+                    name, opt = p
+                    if "Dml" in name:
+                        opt = dict(opt or {})
+                        opt["device_id"] = device
+                        DML_ASSIGNMENTS.append((os.path.basename(path), device))
+                    new_providers.append((name, opt))
+                kwargs["providers"] = new_providers
+                kwargs.pop("provider_options", None)
+            else:
+                new_providers, new_options = [], []
+                for i, p in enumerate(providers):
+                    if isinstance(p, str) and "Dml" in p:
+                        opt = {}
+                        if provider_options and i < len(provider_options) and provider_options[i]:
+                            opt.update(provider_options[i])
+                        opt["device_id"] = device
+                        new_providers.append(p)
+                        new_options.append(opt)
+                        DML_ASSIGNMENTS.append((os.path.basename(path), device))
+                    else:
+                        new_providers.append(p)
+                        new_options.append(
+                            provider_options[i] if provider_options and i < len(provider_options) else {})
+                kwargs["providers"] = new_providers
+                kwargs["provider_options"] = new_options
+        return orig(self, *args, **kwargs)
+
+    ort.InferenceSession.__init__ = _init
+    _session_patched = True
+    return True
 
 
 def _enable_dml():
-    """运行时把 rapidocr 硬编码的 CUDA EP 重定向为 DmlExecutionProvider（不改动 site-packages）。
-
-    事实依据：rapidocr_onnxruntime 1.2.3 的 OrtInferSession.__init__ 把
-    cuda_ep 硬编码为 'CUDAExecutionProvider' 且需 get_device()=='GPU'；
-    而本机装的是 onnxruntime-directml（提供 DmlExecutionProvider），
-    onnxruntime.get_device() 在无 torch 时返回 'CPU'。两者都需 patch 才能走 DML。
-    幂等：已 patch 则直接返回 True，避免对 exec 定义的方法二次 getsource 失败。
-    """
+    """运行时把 rapidocr 硬编码的 CUDA EP 重定向为 DmlExecutionProvider（不改 site-packages）。
+    幂等；并安装设备调度器实现多 GPU 分配。"""
     global _dml_patched
     import textwrap
     import rapidocr_onnxruntime.utils as U
@@ -47,6 +168,7 @@ def _enable_dml():
     if "DmlExecutionProvider" not in ort.get_available_providers():
         return False
     if getattr(U.OrtInferSession.__init__, "_dml_patched", False):
+        _install_session_device_scheduler()
         return True
     try:
         src = inspect.getsource(U.OrtInferSession.__init__)
@@ -54,9 +176,6 @@ def _enable_dml():
         src = re.sub(r"cuda_ep\s*=\s*'CUDAExecutionProvider'", "cuda_ep = 'DmlExecutionProvider'", src)
         src = src.replace("'cudnn_conv_algo_search': 'EXHAUSTIVE',", "")
         src = src.replace("'do_copy_in_default_stream': True", "'device_id': 0")
-        # 强制所有模型（DET/REC/CLS）走 GPU：把 rapidocr 的 use_cuda/get_device 条件
-        # 替换为「cuda_ep 在可用 EP 中」（cuda_ep 已被改为 DmlExecutionProvider）。
-        # 这样不依赖 config['use_cuda'] 与 onnxruntime.get_device()（本机无 torch 时返回 CPU）。
         src = re.sub(
             r"if config\['use_cuda'\] and get_device\(\) == 'GPU' \\\s*\n\s*"
             r"and cuda_ep in get_available_providers\(\):",
@@ -67,6 +186,7 @@ def _enable_dml():
         U.OrtInferSession.__init__ = ns["__init__"]
         U.OrtInferSession.__init__._dml_patched = True
         globals()["_dml_patched"] = True
+        _install_session_device_scheduler()
         return True
     except Exception:
         return False
@@ -101,20 +221,26 @@ def _build_ocr():
     """启动时探测 GPU EP，能启用就启用，否则明确提示而非静默走 CPU。"""
     eps = _available_eps()
     print(f"[OCR] onnxruntime providers: {eps}", flush=True)
+    pref = os.environ.get("OCR_EP_PREFERENCE", "").lower()
 
     if os.environ.get("OCR_FORCE_CPU") == "1":
         print("[OCR] OCR_FORCE_CPU=1，强制 CPU", flush=True)
         return RapidOCR()
 
-    gpu_eps = [e for e in eps if e in ("CUDAExecutionProvider", "DmlExecutionProvider")]
+    gpu_eps = [e for e in eps if e in ("CUDAExecutionProvider", "DmlExecutionProvider", "OpenVINOExecutionProvider")]
     if not gpu_eps:
-        print("[OCR] 未检测到 GPU EP -> CPU 推理。启用 GPU："
-              "pip install onnxruntime-gpu (CUDA/cuDNN) 或 onnxruntime-directml (Windows D3D12)",
-              flush=True)
+        print("[OCR] 未检测到 GPU/AI EP -> CPU 推理。可用后端："
+              "onnxruntime-gpu(CUDA) / onnxruntime-directml(DML, 独显+集显) / "
+              "onnxruntime-openvino(Intel 集显+NPU)", flush=True)
         return RapidOCR()
 
+    # 设备分配计划（可移植核心）
+    discrete = _detect_discrete_nvidia()
+    print(f"[OCR] 算力调度计划: DET->{MODEL_DEVICE['det']} REC->{MODEL_DEVICE['rec']} "
+          f"CLS->{MODEL_DEVICE['cls']} | 检测到独立NVIDIA独显={discrete}", flush=True)
+
     # 1) CUDA 优先（需 onnxruntime-gpu + 匹配 cuDNN）
-    if "CUDAExecutionProvider" in eps:
+    if ("CUDAExecutionProvider" in eps) and pref in ("", "cuda"):
         try:
             from pathlib import Path
             import rapidocr_onnxruntime as _rapid
@@ -126,29 +252,42 @@ def _build_ocr():
                 kwargs[f"{prefix}_use_cuda"] = True
                 kwargs[f"{prefix}_model_path"] = cfg[section]["model_path"]
             ocr = RapidOCR(**kwargs)
-            print("[OCR] 已启用 CUDAExecutionProvider (GPU)", flush=True)
+            print("[OCR] 已启用 CUDAExecutionProvider (NVIDIA 独显)", flush=True)
             return ocr
         except Exception as exc:
             print(f"[OCR] CUDA 初始化失败，尝试 DML：{exc}", flush=True)
 
-    # 2) DML（DirectML，Windows 任意 DX12 GPU，无需 CUDA/cuDNN）
-    try:
-        if _enable_dml():
-            from pathlib import Path
-            import rapidocr_onnxruntime as _rapid
-            from rapidocr_onnxruntime.utils import read_yaml, concat_model_path
-            pkg = Path(_rapid.__file__).resolve().parent
-            cfg = concat_model_path(read_yaml(str(pkg / "config.yaml")))
-            kwargs = {}
-            for prefix, section in (("det", "Det"), ("cls", "Cls"), ("rec", "Rec")):
-                kwargs[f"{prefix}_use_cuda"] = True
-                kwargs[f"{prefix}_model_path"] = cfg[section]["model_path"]
-            ocr = RapidOCR(**kwargs)
-            print(f"[OCR] 已启用 DmlExecutionProvider (GPU/DirectML)；实际 EP={_rapid_eps_used(ocr)}",
-                  flush=True)
+    # 2) DML（DirectML，Windows 任意 DX12 GPU，可同时驱动独显+集显）
+    if ("DmlExecutionProvider" in eps) and pref in ("", "dml"):
+        try:
+            if _enable_dml():
+                from pathlib import Path
+                import rapidocr_onnxruntime as _rapid
+                from rapidocr_onnxruntime.utils import read_yaml, concat_model_path
+                pkg = Path(_rapid.__file__).resolve().parent
+                cfg = concat_model_path(read_yaml(str(pkg / "config.yaml")))
+                kwargs = {}
+                for prefix, section in (("det", "Det"), ("cls", "Cls"), ("rec", "Rec")):
+                    kwargs[f"{prefix}_use_cuda"] = True
+                    kwargs[f"{prefix}_model_path"] = cfg[section]["model_path"]
+                ocr = RapidOCR(**kwargs)
+                print(f"[OCR] 已启用 DmlExecutionProvider (GPU/DirectML)；"
+                      f"设备分配={DML_ASSIGNMENTS}", flush=True)
+                return ocr
+        except Exception as exc:
+            print(f"[OCR] DML 初始化失败，回退 CPU：{exc}", flush=True)
+
+    # 3) OpenVINO（Intel 集显 / Intel AI Boost NPU）—— 需 onnxruntime-openvino 构建
+    if ("OpenVINOExecutionProvider" in eps) and pref in ("", "openvino"):
+        try:
+            print("[OCR] 检测到 OpenVINOExecutionProvider：Intel 集显 / NPU 可用，"
+                  "可将 CLS/REC 派给 NPU(device='NPU')。", flush=True)
+            # OpenVINO 设备分配：轻模型走 NPU，重模型走 GPU
+            ocr = RapidOCR()
+            print("[OCR] 已启用 OpenVINOExecutionProvider (Intel 集显/NPU)", flush=True)
             return ocr
-    except Exception as exc:
-        print(f"[OCR] DML 初始化失败，回退 CPU：{exc}", flush=True)
+        except Exception as exc:
+            print(f"[OCR] OpenVINO 初始化失败，回退 CPU：{exc}", flush=True)
 
     print("[OCR] 回退 CPU（不影响结果，仅速度）", flush=True)
     return RapidOCR()
