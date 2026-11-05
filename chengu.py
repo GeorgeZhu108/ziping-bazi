@@ -19,9 +19,13 @@
   四表组合理论可达成 21~71 钱（共 51 档，中间无空档）；72 钱（7两2）按表值根本算不出，
   多数学者认定为后人增补（guanyitang 明确标注），本表保留以兼容 xuenb 全本。
 
-【月份语义警示】
-  传统称骨月序应为「农历月」（且年界有春节/立春之争、闰月十五分界规则）；本软件 engine 当前传入
-  的是「公历修正月」，与严格农历计算器可能存在月份错位导致的偏差，属已知输入语义差异，非权重表错误。
+【月份语义已实现（2026-11-05 修正）】
+  传统称骨月序严格用「农历月」（年界以春节为界、闰月十五分界），不能用公历月直算
+  （genshuxue 明确指出：国历直算是最大硬伤，月柱会错位一到两个月）。本软件已在 engine 中：
+    - 年柱干支取 lunar.getYearInGanZhi()（春节农历年为界，与八字立春年界可能相差一档，已在报告标注）；
+    - 月序由 leap_aware_month() 按「闰月前半月算本月、后半月算下月」折算（卜易居 / genshuxue / ordoslfy 多源一致）；
+    - 日序取农历真实日；时辰取八字时柱地支（已含晚子时口径）。
+  因此称骨结果现已与严格农历流派一致，不再受公历月份错位影响。
 
 算法：年柱骨重 + 月柱骨重 + 日柱骨重 + 时柱骨重 = 总骨重（两），再查《称骨歌》批语。
 """
@@ -140,13 +144,31 @@ def _fmt_liang(qian: int):
     return f"{q}钱"
 
 
+def leap_aware_month(lunar_month: int, lunar_day: int) -> int:
+    """把 lunar-python 的 getMonth()（闰月为负）折算为称骨用的农历月序。
+
+    规则（卜易居 m.buyiju.com/cgsm/、genshuxue、ordoslfy 多源交叉一致）：
+      - 普通月（lunar_month > 0）直接返回。
+      - 闰月（lunar_month < 0）：闰月序号 = -lunar_month。
+          前半月（农历日 <= 15）折算为本月；后半月（农历日 >= 16）折算为下月。
+      - 特例（ordoslfy）：闰正月(abs==1)、闰腊月(abs==12) 不拆分，统一按当月，
+        因正月/腊月为农历首尾节点，顺延会造成跨月/跨年格局偏差。
+    """
+    if lunar_month > 0:
+        return lunar_month
+    mm = -lunar_month
+    if mm == 1 or mm == 12:
+        return mm
+    return mm if lunar_day <= 15 else mm + 1
+
+
 def calculate_chengu(year_ganzhi: str, month: int, day: int, hour_zhi: str):
     """计算称骨。
 
     参数：
-      year_ganzhi：年柱干支，如 "庚午"
-      month：农历/公历月份（1-12，称骨按出生月序，本软件以公历月代入，按传统月序）
-      day：出生日（1-30）
+      year_ganzhi：年柱干支，如 "庚午"（调用方按春节农历年界提供）
+      month：农历月序（1-12，已由 leap_aware_month 按闰月规则折算）
+      day：农历日（1-30）
       hour_zhi：出生时辰地支，如 "巳"
     返回：{year_w, month_w, day_w, hour_w(均为钱), total_qian, total_str, song, song_band}
     """

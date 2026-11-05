@@ -1244,6 +1244,8 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
             f"\n这便是传统称骨法对您命格气质的一句古批。需说明：称骨与八字是两套并行的古老算法，"
             f"一个称“重量”、一个论“五行生克”，可互为映照；均属古人的经验总结，宜以文化视角欣赏，不必奉为定论。"
         )
+        if cg.get("year_note"):
+            chengu_plain += f"\n{cg['year_note']}"
         sections.append({"term": "袁天罡称骨：您命中几两几钱", "plain": chengu_plain,
                          "source": cg.get("source", "袁天罡称骨歌")})
     elif chengu_result:
@@ -1322,8 +1324,9 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
 
 def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
                   shensha: Dict, wuxing: Dict, pattern: Dict, yongshen: Dict,
-                  liunian: Dict, birth_month: int = None, birth_day: int = None,
-                  gender: str = "男") -> Dict:
+                  liunian: Dict, gender: str = "男",
+                  chengu_year: str = "", chengu_month: int = None,
+                  chengu_day: int = None, chengu_hour_zhi: str = "") -> Dict:
     """
     综合各步结果，生成结构化报告。
     """
@@ -1332,13 +1335,19 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
     year_gan, year_zhi = parse_pillar(pillars["year"])
     hour_gan, hour_zhi = parse_pillar(pillars["time"])
 
-    # 袁天罡称骨（事实依据：chengu.calculate_chengu；四源交叉验证）
+    # 袁天罡称骨（事实依据：chengu.calculate_chengu；四源交叉验证 + 闰月十五分界）
     chengu_result = chengu.calculate_chengu(
-        year_ganzhi=pillars["year"],
-        month=birth_month,
-        day=birth_day,
-        hour_zhi=hour_zhi,
+        year_ganzhi=chengu_year,
+        month=chengu_month,
+        day=chengu_day,
+        hour_zhi=chengu_hour_zhi,
     )
+    # 年界分歧透明化：称骨年柱按春节农历年，八字年柱按立春，立春前后出生者可能差一档。
+    if chengu_result.get("total_str") and chengu_year and chengu_year != pillars["year"]:
+        chengu_result["year_note"] = (
+            f"注：称骨年柱按传统农历春节为界取「{chengu_year}」，而八字年柱按立春为界取"
+            f"「{pillars['year']}」，两者差一档属正常（年界流派分歧，非计算错误）。"
+        )
     # 纳音五行（渊海子平 / 三命通会·纳音）
     year_nayin = NAYIN.get(pillars["year"], "")
     day_nayin = NAYIN.get(pillars["day"], "")
@@ -1466,8 +1475,16 @@ def calculate_bazi(year: int, month: int, day: int, hour: int, minute: int = 0,
     month_gan, month_zhi = parse_pillar(s2["pillars"]["month"])
     s10 = step10_yongshen(s4["day_stem"], month_zhi, s8, s9)
     s11 = step11_liunian(s3, current_year, year, s2["pillars"], s8, s10)
+    # 称骨专用农历解析：与八字分两套历法口径（年界按春节 + 闰月十五分界 + 农历真实日）
+    lunar_cg = Solar.fromYmdHms(cy, cm, cd, ch, cmin, second).getLunar()
+    cg_year = lunar_cg.getYearInGanZhi()                       # 春节农历年干支
+    cg_month = chengu.leap_aware_month(lunar_cg.getMonth(), lunar_cg.getDay())  # 闰月十五分界折算
+    cg_day = lunar_cg.getDay()                                 # 农历真实日（含晚子时真实时刻）
+    cg_hour_zhi = s2["pillars"]["time"][1]                      # 八字时柱地支（含晚子时口径）
     s12 = step12_report(s2["pillars"], s3, s4, s6, s7, s8, s9, s10, s11,
-                        birth_month=cm, birth_day=cd, gender=gender)
+                        gender=gender,
+                        chengu_year=cg_year, chengu_month=cg_month,
+                        chengu_day=cg_day, chengu_hour_zhi=cg_hour_zhi)
 
     return {
         "input": {
