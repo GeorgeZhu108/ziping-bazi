@@ -9,6 +9,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 
 from engine import calculate_bazi
+from ziwei import calculate_ziwei
 import city_coords
 
 app = Flask(__name__)
@@ -69,6 +70,11 @@ def api_calculate():
         result = calculate_bazi(year, month, day, hour, minute=minute,
                                 gender=gender, current_year=current_year,
                                 longitude=longitude, late_zishi_rule=late_zishi_rule)
+        # 紫微斗数：与八字同源出生时间入参（紫微内部晚子时口径与 iztro 一致，避免双重移位）
+        try:
+            result["ziwei"] = calculate_ziwei(year, month, day, hour, gender)
+        except Exception as ze:
+            result["ziwei"] = {"error": str(ze)}
         result = make_serializable(result)
         # 回写解析到的城市信息，便于前端展示
         if resolved_city:

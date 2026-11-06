@@ -813,4 +813,96 @@ button:hover {
     color: var(--text-secondary);
 }
 .hint-ok { color: #4caf50 !important; }
+
+/* ===== 紫微斗数命盘 ===== */
+.ziwei-card { margin-top: 24px; }
+.ziwei-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 14px 0 18px;
+}
+.ziwei-summary .summary-item {
+    min-width: 150px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card, #fff);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.ziwei-summary .summary-item .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.ziwei-summary .summary-item .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+}
+.ziwei-palaces {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+.ziwei-palace {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: var(--bg-card, #fff);
+}
+.ziwei-palace.is-ming {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(0,0,0,.05) inset;
+}
+.ziwei-palace.is-empty { opacity: .72; }
+.zp-head {
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.zp-ganzhi { color: var(--text-secondary); font-weight: 500; font-size: 13px; }
+.ziwei-tag {
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #fff;
+}
+.tag-ming { background: #e53935; }
+.tag-shen { background: #1e88e5; }
+.zp-stars { display: flex; flex-wrap: wrap; gap: 4px; }
+.ziwei-star {
+    font-size: 13px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    line-height: 1.6;
+}
+.ziwei-star.star-major {
+    background: rgba(229,57,53,.10);
+    color: #c62828;
+    font-weight: 600;
+    border: 1px solid rgba(229,57,53,.30);
+}
+.ziwei-star.star-minor {
+    background: rgba(30,136,229,.08);
+    color: #1565c0;
+    border: 1px solid rgba(30,136,229,.25);
+}
+.empty-hint { color: var(--text-secondary); font-size: 13px; }
+.ziwei-decadals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.decadal-item {
+    font-size: 13px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card, #fff);
+}
 .hint-warn { color: #ff9800 !important; font-size: 0.82rem; }

@@ -635,6 +635,7 @@ def step8_wuxing_score(pillars: Dict) -> Dict:
     # 得令：日主五行在月令为旺或相
     in_season = wangshuai[day_element] in ["旺", "相"]
     # 得地：日支或时支藏干有日主五行根气
+    POS_CN = {"year": "年柱", "month": "月柱", "day": "日柱", "time": "时柱"}
     rooted = False
     root_positions = []
     for pos in ["year", "month", "day", "time"]:
@@ -642,7 +643,7 @@ def step8_wuxing_score(pillars: Dict) -> Dict:
         for hg, w in HIDDEN_STEMS[z]:
             if STEM_ATTRS[hg]["element"] == day_element:
                 rooted = True
-                root_positions.append(pos)
+                root_positions.append(POS_CN[pos])
     # 得势：天干有比肩、劫财、正印、偏印
     supported_by_stems = False
     for pos in ["year", "month", "time"]:
@@ -1147,8 +1148,8 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         f"木{_raw_d.get('木', 0)}、火{_raw_d.get('火', 0)}、土{_raw_d.get('土', 0)}、"
         f"金{_raw_d.get('金', 0)}、水{_raw_d.get('水', 0)}。其中「{day_element}」独占 {_raw_d.get(day_element, 0)}、"
         f"折算后得分约 {_day_score} 分；生助您的力量占 {_supported}%，克泄耗您的只占 {_consumed}%。"
-        f"命理判定根由有三：得令（月令「{month_zhi}」当旺={'是' if _cond.get('得令') else '否'}）、"
-        f"得地（地支通根于 {_tongshen}）、得势（天干有印比相助={'是' if _cond.get('得势') else '否'}）。"
+        f"命理判定根由有三：得令（月令「{month_zhi}」当旺，{'是' if _cond.get('得令') else '否'}）、"
+        f"得地（地支通根于 {_tongshen}）、得势（天干有印比相助，{'是' if _cond.get('得势') else '否'}）。"
         f"三者齐备，正是您“{strength}”的底气来源——不是空口说“您旺”，而是这盘{day_element}势厚实、自己就能站稳。"
     )
 

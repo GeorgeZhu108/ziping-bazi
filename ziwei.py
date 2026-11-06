@@ -299,10 +299,10 @@ def to_text(chart):
     inp = chart["input"]
     lines.append(f"紫微命盘｜{inp['birth_used']} {inp['gender']} ｜ 农历 {chart['lunar']['year_stem']}{chart['lunar']['year_branch']}年 "
                 f"{chart['lunar']['lunar_month']}月{chart['lunar']['lunar_day']}日 {chart['lunar']['time_branch']}时")
-    lines.append(f"命宫={chart['soul_branch']}　身宫={chart['body_branch']}　{chart['wuxing_ju_name']}"
+    lines.append(f"命宫：{chart['soul_branch']}　身宫：{chart['body_branch']}　{chart['wuxing_ju_name']}"
                 f"｜紫微在{chart['ziwei_branch']}　天府在{chart['tianfu_branch']}")
-    lines.append(f"本命四化：禄={chart['sihua']['化禄']} 权={chart['sihua']['化权']} "
-                f"科={chart['sihua']['化科']} 忌={chart['sihua']['化忌']}")
+    lines.append(f"本命四化：禄：{chart['sihua']['化禄']} 权：{chart['sihua']['化权']} "
+                f"科：{chart['sihua']['化科']} 忌：{chart['sihua']['化忌']}")
     lines.append("── 十二宫 ──")
     for p in chart["palaces"]:
         stars = "、".join(s["name"] for s in p["stars"]) or "（空宫）"
