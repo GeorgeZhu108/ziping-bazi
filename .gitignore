@@ -1,4 +1,38 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Secrets / credentials — NEVER commit
+.env
+.env.*
+*.key
+*.pem
+id_rsa
+id_ed25519
+
+# Generated artifacts (contain sample birth data, regenerate via build_report.py)
+report-*.html
+
+# Local caches
 data/geocode_cache.json
+
+# Stray generated output dumps (ad-hoc, may contain sample birth data)
+verify_service.json
+bazi_*.json
+test_result.json
+test_rebuild.json
+*.output.json
+
+# Node (if any tooling added later)
+node_modules/
+
+# Editor / OS
+.DS_Store
+*.log
+.idea/
+.vscode/
