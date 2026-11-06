@@ -39,3 +39,26 @@
   test_chengu_online_diff.py（在线共识零偏差）、test_chengu_lunar.py、test_ocr_parallel.py（OCR 多线程）、
   **test_external_crosscheck.py（多参数×多源四柱/称骨零偏差，本文件第六节所述）**。
 - 提交前须全绿；任一偏差须先定位是「引擎 bug」还是「独立 oracle 实现错」，禁止静默放过。
+
+## 八、CI 固化（多参数×多源交叉验证进流水线）
+- 交付物：`.github/workflows/ci.yml`（push/PR 触发，Python 3.11/3.13 矩阵）+ `requirements.txt`（flask + lunar-python）+ `run_ci.sh`（本地一键跑全套确定性测试，无需 GitHub 也可验）。
+- **CI 只跑确定性、可离线套件**：test_regression / test_full_regression / test_late_zishi_regression / test_chengu_online_diff / test_chengu_lunar / test_external_crosscheck / test_ziwei。
+- **显式排除** test_ocr_parallel（需 rapidocr + GPU/CPU 重负载）、test_bing_regression / test_skill_crosscheck（需网络/外部技能）：这些非确定性、不可离线复现，不适合 CI。
+- 当前仓库无远程、本会话 GitHub MCP 不可用 → 工作流文件先就位，用户建 GitHub 仓库推送即自动生效。
+
+## 九、紫微斗数集成（Renhuai123/ziwei-doushu 纯 Python 移植核心）
+- **溯源（非臆造，逐条可核对）**：上游 `algorithm.ts` 实为 iztro（SylarLong/iztro, MIT）的薄封装；真排盘数学在 iztro。故 `ziwei.py` 直接移植：
+  - 命宫/身宫/五行局/宫干/十二宫/大限 = iztro `src/astro/palace.ts` + `astro.ts`；
+  - 十四主星安星诀、禄存羊陀马/魁钺/左右/昌曲/红鸾天喜/地空地劫/火铃 = iztro `src/star/location.ts` + `majorStar.ts`；
+  - 四化表 / 辅星表 / 宫名 / 五行局映射 = Renhuai123 `lib/ziwei/constants.ts` + `sihua.ts`。
+- **关键口径（与 iztro 默认对齐，已显式标注）**：
+  - 年界：**立春换年**（与八字年柱同源，用 `getBaZi()[0]`）；故立春前出生年干取上一年（例 1989-01-09 → 戊辰，年干戊）。
+  - 月：**农历月**（非节气月）；闰月前半月用上月、后半月用本月（fix_leap）。
+  - 时辰：23:00–00:59 为子时；**晚子时 23:00–23:59 归次日**（iztro normalizeDayBoundary 默认），农历日随之取次日。
+  - 五行局：以**命宫干支**纳音取数（干 甲乙1丙丁2戊己3庚辛4壬癸5；支 子午丑未1 寅申卯酉2 辰戌巳亥3；>5 减5 → 1木2金3水4火5土 → 局数 木3金4水2火6土5）。
+  - 紫微起星诀：局数除日数至整除，商%12−1，奇偶偏移定紫微；天府=12−紫微（对待宫）。
+- **验证（iztro 自身注释金标准示例，非自造）**：
+  - 起紫微：27日木三局→戌 / 13日火六局→亥 / 6日土五局→未（tests/test_ziwei.py 逐字断言）。
+  - 五行局：丙子→水二局 / 辛未→土五局 / 庚申→木三局。
+  - 四化表、命宫公式（农历五月子时→命宫午）、紫微铁律（紫微≠天府同宫、十四主星各唯一宫）全绿；当前 5/5。
+- 辅星已实现：禄存/擎羊/陀罗/天马/天魁/天钺/左辅/右弼/文昌/文曲/红鸾/天喜/地空/地劫/火星/铃星。宫干按五虎遁绕地支序（寅宫=年干五虎遁寅月干，顺行）。

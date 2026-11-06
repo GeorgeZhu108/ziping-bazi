@@ -1,0 +1,8 @@
+# ziping-app 运行/测试依赖
+# 核心依赖（CI 必装）
+flask>=3.0
+lunar-python>=1.0
+
+# 可选依赖（本地 OCR 逐字核验用，非 CI 必需）：
+#   rapidocr-onnxruntime   —— 离线 OCR，需 CPU/GPU；对应的
+#   tests/test_ocr_parallel.py 等重负载测试已从 CI 套件中排除。
