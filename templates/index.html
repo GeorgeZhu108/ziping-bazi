@@ -732,7 +732,7 @@
             html += '</div>';
             html += `<p><strong>日主 ${step.day_element} 强弱：</strong>${step.strength}（${step.day_score}分）。</p>`;
             html += `<p><strong>判断理由：</strong>${step.strength_reason}</p>`;
-            html += `<p><strong>生助 vs 克泄耗：</strong>生助日主 ${step.support_vs_consume['生助日主']}分，克泄耗日主 ${step.support_vs_consume['克泄耗日主']}分。</p>`;
+            html += `<p><strong>生助 对比 克泄耗：</strong>生助日主 ${step.support_vs_consume['生助日主']}分，克泄耗日主 ${step.support_vs_consume['克泄耗日主']}分。</p>`;
             html += '<p class="step-note">说明：五行强弱以天干地支本气、藏干权重及月令旺衰综合计算，是扶抑取用神的基础。<strong>注：此为程序化的简化打分模型，未考虑天干五合、地支合化、刑冲对力量的转化与损耗，结果仅供辅助参考。</strong></p>';
             return html;
         }

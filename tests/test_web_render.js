@@ -64,7 +64,9 @@ const driver = `
     let combined = (allHTML + '\\n' + allText);
     // strip collapsed developer raw-data dumps (legitimately contain null)
     combined = combined.replace(/<pre class="hidden">[\\s\\S]*?<\\/pre>/g, '');
-    const hits = [...combined.matchAll(/undefined|null/g)];
+    // strip HTML tags so only VISIBLE text is scanned for English leaks
+    const textOnly = combined.replace(/<[^>]+>/g, ' ');
+    const hits = [...textOnly.matchAll(/undefined|null/g)];
     if (hits.length) {
       bad++;
       const cx = hits.slice(0,5).map(m=>{
@@ -73,10 +75,24 @@ const driver = `
       });
       console.log(f + ': BAD x' + hits.length);
       cx.forEach(c=>console.log(c));
-    } else { console.log(f + ': clean'); }
+    } else { console.log(f + ': clean(undef/null)'); }
+    // English-leak scan on the VISIBLE (JS-rendered) output.
+    // Whitelist: (1) common acronyms acceptable in a Chinese UI; (2) open-source
+    // library attribution proper nouns (iztro / SylarLong / MIT / Renhuai /
+    // ziwei / doushu) — these are REQUIRED credits when publishing to GitHub and
+    // are conventionally kept in English. They are NOT user-facing 命理 content.
+    const ENG_WHITELIST = /^(pdf|iztro|SylarLong|MIT|Renhuai|ziwei|doushu)$/i;
+    const engHits = [...textOnly.matchAll(/[A-Za-z]{2,}/g)]
+      .map(m => m[0])
+      .filter(w => !ENG_WHITELIST.test(w));
+    if (engHits.length) {
+      bad++;
+      const uniq = [...new Set(engHits)];
+      console.log(f + ': ENGLISH-LEAK x' + uniq.length + ' -> ' + uniq.slice(0,12).join(', '));
+    } else { console.log(f + ': clean(english)'); }
   }
   if (bad) { console.log('FAIL: ' + bad + ' fixture(s) with English leakage'); process.exit(1); }
-  else { console.log('PASS: all fixtures render without undefined/null'); process.exit(0); }
+  else { console.log('PASS: all fixtures render without undefined/null/english'); process.exit(0); }
 })();
 `;
 

@@ -23,6 +23,9 @@ from data import (
 )
 import chengu
 
+# 四柱位置英文键 → 中文简称（用于「透出天干」位置标注，避免界面出现英文如 "month柱透出"）
+POS_SHORT = {"year": "年", "month": "月", "day": "日", "time": "时"}
+
 # ============================================================
 # 工具函数
 # ============================================================
@@ -724,7 +727,7 @@ def step9_pattern(pillars: Dict, tenshen: Dict) -> Dict:
         g, z = parse_pillar(pillars[pos])
         for hg, _ in HIDDEN_STEMS[month_zhi]:
             if g == hg:
-                tian_gan_tou_chu.append({"位置": pos, "天干": g})
+                tian_gan_tou_chu.append({"位置": POS_SHORT.get(pos, pos), "天干": g})
 
     # 建禄 / 月刃（阳干论刃，阴干无刃）
     yang_gan = is_yang_gan(day_gan)
