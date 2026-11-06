@@ -529,8 +529,8 @@
                 const hiddenTs = step4.hidden_tenshen[pos].map(h => `${h.藏干}(${h.十神})`).join('，');
                 html += `<tr>
                     <td><strong>${labels[pos]}</strong></td>
-                    <td>${p[0]}<br><small>${det.天干属性.五行}</small></td>
-                    <td>${p[1]}<br><small>${det.地支属性.五行}</small></td>
+                    <td>${p[0]}<br><small>${det.天干属性?.element || '—'}</small></td>
+                    <td>${p[1]}<br><small>${det.地支属性?.element || '—'}</small></td>
                     <td>${det.纳音}</td>
                     <td>${ts.十神}</td>
                     <td>${hiddenTs}</td>
