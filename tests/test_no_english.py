@@ -90,6 +90,27 @@ def test_no_english_in_ziwei_summary():
     assert not leaks, f"紫微总体总评发现英文泄漏: {leaks[:10]}"
 
 
+def test_no_double_punct():
+    """永久防御：用户可见文案不得出现『））』『。。』等双标点。
+    此前由 explain_ten_god / 六亲模板 / 用神段 拼接产生的表达瑕疵，根因已修；
+    本测试防止同类问题复发。"""
+    bad = []
+    for (y, m, d, h, g) in INPUTS:
+        r = E.calculate_bazi(y, m, d, h, 0, gender=g)
+        pl = r["steps"][-1].get("plain_language", {}) or {}
+        texts = []
+        if isinstance(pl.get("overview"), str):
+            texts.append(pl["overview"])
+        for s in pl.get("sections", []) or []:
+            if isinstance(s, dict) and isinstance(s.get("plain"), str):
+                texts.append(s["plain"])
+        for t in texts:
+            for tok in ("））", "。。"):
+                if tok in t:
+                    bad.append((y, m, d, h, g, tok))
+    assert not bad, f"用户文案发现双标点: {bad[:10]}"
+
+
 def test_bazi_grounding():
     """永久防御：总体总评必须含『十神命名原理导语』『滴天髓逐句大白话』『本盘印证』，
     杜绝术语/古诀突兀冒出、不接本盘（此前用户投诉三类问题）。"""
@@ -132,5 +153,11 @@ if __name__ == "__main__":
     except AssertionError as e:
         print("[FAIL] test_bazi_grounding:", e)
         raise
-    print("PASS: 引擎用户文案无英文泄漏（八字+紫微），透出位置均为中文，且术语/古诀均接地")
+    try:
+        test_no_double_punct()
+        print("[OK] test_no_double_punct")
+    except AssertionError as e:
+        print("[FAIL] test_no_double_punct:", e)
+        raise
+    print("PASS: 引擎用户文案无英文泄漏（八字+紫微），透出位置均为中文，术语/古诀均接地，且无双标点")
 
