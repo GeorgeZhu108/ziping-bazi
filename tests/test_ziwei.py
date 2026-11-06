@@ -10,7 +10,7 @@
   5) 内部紫微铁律：紫微≠天府同宫；十四主星各落唯一宫；紫微天府=(12-ziwei)
   6) 端到端：1989-01-09 10:00 男 排盘不报错且结构完整
 """
-import os, sys
+import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from ziwei import (
@@ -121,10 +121,31 @@ def test_interpret_ziwei():
         assert any(p["name"] == "机月同梁" for p in it["patterns"]), "三方四正含机月同梁应被识别"
 
 
+def test_ziwei_life_summary():
+    """紫微·人生总体总评：八维度齐全、文案非空、无英文泄漏、带出处。"""
+    ENG = re.compile(r"[A-Za-z]{2,}")
+    REQUIRED = ["性格", "事业", "财富", "婚姻", "健康", "人际", "学业", "大运"]
+    cases = [(1989, 1, 9, 10, "男"), (1995, 11, 11, 23, "男"),
+             (2000, 2, 29, 14, "女"), (1976, 5, 20, 15, "女")]
+    for (y, m, d, h, g) in cases:
+        c = calculate_ziwei(y, m, d, h, g)
+        ls = c["interpretation"]["life_summary"]
+        assert isinstance(ls, list) and len(ls) == 8, f"应8维度，实得 {len(ls)}"
+        joined = " ".join(s["term"] for s in ls)
+        for r in REQUIRED:
+            assert r in joined, f"{y}-{m}-{d} {g} 缺角度 {r}"
+        for s in ls:
+            assert all(k in s for k in ("term", "plain", "source")), f"字段缺失: {s}"
+            assert s["plain"], f"plain 不应空: {s['term']}"
+            assert s["source"].startswith("《"), f"应带典籍出处: {s['source']}"
+            for w in ENG.findall(s["plain"]):
+                raise AssertionError(f"{y}-{m}-{d} {g} 文案含英文: {w} @ {s['term']}")
+
+
 if __name__ == "__main__":
     n = 0
     for fn in (test_ziwei_placement_examples, test_wuxing_ju_examples,
                test_sihua_table, test_soul_body, test_full_chart_invariants,
-               test_interpret_ziwei):
+               test_interpret_ziwei, test_ziwei_life_summary):
         fn(); n += 1; print(f"  [OK] {fn.__name__}")
-    print(f"紫微核心测试 {n}/6 全部通过 ✅")
+    print(f"紫微核心测试 {n}/7 全部通过 ✅")

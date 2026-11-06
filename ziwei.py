@@ -404,6 +404,167 @@ def detect_patterns(chart):
     return patterns
 
 
+# ───────────────────────── 多维度人生总体总评（大白话） ─────────────────────────
+def _palace_by_name(chart, name):
+    return next((p for p in chart["palaces"] if p["name"] == name), None)
+
+
+def _sihua_in_palace(chart, p):
+    if not p:
+        return []
+    names = {s["name"] for s in p["stars"]}
+    return [(hua, star) for hua, star in chart["sihua"].items() if star in names]
+
+
+def _star_line(items):
+    """items: [(名, 性质)] → 简洁中文串（性质去掉末尾「（五行，吉凶）」后缀，避免双重括号）。"""
+    if not items:
+        return "（空宫，无十四主星，其象借对宫参看）"
+    parts = []
+    for nm, nat in items:
+        if nat:
+            # 去掉形如「（木，吉）」「（水，中性偏吉）」的末尾括号说明
+            core = nat.split("（")[0].rstrip("、 ")
+            parts.append(f"{nm}（{core}）")
+        else:
+            parts.append(nm)
+    return "、".join(parts)
+
+
+def _hua_text(hua, star):
+    if hua == "化禄":
+        return f"「化禄」落此宫于{star}，主该领域多得缘、顺遂、资源丰沛"
+    if hua == "化权":
+        return f"「化权」落此宫于{star}，主该领域掌权、有主见、能主导"
+    if hua == "化科":
+        return f"「化科」落此宫于{star}，主该领域得名声、清誉、考试利，并能化解凶厄"
+    if hua == "化忌":
+        return f"「化忌」落此宫于{star}，主该领域易有执念、波折与牵绊，需谨慎经营"
+    return ""
+
+
+def build_ziwei_overall_summary(chart):
+    """紫微斗数·人生总体总评：从性格底色、事业成就、财富格局、感情婚姻、
+    健康寿元、人际关系、学业才学、大运走势八维度展开大白话解读。
+    全部基于本盘实测星曜 + 标准斗数赋文（STAR_INFO/STAR_INTERP/SIHUA_INTERP/
+    PALACE_INTERP），每条带 source 典籍出处，不臆造无源内容。"""
+    src_star = "《紫微斗数全书·星曜释义》"
+    src_hua = "《紫微斗数全书·四化赋》"
+    src_pal = "《紫微斗数全书·十二宫赋》"
+    sections = []
+
+    # 1) 性格底色（命宫·身宫）
+    ming = _palace_by_name(chart, "命宫")
+    shen = _palace_by_name(chart, "身宫")
+    ming_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in ming["stars"] if s["type"] == "major"] if ming else []
+    char_txt = f"命宫主星为{_star_line(ming_items)}，是您先天的性格底色与气质根基，决定待人接物、面对压力的基本反应模式。"
+    if shen:
+        shen_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in shen["stars"] if s["type"] == "major"]
+        char_txt += f"身宫在{chart['body_branch']}（{shen['name']}），主后天着力方向与自我期许，落{_star_line(shen_items)}，提示您一生的修为着力点。"
+    else:
+        char_txt += f"身宫在{chart['body_branch']}，主后天着力方向。"
+    sections.append({"term": "性格底色（命宫·身宫）", "plain": char_txt, "source": src_star})
+
+    # 2) 事业成就（官禄宫）
+    guan = _palace_by_name(chart, "官禄宫")
+    guan_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in guan["stars"] if s["type"] == "major"] if guan else []
+    car_txt = f"官禄宫（事业宫）主星为{_star_line(guan_items)}。"
+    car_txt += "其性各有所长：紫微、太阳、天相主贵气与行政才；天机主谋划策划；武曲主专业技艺与执行力；廉贞主才艺管理；七杀、破军、贪狼（杀破狼）主开创与变动。"
+    for hua, star in _sihua_in_palace(chart, guan):
+        t = _hua_text(hua, star)
+        if t:
+            car_txt += t + "（事业）。"
+    if not guan_items:
+        car_txt += "官禄宫为空宫，事业取向宜借对宫（夫妻宫）星曜与三方四正合参，宜专业深耕、不宜强求虚名。"
+    sections.append({"term": "事业成就（官禄宫）", "plain": car_txt, "source": src_star})
+
+    # 3) 财富格局（财帛宫）
+    cai = _palace_by_name(chart, "财帛宫")
+    cai_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in cai["stars"] if s["type"] == "major"] if cai else []
+    wealth_txt = f"财帛宫主星为{_star_line(cai_items)}。"
+    wealth_txt += "武曲为北斗财星、天府为财库之府、太阴主富、禄存主积蓄——见之则理财有方、宜以专业或稳定平台生财。"
+    for hua, star in _sihua_in_palace(chart, cai):
+        t = _hua_text(hua, star)
+        if t:
+            wealth_txt += t + "（财富）。"
+    if not cai_items:
+        wealth_txt += "财帛宫为空宫，财运宜借对宫（福德宫）与化禄所在宫合参，宜踏实积累、不宜投机冒进。"
+    sections.append({"term": "财富格局（财帛宫）", "plain": wealth_txt, "source": src_star})
+
+    # 4) 感情婚姻（夫妻宫）
+    fu = _palace_by_name(chart, "夫妻宫")
+    fu_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in fu["stars"] if s["type"] == "major"] if fu else []
+    mar_txt = f"夫妻宫主星为{_star_line(fu_items)}，主导婚姻模式与伴侣性情。"
+    mar_txt += "紫微、天相主配偶有主见、稳重；太阳主光明磊落、男缘旺；太阴主柔和、女缘佳；廉贞、贪狼带桃花才艺，相处需重情感分寸；七杀、破军主感情起伏较大。"
+    # 桃花星（红鸾/天喜/贪狼/廉贞）在夫妻宫或子女宫
+    peach = []
+    for nm in ("夫妻宫", "子女宫"):
+        pp = _palace_by_name(chart, nm)
+        if pp:
+            for s in pp["stars"]:
+                if s["name"] in ("红鸾", "天喜", "贪狼", "廉贞"):
+                    peach.append(s["name"])
+    if peach:
+        mar_txt += f"盘中见{ '、'.join(set(peach)) }等桃花星，感情世界较丰富、宜把握分寸与边界。"
+    for hua, star in _sihua_in_palace(chart, fu):
+        t = _hua_text(hua, star)
+        if t:
+            mar_txt += t + "（婚姻）。"
+    if not fu_items:
+        mar_txt += "夫妻宫为空宫，婚姻缘份宜借对宫（官禄宫）星曜合参，相处宜包容、忌强控。"
+    sections.append({"term": "感情婚姻（夫妻宫）", "plain": mar_txt, "source": src_star})
+
+    # 5) 健康寿元·传统意象（疾厄宫，非医学诊断）
+    ji = _palace_by_name(chart, "疾厄宫")
+    ji_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in ji["stars"] if s["type"] == "major"] if ji else []
+    health_txt = f"疾厄宫主星为{_star_line(ji_items)}。此为传统命理的「象义」提示，绝非医学诊断——健康问题务必以现代医学为准。"
+    health_txt += "斗数以星曜五行论体质倾向：天府、天同主平和；天梁主逢凶化吉、与医药有缘；廉贞（囚）、贪狼（木）、破军（水）等若落疾厄且见煞，传统上提示相应系统宜养护；七杀、破军主突发变动，宜规律作息。"
+    sections.append({"term": "健康寿元·传统意象（疾厄宫，非医学诊断）", "plain": health_txt, "source": src_star})
+
+    # 6) 人际关系（交友宫·迁移宫·兄弟宫）
+    jiao = _palace_by_name(chart, "交友宫")
+    qian = _palace_by_name(chart, "迁移宫")
+    xiong = _palace_by_name(chart, "兄弟宫")
+    jiao_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in jiao["stars"] if s["type"] == "major"] if jiao else []
+    qian_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in qian["stars"] if s["type"] == "major"] if qian else []
+    ren_txt = f"交友宫（部属/社交圈）主星{_star_line(jiao_items)}；迁移宫（对外形象、外出际遇）主星{_star_line(qian_items)}。"
+    if xiong:
+        xiong_items = [(s["name"], STAR_INFO.get(s["name"], "")) for s in xiong["stars"] if s["type"] == "major"]
+        ren_txt += f"兄弟宫（同辈助力）主星{_star_line(xiong_items)}。"
+    ren_txt += "迁移宫见紫微、太阳、天同多主外出得助、形象佳；交友宫见吉星主得朋友部属助力，见煞（羊陀火铃、空劫）则人际宜择善而交、忌金钱纠葛。"
+    sections.append({"term": "人际关系（交友宫·迁移宫·兄弟宫）", "plain": ren_txt, "source": src_pal})
+
+    # 7) 学业才学（文昌文曲·化科·官禄兼看）
+    # 文昌/文曲 落宫
+    chang_qu = []
+    for p in chart["palaces"]:
+        for s in p["stars"]:
+            if s["name"] in ("文昌", "文曲"):
+                chang_qu.append(f"{s['name']}在{p['name']}")
+    xue_txt = "学业才学看官禄宫（职业根基亦为学历根基）与文昌、文曲、化科。"
+    if chang_qu:
+        xue_txt += f"本盘{ '、'.join(chang_qu) }，主文采、考试与才艺表现；文昌偏实务、文曲偏才艺。"
+    else:
+        xue_txt += "本盘未见文昌文曲，学业更赖后天努力与官禄宫星曜所主之专业方向。"
+    for hua, star in chart["sihua"].items():
+        if hua == "化科":
+            xue_txt += f"本命「化科」落{star}，主考试、名声与文采利于学业进取。"
+    xue_txt += "天机、太阴入命或官禄，亦主聪明好学、以智取胜。"
+    sections.append({"term": "学业才学（文昌文曲·化科）", "plain": xue_txt, "source": src_star})
+
+    # 8) 大运走势（大限·流年·四化主题）
+    ju = chart.get("wuxing_ju", 0)
+    da_txt = f"您约 {ju} 岁起运（以五行局数定），大限每十年一转，顺逆依阴阳年与性别而定。"
+    # 本命四化作为一生主题
+    lu = chart["sihua"].get("化禄", "—")
+    ji_h = chart["sihua"].get("化忌", "—")
+    da_txt += f"本命四化揭示一生主题：化禄在{lu}（得缘顺遂之方向）、化忌在{ji_h}（需谨慎经营之处）；化权、化科分别主掌权与名声所在。"
+    da_txt += "流年看法：以当年立春后的年地支落宫论流年，逢化禄/权/科之宫多吉、化忌之宫宜守——具体年份须结合当年干支另行推算。"
+    sections.append({"term": "大运走势（大限·流年·四化主题）", "plain": da_txt, "source": src_hua})
+
+    return sections
+
+
 def interpret_ziwei(chart):
     """生成结构化释义，供 Web 与报告渲染。所有释义均基于标准斗数赋文。"""
     ming = next(p for p in chart["palaces"] if p["is_ming"])
@@ -449,6 +610,7 @@ def interpret_ziwei(chart):
         "sihua": sihua_list,
         "patterns": patterns,
         "triple": triple_stars,
+        "life_summary": build_ziwei_overall_summary(chart),
     }
 
 

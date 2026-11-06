@@ -513,6 +513,17 @@
                 html += '<h3 class="zi-sub">身宫释义</h3><div class="zi-interp"><div class="zi-star-interp"><div class="zi-si-head"><b>身宫在' + esc(it.shen_branch) + '</b></div><p class="zi-si-meaning">' + esc(it.shen_meaning) + '</p></div></div>';
             }
 
+            // 紫微斗数·人生总体总评（多维度大白话，逐条标来源）
+            if (it.life_summary && it.life_summary.length) {
+                html += '<h3 class="zi-sub">紫微斗数·人生总体总评（财富·事业·健康·婚姻·人际·学业·大运）</h3><div class="zi-interp">';
+                for (const sec of it.life_summary) {
+                    html += '<div class="zi-star-interp"><div class="zi-si-head"><b>' + esc(sec.term) + '</b></div>'
+                        + '<p class="zi-si-meaning">' + esc(sec.plain) + '</p>'
+                        + '<span class="source-tag">来源：' + esc(sec.source) + '</span></div>';
+                }
+                html += '</div>';
+            }
+
             body.innerHTML = html;
         }
 

@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import re
 import engine as E
+import ziwei as Z
 
 # 测试用真实出生数据（覆盖闰日、晚子时、男女、不同月令）
 INPUTS = [
@@ -76,6 +77,19 @@ def test_touchu_position_is_chinese():
     assert not bad, f"透出天干位置仍为英文: {bad[:5]}"
 
 
+def test_no_english_in_ziwei_summary():
+    """紫微斗数·人生总体总评（life_summary）面向用户文案不得夹带英文。"""
+    leaks = []
+    for (y, m, d, h, g) in INPUTS:
+        r = Z.calculate_ziwei(y, m, d, h, g)
+        ls = r["interpretation"]["life_summary"]
+        for sec in ls:
+            for key in ("term", "plain", "source"):
+                for w in _ENG.findall(sec.get(key, "")):
+                    leaks.append((y, m, d, h, g, w, sec.get(key, "")[:40]))
+    assert not leaks, f"紫微总体总评发现英文泄漏: {leaks[:10]}"
+
+
 if __name__ == "__main__":
     try:
         test_no_english_in_user_text()
@@ -89,4 +103,10 @@ if __name__ == "__main__":
     except AssertionError as e:
         print("[FAIL] test_touchu_position_is_chinese:", e)
         raise
-    print("PASS: 引擎用户文案无英文泄漏，透出位置均为中文")
+    try:
+        test_no_english_in_ziwei_summary()
+        print("[OK] test_no_english_in_ziwei_summary")
+    except AssertionError as e:
+        print("[FAIL] test_no_english_in_ziwei_summary:", e)
+        raise
+    print("PASS: 引擎用户文案无英文泄漏（八字+紫微），透出位置均为中文")
