@@ -19,7 +19,7 @@ from data import (
     SHENG_XIAO, GAN_HE, GAN_HE_ELEMENT, RELATION_MEANINGS,
     TEN_GOD_MEANINGS, LIUNIAN_TEMPLATES, MONTH_ZHI_TO_SOLAR_MONTH,
     ELEMENT_TO_STEMS, YONGSHEN_PRIORITY, NAYIN, DITIANSUI_TIXIANG,
-    DITIANSUI_XINGXIANG, ZIPING_GE, ziping_ge_category, SHENFENG, SANMINGTONGHUI
+    DITIANSUI_XINGXIANG, DITIANSUI_XINGXIANG_NOTE, ZIPING_GE, ziping_ge_category, SHENFENG, SANMINGTONGHUI
 )
 import chengu
 
@@ -1099,11 +1099,27 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
                          chengu_result: Dict = None, year_pillar: str = "",
                          day_pillar: str = "", year_nayin: str = "",
                          day_nayin: str = "", pillars: Dict = None,
-                         gender: str = "男") -> Dict:
+                         gender: str = "男", wuxing: Dict = None,
+                         tenshen: Dict = None) -> Dict:
     """
     生成「大白话」解读：用通俗语言解释专业术语，并标注古籍出处。
     让不懂命理的人也能看懂综合报告。
     """
+    # —— 提取五行 / 十神明细，供下方做"有数据支撑"的解读 ——
+    wx = wuxing or {}
+    _raw = wx.get("raw_weight", {}) or {}
+    _scores = wx.get("scores", {}) or {}
+    _sup = wx.get("support_vs_consume", {}) or {}
+    _season = wx.get("season", "")
+    _wang = wx.get("wangshuai", {}) or {}
+    _day_score = wx.get("day_score")
+    _supported = _sup.get("生助日主")
+    _consumed = _sup.get("克泄耗日主")
+    _cond = wx.get("condition", {}) or {}
+    _tenshen = tenshen or {}
+    _tdetails = _tenshen.get("details", {}) or {}
+    _hidden = _tenshen.get("hidden_tenshen", {}) or {}
+
     # —— 日主强弱（通俗）——
     if strength in ("身旺", "中和偏旺"):
         strength_plain = (
@@ -1123,14 +1139,52 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
             f"适应力强、可塑性好，喜忌要看具体大运流年再定。"
         )
 
-    # 引《滴天髓·论十天干》形象描摹日主性情（事实依据：data.DITIANSUI_XINGXIANG）
+    # 用"数据"把底气讲实：得令 / 得地 / 得势 + 五行占比
+    _tongshen = "、".join(_cond.get("得地位置", []) or []) or "无"
+    _raw_d = {k: (round(v, 1) if isinstance(v, (int, float)) else v) for k, v in _raw.items()}
+    strength_plain += (
+        f"\n\n【底气从何而来——用数据说话】您这一盘五行原始得气份数为："
+        f"木{_raw_d.get('木', 0)}、火{_raw_d.get('火', 0)}、土{_raw_d.get('土', 0)}、"
+        f"金{_raw_d.get('金', 0)}、水{_raw_d.get('水', 0)}。其中「{day_element}」独占 {_raw_d.get(day_element, 0)}、"
+        f"折算后得分约 {_day_score} 分；生助您的力量占 {_supported}%，克泄耗您的只占 {_consumed}%。"
+        f"命理判定根由有三：得令（月令「{month_zhi}」当旺={'是' if _cond.get('得令') else '否'}）、"
+        f"得地（地支通根于 {_tongshen}）、得势（天干有印比相助={'是' if _cond.get('得势') else '否'}）。"
+        f"三者齐备，正是您“{strength}”的底气来源——不是空口说“您旺”，而是这盘{day_element}势厚实、自己就能站稳。"
+    )
+
+    # 引《滴天髓·论十天干》形象描摹日主性情，并逐层释义
     _xg = DITIANSUI_XINGXIANG.get(day_gan, "")
+    _xg_note = DITIANSUI_XINGXIANG_NOTE.get(day_gan, "")
     if _xg:
         strength_plain += (
-            f"\n\n古书《滴天髓·论十天干》对「{day_gan}」有一番形象的描摹：「{_xg}」。"
-            f"这把{day_element}的天然禀赋与脾气写活了——{day_gan}如{day_element}之体，"
-            f"有其专属的喜与忌。您{strength}的判定，正可从这番古诀里读出底气从何而来、又该如何顺势而为。"
+            f"\n\n【古诀逐句释义】《滴天髓·论十天干》对「{day_gan}」的八字真言是：「{_xg}」。"
+            f"\n把它拆开看：{_xg_note}"
         )
+        # 顺势而为：结合身旺 / 身弱给具体行动建议
+        if strength in ("身旺", "中和偏旺"):
+            strength_plain += (
+                f"\n\n【该如何顺势而为】您身旺，好比一块肥沃厚土，本身底气已足。顺势的关键是“向外输出”而非“继续堆叠”："
+                f"① 事业上勇于担责、带团队（{day_element}能承载）；"
+                f"② 把才华变成作品与产出（食伤泄秀）；"
+                f"③ 主动经营财富与人际（财星、官星）；④ 助人、分享，反而更顺。"
+                f"要避的，是再叠印比（同五行）——那会土重埋金、反成滞塞。这正应了古诀“宜助宜帮、金多金光”的提醒：帮对了人、泄对了地方，您才显光华。"
+            )
+        else:
+            strength_plain += (
+                f"\n\n【该如何顺势而为】您身弱，好比土薄之地，顺势的关键是“借力补强”："
+                f"靠近贵人、扎进稳定平台、持续学习（印星生扶），与同辈抱团（比劫帮身），"
+                f"遇大事借势而不硬扛，方能把底气一点点养起来。"
+            )
+        # 专属喜忌（来自 step10 实际推导），引向"用神"一节
+        fy = yongshen.get("final_yong") or ""
+        fx = yongshen.get("final_xi") or ""
+        fj = yongshen.get("final_ji") or ""
+        if fy or fx or fj:
+            strength_plain += (
+                f"\n\n【您这一盘的专属喜与忌】综合穷通宝鉴 / 滴天髓 / 三命通会三源合参，对您最有用的是"
+                f"「用神 {fy or '—'}」「喜神 {fx or '—'}」，给您添乱的是「忌神 {fj or '—'}」。"
+                f"下方“用神”一节会把它们逐字讲透，并落到财富、事业、健康、感情等具体角度。"
+            )
 
     # 神峰通考·病药说 的病药判定（事实依据：data.SHENFENG），供下方格局/用神段落复用
     if strength in ("身弱", "中和偏弱"):
@@ -1146,6 +1200,33 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         f"“月令”（出生那个月的地支，这里是「{month_zhi}」）。月令就像当季的气候，"
         f"决定哪种五行最旺，是定格局的“提纲”。您构成「{pattern['pattern']}」：{pattern['description']}"
     )
+    # 格局推导过程（透明展示"怎么定出来的"）
+    _pr = pattern.get("reason", {}) or {}
+    _mz = _pr.get("月支", month_zhi)
+    _mh = _pr.get("月支本气藏干", "")
+    _mt = _pr.get("月支本气十神", "")
+    _tou = _pr.get("透出天干", []) or []
+    if pattern["pattern"] == "杂气格":
+        _cang = _hidden.get("month", []) or []
+        _cang_txt = "、".join([f"{h.get('藏干')}（{h.get('十神')}）" for h in _cang]) or f"{_mh}（{_mt}）"
+        _tou_txt = "、".join([f"{t.get('天干')}（{t.get('位置')}柱透出）" for t in _tou]) or "无正统十神透出"
+        pattern_plain += (
+            f"\n\n【“杂气格”是怎么得出来的——一步步推给您看】定格局以“月令”（出生月地支）为提纲。"
+            f"您的月支是「{_mz}」，属辰、戌、丑、未“四库”之一——古人称这类月为“杂气月”，"
+            f"因为库中所藏不是一干，而是三干混杂（本气+中气+余气）。您月支「{_mz}」内藏：{_cang_txt}。"
+            f"《子平真诠》定杂气格的规矩是“取透干或人元司令定格”——看这三干里哪个透出天干"
+            f"（显在四柱天干上），或看月令当值的“人元司令”来立格。本盘从月支透出天干的是：{_tou_txt}。"
+            f"透出的若是比肩、劫财（同我者），不算“八格”之列；而能立正格的正官、七杀、财、印、食伤又都没透出，"
+            f"于是“格局不清”，归为「杂气格」——意思是月令之气混杂，需结合日主强弱（扶抑）来取用神，而非拘泥某一固定格局。"
+        )
+    else:
+        _tou_txt = "、".join([f"{t.get('天干')}（{t.get('位置')}柱透出）" for t in _tou]) or f"月支本气{_mh}（{_mt}）"
+        pattern_plain += (
+            f"\n\n【“{pattern['pattern']}”是怎么定出来的】定格局以月令（月支「{_mz}」）为提纲，"
+            f"本气藏干为「{_mh}」（十神为{_mt}）；再看月支藏干哪个透出天干：本盘透出的是 {_tou_txt}，"
+            f"据此立为「{pattern['pattern']}」。简言之：月令给了一盘气的“主色调”，透干的那一神把格局“点”了出来。"
+        )
+
     # 引《子平真诠·论用神》格局顺逆（事实依据：data.ZIPING_GE / ziping_ge_category）
     _ge = ziping_ge_category(pattern.get("pattern", ""))
     if _ge:
@@ -1161,6 +1242,9 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
     fx = yongshen.get("final_xi") or ""
     fj = yongshen.get("final_ji") or ""
     syn = yongshen.get("synthesis", {})
+    _qt = yongshen.get("components", {}).get("穷通宝鉴", {})
+    _qt_yong = _qt.get("用神", "")
+    _aligned = syn.get("是否同向", {}) or {}
     yong_plain = (
         "取“用神”是八字的核心：用神就是对您最有帮助的五行/十神，相当于您的“补药”；"
         "喜神是帮用神一臂之力的；忌神是给您添乱的，逢之宜谨慎。\n"
@@ -1168,8 +1252,54 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         f"三命通会看格局（格局用神）。三者合参后：您的用神是「{fy or '需结合大运细断'}」；"
         f"喜神「{fx or '—'}」；忌神「{fj or '—'}」。"
     )
+    # 逐字解释 用神 / 喜神 / 忌神（每个干都讲清它在您盘里是"十神"里的什么角色）
+    _TG_ROLE = {
+        "zheng_guan": "正官——规矩、事业、名望、上司、丈夫（女命），是“克我而正”的力量",
+        "qi_sha": "七杀——魄力、挑战、压力、儿子（男命）、偏夫（女命），是“克我而偏”的力量",
+        "zheng_cai": "正财——稳定收入、妻子（男命）、务实，是“我克而正”的力量",
+        "pian_cai": "偏财——横财、父亲、外缘、桃花，是“我克而偏”的力量",
+        "zheng_yin": "正印——贵人、学历、庇护、母亲，是“生我而正”的力量",
+        "pian_yin": "偏印——偏门学识、冷贵人，是“生我而偏”的力量",
+        "shi_shen": "食神——才华、口福、女儿（女命）、温和输出，是“我生而正”的力量",
+        "shang_guan": "伤官——才艺、叛逆、锋芒、儿子（女命），是“我生而偏”的力量",
+        "bi_jian": "比肩——同辈、朋友、同事、分财者，是“同我”的力量",
+        "jie_cai": "劫财——兄弟、竞争者、破财者，是“同我”的力量",
+    }
+    _ELEM_MEAN = {
+        "木": "木主生长、舒展、条达（对应事业、官杀、行动力）",
+        "火": "火主温暖、名望、光明（对应贵人、印星、声誉）",
+        "土": "土主承载、稳定、积藏（对应根基、比劫、务实）",
+        "金": "金主收敛、才华、器具（对应食伤、才华输出、子女）",
+        "水": "水主流动、财富、智慧（对应财星、情感、灵动）",
+    }
+    _explain_lines = []
+    for _stem, _label in ((fy, "用神"), (fx, "喜神"), (fj, "忌神")):
+        if not _stem:
+            continue
+        _code, _tname = get_ten_god(day_gan, _stem)
+        _elem = STEM_ATTRS.get(_stem, {}).get("element", "")
+        _role = _TG_ROLE.get(_code, "（十神角色待定）")
+        _em = _ELEM_MEAN.get(_elem, "")
+        _tag = "尤其要靠近/多用" if _label != "忌神" else "要警惕/回避"
+        _explain_lines.append(
+            f"\n· 「{_label} {_stem}」（{_elem}）：在您盘里是「{_tname}」——{_role}。{_em}。{_tag}。"
+        )
+    if _explain_lines:
+        yong_plain += "\n\n【用神 / 喜神 / 忌神 逐字讲透】" + "".join(_explain_lines)
+    # 调候 vs 扶抑：两套体系的区别与合参
+    yong_plain += (
+        f"\n\n【调候用神 与 扶抑用神，是两个不同维度，别混】"
+        f"\n· 调候（穷通宝鉴）：管“寒暖燥湿”的气候问题——像冬天生人冷，要火来暖；夏天生人燥，要水来润。"
+        f"您日主{day_gan}生于「{month_zhi}」月（{_season}之令），全局水{_raw.get('水',0)}、火{_raw.get('火',0)}、"
+        f"土{_raw.get('土',0)}——调候用神是「{_qt_yong or fy}」（{STEM_ATTRS.get(_qt_yong,{}).get('element','') or _qt_yong}），"
+        f"需要它来调候，正说明本局{'偏寒、最需火来暖局' if STEM_ATTRS.get(_qt_yong,{}).get('element')=='火' else '偏燥、最需水来润局' if STEM_ATTRS.get(_qt_yong,{}).get('element')=='水' else '寒暖尚匀'}。"
+        f"\n· 扶抑（滴天髓）：管“身旺身弱”的强弱问题——您{strength}，喜{'克泄耗（向外输出）' if strength in ('身旺','中和偏旺') else '生扶（借力补强）'}。"
+        f"\n· 两者是否同向：调候与扶抑一致={'是' if _aligned.get('调候与扶抑一致') else '否'}；"
+        f"格局与扶抑一致={'是' if _aligned.get('格局与扶抑一致') else '否'}。"
+        f"所以综合上：{syn.get('综合建议','按三源合参定夺')}。"
+    )
     if syn.get("综合建议"):
-        yong_plain += f"\n综合建议：{syn['综合建议']}"
+        yong_plain += f"\n一句话记住：{syn['综合建议']}"
     # 引《神峰通考·病药说》以药喻用神（事实依据：data.SHENFENG）
     yong_plain += (
         f"\n\n若用明代张楠《神峰通考·病药说》来打比方：命局中『不妥当之处』便是『病』，"
@@ -1208,6 +1338,56 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
     else:
         signal_plain = "命局暂无显著的神煞与刑冲合害标记。"
 
+    # —— 用神如何影响您的具体人生（财富 / 事业 / 健康 / 感情 / 人际 / 学业）——
+    def _find_elem_for_code(dg, code):
+        for s in ("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"):
+            if get_ten_god(dg, s)[0] == code:
+                return STEM_ATTRS.get(s, {}).get("element", ""), s
+        return "", ""
+
+    _xiyong_elems = []
+    for _s in (fy, fx):
+        _e = STEM_ATTRS.get(_s, {}).get("element")
+        if _e and _e not in _xiyong_elems:
+            _xiyong_elems.append(_e)
+    _ji_elems = []
+    for _s in (fj,):
+        _e = STEM_ATTRS.get(_s, {}).get("element")
+        if _e and _e not in _ji_elems:
+            _ji_elems.append(_e)
+    _xiyong_str = "、".join(_xiyong_elems) or "（见上）"
+    _ji_str = "、".join(_ji_elems) or "（见上）"
+    _month_ts = _tdetails.get("month", {}).get("十神", "")
+    _month_tg = _tdetails.get("month", {}).get("天干", "")
+    if gender == "男":
+        _spouse_elem, _spouse_s = _find_elem_for_code(day_gan, "zheng_cai")
+        _spouse_label = "妻星（正财）"
+    else:
+        _spouse_elem, _spouse_s = _find_elem_for_code(day_gan, "zheng_guan")
+        _spouse_label = "夫星（正官）"
+    _spouse_score = _raw.get(_spouse_elem, 0)
+    life_plain = (
+        f"把上面抽象的“用神/喜忌”翻译成您关心的六个方面。总原则：多亲近「{_xiyong_str}」类的人事物、"
+        f"行业、方位与年份；少碰「{_ji_str}」类。下面逐条结合您这一盘的真实五行强弱说——\n"
+        f"【财富】您是{day_element}日主，“我克者”为财。财星所在的「水」原始得气仅 {_raw.get('水',0)}（偏弱），"
+        f"而偏财「{fj or '—'}」又是忌神且弱，说明正财不算丰、横财更宜谨慎；您比劫（{day_element}）重，"
+        f"合作共事易有“分财”，账目宜分明、莫糊涂合伙。\n"
+        f"【事业】“克我者”为官杀（事业、名望、上司）。您月干透「{_month_tg}」为「{_month_ts}」，"
+        f"有魄力担责之象；用神「{fy or '—'}」（印）主贵人平台暖局。但事业竞争力所在的「木」得气仅 {_raw.get('木',0)}（偏弱），"
+        f"临场发挥与升迁需借大运流年补木（喜用神中的木）方显。\n"
+        f"【健康（传统意象，非医学诊断）】五行讲究平衡：您「土」得气 {_raw.get('土',0)} 过重，传统上对应脾胃厚实易滞；"
+        f"「水」仅 {_raw.get('水',0)}（弱），对应肾系/泌尿系统、畏寒；「火」{_raw.get('火',0)}（偏弱），对应心阳与循环；"
+        f"「木」{_raw.get('木',0)}（弱），对应肝胆疏泄、情绪易郁结。调候用「{fy or '—'}」暖局，正可针对“土重水弱火弱”的偏寒偏滞。\n"
+        f"【感情婚姻】您{gender}命，{_spouse_label}为「{_spouse_elem}」（{_spouse_s or '—'}），"
+        f"本盘得气 {_spouse_score}（{'偏弱，宜晚婚或借大运流年补足' if isinstance(_spouse_score, (int, float)) and _spouse_score <= 0.8 else '尚可'}）。"
+        f"偏财「{fj or '—'}」为忌且藏于月支（父母宫），感情中注意财务边界与桃花分寸。\n"
+        f"【人际】您比劫（同辈、朋友、同事）多，人缘广、互助也多，但同辈间也易有利益牵扯；"
+        f"月干透七杀/官，对上（上司、规则）既有压力也是锻炼；喜神「{fx or '—'}」（官）提示：守规矩、尊权威，反而得助力。\n"
+        f"【学业】印星（喜用神中的火）为学业根基，本盘火偏弱，需主动用功、环境暖助；"
+        f"食伤（金）为才华输出，金相（{_raw.get('金',0)}）尚可，有一技之长可发挥；"
+        f"官杀（木）为考试竞争力，木偏弱，临场宜借运。一句话：您底子厚（身旺），成事靠“向外输出才华 + 借贵人与规则”，而非死守。"
+    )
+
     sections = [
         {"term": "您是谁（日主）", "plain": (
             f"八字由四柱八个字组成，其中“日干”（出生那天的天干）代表您本人，叫「日主」。"
@@ -1219,16 +1399,47 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         {"term": "您出生的时令与格局", "plain": pattern_plain, "source": pattern.get("source", "三命通会·论格局")},
         {"term": "对您最有利的“补药”（用神 / 喜神 / 忌神）", "plain": yong_plain,
          "source": "穷通宝鉴；滴天髓·体象；三命通会·论用神"},
+        {"term": "用神如何影响您的具体人生", "plain": life_plain,
+         "source": "穷通宝鉴；滴天髓·体象；三命通会·论六亲/论五行"},
         {"term": "您的大运与今年流年", "plain": liunian_plain, "source": "三命通会·论大运流年；滴天髓·体用"},
         {"term": "命局里的特殊信号", "plain": signal_plain, "source": "三命通会·论神煞 / 论刑冲合害"},
     ]
 
     # —— 纳音五行（渊海子平 / 三命通会·纳音）——
     if year_nayin or day_nayin:
+        _ny_elem = next((e for e in ("金", "木", "水", "火", "土") if e in (year_nayin or "")), "")
         nayin_plain = (
             f"纳音五行，是六十甲子每对干支被赋予的另一个“五行别称”，渊海子平与三命通会同载此表，与“正五行”并行不悖。"
             f"您年柱「{year_pillar}」的纳音为「{year_nayin or '—'}」，日柱「{day_pillar}」的纳音为「{day_nayin or '—'}」。"
             f"打个比方：正五行是您的“本色”，纳音是您的“雅号”，两者合看，命局意象更丰满生动。"
+        )
+        # 结合具体纳音 + 本盘实际五行强弱做"雅号如何落地"的解读
+        if _ny_elem and _ny_elem == day_element:
+            nayin_plain += (
+                f"\n\n【“本色与雅号”具体怎么理解】您的正五行日主是「{day_element}」（{day_gan}），"
+                f"纳音也属「{_ny_elem}」（{year_nayin}），本色与雅号同气，主您表里如一、根基厚重，"
+                f"这“{_ny_elem}”的意象（如{_ny_elem}之沉稳/生发）会贯穿您的外在气质与内在定力。"
+            )
+        elif _ny_elem:
+            _rel = "与您同气、相互涵养"
+            if SHENG.get(day_element) == _ny_elem:
+                _rel = f"纳音之{_ny_elem}生扶您的{day_element}（如雨润土、资粮助身）"
+            elif KE.get(day_element) == _ny_elem:
+                _rel = f"纳音之{_ny_elem}被您的{day_element}所克（您能驾驭、转化它）"
+            elif SHENG.get(_ny_elem) == day_element:
+                _rel = f"您的{day_element}生纳音之{_ny_elem}（您滋养、成就它）"
+            elif KE.get(_ny_elem) == day_element:
+                _rel = f"纳音之{_ny_elem}克您的{day_element}（它约束、雕琢您）"
+            nayin_plain += (
+                f"\n\n【“本色与雅号”具体怎么理解】您的正五行日主是「{day_element}」（{day_gan}），"
+                f"而纳音却披着「{year_nayin}」（属{_ny_elem}）的雅号——就像一个本性厚重的{day_element}，"
+                f"顶着“{_ny_elem}”的名号。{_rel}，两者相成：您外表敦厚内里藏才，"
+                f"如{_ny_elem}扎根{day_element}、根基稳而能向上。"
+                f"但别只看雅号——本盘实际的「{_ny_elem}」得气仅 {_raw.get(_ny_elem, 0)}（偏弱），"
+                f"这层雅号之美要等您走「{_ny_elem}」旺的大运流年（或逢喜用），才真正显出来。"
+            )
+        nayin_plain += (
+            f"\n简言之：正五行讲“您是什么”，纳音讲“您像什么”；一个是体质，一个是气质，合看才立体。"
         )
         sections.append({"term": "您的纳音五行（年命 / 日柱）", "plain": nayin_plain,
                          "source": "渊海子平·纳音；三命通会·纳音"})
@@ -1243,6 +1454,8 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
             f"\n袁天罡据此批曰：「{cg['song']}」"
             f"\n这便是传统称骨法对您命格气质的一句古批。需说明：称骨与八字是两套并行的古老算法，"
             f"一个称“重量”、一个论“五行生克”，可互为映照；均属古人的经验总结，宜以文化视角欣赏，不必奉为定论。"
+            f"\n（这首古批如何与您四柱的“气数阶段”合看、逐句理解，详见下方『十二长生』一节——"
+            f"那里会把您年/月/日/时支分别处于长生·帝旺·墓·绝等哪一阶段讲透，并和这首称骨歌互相印证。）"
         )
         if cg.get("year_note"):
             chengu_plain += f"\n{cg['year_note']}"
@@ -1282,19 +1495,91 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
                 f"\n十二宫中长生、临官(禄)、帝旺为『旺相』，好比人生当打之年；墓、绝、胎、养为收藏孕育，并非凶险。"
                 f"古诀云『生旺太过宜制伏，死绝不及宜生扶』，重在识其通变，不可执一而论。"
             )
+            # 把"气数"和"身旺底气 / 称骨歌"勾连起来，回应"结合四柱气数解释"的要求
+            _day_state_cs = next((s.split("为")[1] for s in _pz if s.startswith("日支")), "")
+            _time_state_cs = next((s.split("为")[1] for s in _pz if s.startswith("时柱")), "")
+            _month_state_cs = next((s.split("为")[1] for s in _pz if s.startswith("月柱")), "")
+            _year_state_cs = next((s.split("为")[1] for s in _pz if s.startswith("年柱")), "")
+            _cs_plain += (
+                f"\n\n【用“气数”解释您的“身旺底气”从哪来】上面说到您身旺，底气的一个重要来源就藏在十二长生里："
+                f"您的日支「{pillars['day'][1]}」与时支「{pillars['time'][1]}」都落在「{_day_state_cs or _time_state_cs}」"
+                f"（己土阴干逆行，帝旺在巳）——日支是“自己宫”、时支是“结局/子孙宫”，自坐帝旺，"
+                f"等于您中年当打之年气数正旺、自身定力足，这与“身旺”互相印证；"
+                f"而月支「{month_zhi}」为「{_month_state_cs}」、年支「{pillars['year'][1]}」为「{_year_state_cs}」属收藏蓄势之位，"
+                f"提示早岁宜蓄力、中晚年方发。"
+            )
+            if chengu_result and chengu_result.get("song"):
+                _cg_song = chengu_result["song"]
+                _cg_total = chengu_result.get("total_str", "")
+                _cs_plain += (
+                    f"\n\n【把袁天罡称骨歌 与 十二长生 合看】您称骨 {_cg_total}，袁天罡批：「{_cg_song}」。"
+                    f"这首古批是古人对“总重量”的意象总评；若用十二长生来读：日时支坐旺（帝旺/临官）"
+                    f"正说明您自身气数旺、底气足，与称骨歌里那份“自身站得稳、不靠依附”的意象相合；"
+                    f"月年支处收藏之位，则呼应“早年蓄势、中晚年发越”的节律。"
+                    f"称骨是“总重量”、十二长生是“气数阶段”，两相互参，命局意象才真正活起来。"
+                )
             sections.append({"term": "您的生命节律：十二长生（三命通会·寄生十二宫）",
                              "plain": _cs_plain, "source": cs["source"]})
 
-    # —— 三命通会·论六亲 ——
+    # —— 三命通会·论六亲（大白话重构，每一步落到本盘实际十神 + 宫位）——
     _lq = SANMINGTONGHUI["LIUQIN"]
-    _side = _lq["male"] if gender == "男" else _lq["female"]
+    _pos_label = {"year": "年柱(祖上/父母宫)", "month": "月柱(父母兄弟宫)",
+                  "day": "日柱(己身/夫妻宫)", "time": "时柱(子孙宫)"}
+
+    def _scan_tg(code):
+        found = []
+        for _pos in ("year", "month", "day", "time"):
+            _d = _tdetails.get(_pos, {})
+            _tg = _d.get("天干", "")
+            if _tg and get_ten_god(day_gan, _tg)[0] == code:
+                found.append(f"{_pos_label[_pos]}天干透出「{_tg}」（现于明处，力量强、关系明显）")
+        for _pos in ("year", "month", "day", "time"):
+            for _h in (_hidden.get(_pos, []) or []):
+                _hg = _h.get("藏干", "")
+                if _hg and get_ten_god(day_gan, _hg)[0] == code:
+                    found.append(f"{_pos_label[_pos]}地支藏「{_hg}」（藏于暗处，力量含蓄、缘分内敛）")
+        return found
+
+    if gender == "男":
+        _rel_defs = [
+            ("父亲", "pian_cai", "偏财为父"),
+            ("母亲", "zheng_yin", "正印为母"),
+            ("兄弟姐妹", ("bi_jian", "jie_cai"), "比劫为兄弟姐妹（男女同断）"),
+            ("妻子", "zheng_cai", "正财为妻"),
+            ("儿子", "qi_sha", "七杀为子（男命）"),
+            ("女儿", "zheng_guan", "正官为女（男命）"),
+        ]
+    else:
+        _rel_defs = [
+            ("父亲", "pian_cai", "偏财为父"),
+            ("母亲", "zheng_yin", "正印为母"),
+            ("兄弟姐妹", ("bi_jian", "jie_cai"), "比劫为兄弟姐妹（男女同断）"),
+            ("丈夫", "zheng_guan", "正官为夫（女命）"),
+            ("儿子", "shi_shen", "食神为子（女命，三命通会）"),
+            ("女儿", "shang_guan", "伤官为女（女命，三命通会）"),
+        ]
+    _lq_lines = []
+    for _name, _code, _rule in _rel_defs:
+        _codes = _code if isinstance(_code, tuple) else (_code,)
+        _found = []
+        for _c in _codes:
+            _found += _scan_tg(_c)
+        if _found:
+            _lq_lines.append(f"· {_name}（{_rule}）：本盘见{_name}星于——{'；'.join(_found)}。")
+        else:
+            _lq_lines.append(f"· {_name}（{_rule}）：本盘天干地支均未见明显{_name}星，主这方面缘分较淡、或需借大运流年方显。")
     _lq_plain = (
-        f"《三命通会·卷七·论六亲》以日干（您是「{day_gan}」）为中心，把五行生克转成亲人关系："
-        f"克我者官杀、生我者印星、我生者食伤、我克者财星、同我者比劫，再分正偏对应六亲。\n"
-        f"您为{gender}命，对应如下——"
-        + "；".join([f"{k}：{v}" for k, v in _side.items() if k != "source"])
-        + f"。\n推六亲须『星宫同参』：十神为『星』主关系好坏，四柱位置（年祖上、月父母兄弟、"
-          f"日妻妾己身、时子孙）为『宫』主条件优劣，二者合看方准。"
+        f"《三命通会·卷七·论六亲》的算法，用大白话讲就是：以您自己（日干「{day_gan}」）为中心，"
+        f"把“谁生我、我生谁、谁克我、我克谁、谁同我”转成亲人角色——生我者=父母长辈、我克者=妻财、"
+        f"克我者=官杀丈夫/子女、我生者=食伤子女、同我者=兄弟姐妹。下面把您这一盘里“每位亲人对应的星”"
+        f"逐一找出来、并看它落在哪一柱（宫位），这就是古人说的『星宫同参』：星（十神）看关系好坏，"
+        f"宫（年祖上/月父母/日夫妻己身/时子孙）看条件优劣。\n"
+        + "\n".join(_lq_lines)
+        + f"\n\n【星宫同参怎么读】若某位亲人的“星”透在天干（明处），关系明显、力量强；若只藏在地支（暗处），"
+          f"则缘分含蓄内敛。星落之宫也定“在哪方面显”：如父星落月柱父母宫，主父亲与您早年家庭关联深；"
+          f"妻星落日支夫妻宫，主配偶贴近您自身。把“星”与“宫”合看，比单看一个字准得多。"
+        + f"\n【落到人际】您比劫（同辈朋友）多，人缘广、互助也多，但同辈间易有利益牵扯；"
+          f"官杀（上司/规则/子女）透干，对上既有压力也是锻炼。守规矩、借贵人（印）、择明友（比劫有度），人际便顺。"
     )
     sections.append({"term": "您的六亲与人际（三命通会·论六亲）", "plain": _lq_plain,
                      "source": _lq["source"]})
@@ -1418,6 +1703,8 @@ def step12_report(pillars: Dict, dayun: Dict, tenshen: Dict, relations: Dict,
         day_nayin=day_nayin,
         pillars=pillars,
         gender=gender,
+        wuxing=wuxing,
+        tenshen=tenshen,
     )
     # 称骨结果一并附于报告（API / JSON 可取用）
     report["chengu"] = chengu_result
