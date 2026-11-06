@@ -280,9 +280,11 @@ def calculate_ziwei(year, month, day, hour, gender, fix_leap=True, current_year=
     }
 
 
-def flow_year(chart, flow_year_gregorian):
-    """流年落宫：取流年地支对应的宫。返回该宫 dict（含流年四化）。"""
-    lunar = Solar.fromYmdHms(flow_year_gregorian, 1, 1, 0, 0, 0).getLunar()
+def flow_year(chart, flow_year_gregorian, month=1, day=1):
+    """流年落宫：取流年地支对应的宫。返回该宫 dict（含流年四化）。
+    flow_year_gregorian 取该公历年的年月日（默认 1/1）。紫微年界=立春，
+    故传入实际日期（而非年初）可正确取当年立春后的流年。"""
+    lunar = Solar.fromYmdHms(flow_year_gregorian, month, day, 0, 0, 0).getLunar()
     fy = lunar.getBaZi()[0]
     fy_branch = BRANCHES.index(fy[1])
     fy_stem = STEMS.index(fy[0])
