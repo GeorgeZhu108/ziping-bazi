@@ -90,6 +90,23 @@ def test_no_english_in_ziwei_summary():
     assert not leaks, f"紫微总体总评发现英文泄漏: {leaks[:10]}"
 
 
+def test_bazi_grounding():
+    """永久防御：总体总评必须含『十神命名原理导语』『滴天髓逐句大白话』『本盘印证』，
+    杜绝术语/古诀突兀冒出、不接本盘（此前用户投诉三类问题）。"""
+    bad = []
+    for (y, m, d, h, g) in INPUTS:
+        r = E.calculate_bazi(y, m, d, h, 0, gender=g)
+        ov = ""
+        for s in r["steps"][-1].get("plain_language", {}).get("sections", []):
+            if isinstance(s, dict) and "总体总评" in s.get("term", ""):
+                ov = s.get("plain", "")
+                break
+        for token in ("怎么看十神", "逐句大白话", "本盘印证"):
+            if token not in ov:
+                bad.append((y, m, d, h, g, token))
+    assert not bad, f"总体总评缺少接地机制: {bad[:10]}"
+
+
 if __name__ == "__main__":
     try:
         test_no_english_in_user_text()
@@ -109,4 +126,11 @@ if __name__ == "__main__":
     except AssertionError as e:
         print("[FAIL] test_no_english_in_ziwei_summary:", e)
         raise
-    print("PASS: 引擎用户文案无英文泄漏（八字+紫微），透出位置均为中文")
+    try:
+        test_bazi_grounding()
+        print("[OK] test_bazi_grounding")
+    except AssertionError as e:
+        print("[FAIL] test_bazi_grounding:", e)
+        raise
+    print("PASS: 引擎用户文案无英文泄漏（八字+紫微），透出位置均为中文，且术语/古诀均接地")
+

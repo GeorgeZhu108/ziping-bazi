@@ -32,6 +32,132 @@ _KE_WO = {v: k for k, v in _WO_KE.items()}                                    # 
 _WO_SHENG = {"木": "火", "火": "土", "土": "金", "金": "水", "水": "木"}      # 我生者 = 食伤
 _SHENG_WO = {v: k for k, v in _WO_SHENG.items()}                              # 生我者 = 印
 
+# —— 十神 → 人生领域（通用，任意日主适用）——
+_TG_LIFE = {
+    "zheng_guan": "事业、名望、上级、规则与责任（含约束与锻炼）",
+    "qi_sha": "魄力、挑战、压力与突破（也管事业竞争力与权威）",
+    "zheng_cai": "正财、稳定收入、妻子（男命）",
+    "pian_cai": "偏财、外财、投资与桃花（男命亦含情人）",
+    "zheng_yin": "学业、贵人、庇护与长辈",
+    "pian_yin": "偏印、特殊才华与暗助",
+    "shi_shen": "才华、表达、食禄与子女（男命）",
+    "shang_guan": "才艺、表达与输出、子女（女命）",
+    "bi_jian": "同辈、朋友、同事（亦含分财）",
+    "jie_cai": "劫财、同辈竞争与破财",
+}
+
+
+def tenshen_principle(day_element: str) -> str:
+    """十神命名原理：给定日主五行，用五行生克讲清"为什么官杀=某元素"等，
+    让用户看到任何十神都知其来源，杜绝突兀冒出术语。"""
+    cai_e = _WO_KE.get(day_element, "")
+    guan_e = _KE_WO.get(day_element, "")
+    yin_e = _SHENG_WO.get(day_element, "")
+    shang_e = _WO_SHENG.get(day_element, "")
+    return (
+        f"先说一个命名规则，后面都用得上：您是「{day_element}」日主。命理把日主与其他干支的关系"
+        f"称为「十神」，全按五行生克命名——克您（{day_element}）的那一行叫「官杀」"
+        f"（{guan_e}克{day_element}，所以您的官杀＝「{guan_e}」）；"
+        f"您克的那一行叫「财」（{day_element}克{cai_e}，所以财＝「{cai_e}」）；"
+        f"生您的叫「印」（{yin_e}生{day_element}）；您生的叫「食伤」（{day_element}生{shang_e}）；"
+        f"和您同五行的叫「比劫」（「{day_element}」）。"
+        f"各组各管一面：官杀管事业/名望/上司/规则，财管财富，印管学业/贵人，食伤管才华，比劫管同辈朋友。"
+    )
+
+
+def explain_ten_god(day_gan: str, day_element: str, stem: str, code: str, loc: str) -> str:
+    """把"某柱透/藏某干"翻译成可追溯的推导：该干属何五行→对日主是何十神→落何宫→意味什么。"""
+    elem = STEM_ATTRS.get(stem, {}).get("element", "")
+    yin = STEM_ATTRS.get(stem, {}).get("yin")
+    yin_txt = "阴" if yin else "阳"
+    name = TEN_GOD_NAMES.get(code, code)
+    life = _TG_LIFE.get(code, "")
+    rel = {_WO_KE.get(day_element, ""): "您所克，即财星",
+           _KE_WO.get(day_element, ""): "克您，即官杀",
+           _SHENG_WO.get(day_element, ""): "生您，即印星",
+           _WO_SHENG.get(day_element, ""): "您所生，即食伤",
+           day_element: "与您同气，即比劫"}.get(elem, "与您有特殊关系")
+    return (
+        f"{loc}见「{stem}」——{stem}属{yin_txt}{elem}，对您{day_gan}{day_element}日主而言，"
+        f"{elem}（{rel}），所以「{stem}」在您盘里是「{name}」（主管{life}）。"
+        f"它出现在「{loc}」的位置，意味着这份{life.split('、')[0]}的力量，会更多作用在对应宫位所主的人生领域上。"
+    )
+
+
+# —— 《滴天髓·论十天干》逐句大白话释义（把古诀点到的天干/五行/生肖逐一讲清）——
+DITIANSUI_CLAUSE_PLAIN = {
+    "甲": "①「甲木参天，脱胎要火」——甲是参天大树，最需火来泄秀成材；②「春不容金」——春天木旺，容不下金来克伐；"
+         "③「秋不容土」——秋天金旺木凋，土重则根不舒展；④「火炽乘龙」——火旺又逢辰龙（湿土）养根最佳；"
+         "⑤「水宕骑虎」——水多漂浮，要骑寅虎（木根）才稳；⑥「地润天和，植立千古」——水火适度则长青。",
+    "乙": "①「乙木虽柔，刲羊解牛」——乙是藤萝花草，柔中带刚；②「怀丁抱丙」——心怀丙丁火则得温暖；"
+         "③「跨凤乘猴」——逢酉鸡（凤）申猴则灵动；④「虚湿之地，骑马亦忧」——生于湿泥水地，即便有午马（火）也忧；"
+         "⑤「藤萝系甲，可春可秋」——依附甲木（大树）则四季可活。",
+    "丙": "①「丙火猛烈，欺霜侮雪」——丙是太阳火，气性刚烈，不畏霜雪寒凉；②「能煅庚金」——丙火能锻炼庚金（阳金）成器，喻有魄力办成难事；"
+         "③「逢辛反怯」——丙辛相合化水，遇辛金（阴金）反显怯懦；④「土众成慈」——土多则火生土、火性转慈和包容；"
+         "⑤「水猖显节」——水（官杀）旺时，丙火反显坚贞节操；⑥「虎马犬乡，甲来有殃」——寅午戌三合火局（虎=寅、马=午、犬=戌），若再逢甲木来生，火太旺反招殃。",
+    "丁": "①「丁火柔中，内性昭融」——丁是灯烛火，外柔内明；②「抱乙而孝」——得乙木（阴木）生则柔顺；"
+         "③「合壬而忠」——与壬水相合则忠；④「旺而不烈，衰而不穷」——旺时不燥、衰时不灭；"
+         "⑤「如有嫡母，可秋可冬」——有甲木（嫡母=印）生扶，秋冬亦安。",
+    "戊": "①「戊土固重，既中且正」——戊是城墙堤岸土，厚重中正；②「静翕动辟，万物司命」——静则收纳、动则生发，司万物之命；"
+         "③「水润物生，火燥物病」——水润则生、火燥则病；④「若在艮坤，怕冲宜静」——艮（寅）、坤（申）之地，怕冲宜静守。",
+    "己": "①「己土卑湿，中正蓄藏」——己是田园湿土，卑下而中正、能容能藏；②「不愁木盛，不畏水狂」——木多（官杀）不愁、水狂（财）不畏（湿土纳水）；"
+         "③「火少火晦」——火（印）太少则晦暗无光；④「金多金光」——金（食伤）多反显金之光华；"
+         "⑤「若要物旺，宜助宜帮」——要旺须火来暖、比劫（同土）来帮。",
+    "庚": "①「庚金带煞，刚健为最」——庚是顽铁，刚健带煞；②「得水而清，得火而锐」——得水则清、得火（锻炼）则锐利成器；"
+         "③「土润则生，土干则脆」——湿土生、燥土脆；④「能赢甲兄，输于乙妹」——能胜甲木、却输于乙木（乙庚相合）。",
+    "辛": "①「辛金软弱，温润而清」——辛是珠玉，温润清灵；②「畏土之叠，乐水之盈」——怕土叠埋、喜水盈养；"
+         "③「能扶社稷，能救生灵」——可成大用；④「热则喜母，寒则喜丁」——热时喜土（母）生、寒时喜丁火暖。",
+    "壬": "①「壬水通河，能泄金气」——壬是江河，能泄金气；②「刚中之德，周流不滞」——刚中带德、流动不滞；"
+         "③「通根透癸」——通根又透癸（助）；④「冲天奔地」——势大奔流；⑤「化则有情，从则相济」——合化则有情、从格则相济。",
+    "癸": "①「癸水至弱，达于天津」——癸是雨露，至弱而通达；②「得龙而运，功化斯神」——得辰龙（水库）则运化神奇；"
+         "③「不愁火土，不论庚辛」——不畏火土、不论庚辛；④「合戊见火，化象斯真」——与戊土合再见火，化象为真。",
+}
+
+# 生肖/动物字 → 地支（用于解析古诀中"虎马犬乡""乘龙""骑虎"等）
+_ANIMAL_BRANCH = {"虎": "寅", "马": "午", "犬": "戌", "龙": "辰", "羊": "未", "牛": "丑",
+                  "凤": "酉", "鸡": "酉", "猴": "申", "蛇": "巳", "兔": "卯", "猪": "亥", "鼠": "子"}
+
+
+def _poem_terms(poem: str):
+    """从《滴天髓》古诀中提取被点名的天干 / 五行 / 生肖(→地支)。"""
+    stems, eles, brs = [], [], []
+    for ch in poem:
+        if ch in HEAVENLY_STEMS and ch not in stems:
+            stems.append(ch)
+        if ch in ("金", "木", "水", "火", "土") and ch not in eles:
+            eles.append(ch)
+        if ch in _ANIMAL_BRANCH and _ANIMAL_BRANCH[ch] not in brs:
+            brs.append(_ANIMAL_BRANCH[ch])
+    return stems, eles, brs
+
+
+def dt_crosscheck(day_gan: str, poem: str, all_stems: dict, raw: dict, branches: list) -> str:
+    """把古诀点到的天干/五行/生肖，逐条对照本盘：在不在、在哪一宫、得气旺弱。"""
+    stems, eles, brs = _poem_terms(poem)
+    parts = []
+    for s in stems:
+        elem = STEM_ATTRS.get(s, {}).get("element", "")
+        if s == day_gan:
+            parts.append(f"「{s}」（{elem}）：就是您自己的日主；其余天干都是与您发生关系的『客』。")
+            continue
+        locs = all_stems.get(s, [])
+        if locs:
+            parts.append(f"「{s}」（{elem}）：本盘在{'、'.join(locs)}出现——古诀点到的这一行，在您命里是『实象』，会真正显现。")
+        else:
+            parts.append(f"「{s}」（{elem}）：本盘四柱不见{s}——古诀此句只是对{day_gan}本性的描述，须待大运/流年逢{s}时才显。")
+    for e in eles:
+        sc = round(float(raw.get(e, 0)), 1)
+        tag = "旺（得气重）" if sc >= 3 else ("偏弱" if sc <= 1 else "中和")
+        parts.append(f"五行「{e}」：本盘得气约 {sc}（{tag}）。")
+    rev = {v: k for k, v in _ANIMAL_BRANCH.items()}
+    for b in brs:
+        an = rev.get(b, "")
+        if b in branches:
+            parts.append(f"地支「{b}」（{an}）：本盘四柱含{b}——与古诀所述呼应。")
+        else:
+            parts.append(f"地支「{b}」（{an}）：本盘四柱不含{b}。")
+    return "\n".join("· " + p for p in parts)
+
 # 晚子时口径枚举 → 中文展示名（避免界面出现英文 current-day / next-day 等）
 # 晚子时口径枚举 → 纯中文展示（供前端历法校正卡片渲染，不得含英文）。
 # 注：current-day 与 lunar-python 库的排盘口径一致，但英文库名仅作开发备注，
@@ -1137,11 +1263,11 @@ def build_overall_summary(day_gan: str, day_element: str, strength: str, pillars
             _d = _tdetails.get(p, {})
             _tg = _d.get("天干", "")
             if _tg and get_ten_god(day_gan, _tg)[0] == code:
-                out.append(f"{_pos[p]}天干透「{_tg}」")
+                out.append((f"{_pos[p]}天干", _tg, code))
             for _h in (_hidden.get(p, []) or []):
                 _hg = _h.get("藏干", "")
                 if _hg and get_ten_god(day_gan, _hg)[0] == code:
-                    out.append(f"{_pos[p]}地支藏「{_hg}」")
+                    out.append((f"{_pos[p]}地支", _hg, code))
         return out
 
     def _elem_score(el):
@@ -1171,37 +1297,73 @@ def build_overall_summary(day_gan: str, day_element: str, strength: str, pillars
     _xiyong = "/".join([e for e in (fy, fx) if e not in ("—", "")]) or "见上方用神"
     _ji = fj if fj not in ("—", "") else "见上方用神"
 
+    # 全盘干支清单 + 地支（供古诀本盘印证与十神落宫自解释）
+    _all_stems = {}
+    for p in ("year", "month", "day", "time"):
+        _d = _tdetails.get(p, {})
+        _tg = _d.get("天干", "")
+        if _tg:
+            _all_stems.setdefault(_tg, []).append(f"{_pos[p]}天干")
+        for _h in (_hidden.get(p, []) or []):
+            _hg = _h.get("藏干", "")
+            if _hg:
+                _all_stems.setdefault(_hg, []).append(f"{_pos[p]}地支")
+    _branches = [parse_pillar(pillars[p])[1] for p in ("year", "month", "day", "time") if p in pillars]
+
+    # 十神命名原理导语：让后面出现的每一个十神/元素都知其来源（消除"术语突兀冒出"）
+    _principle = tenshen_principle(day_element)
+    _xg_clause = DITIANSUI_CLAUSE_PLAIN.get(day_gan, "")
+    _xg_cross = dt_crosscheck(day_gan, _xg, _all_stems, _raw, _branches) if _xg else ""
+
     lines = []
-    # 1 性格底色
-    lines.append(
-        f"【性格底色】您是「{day_gan}」{day_element}日主，{strength}。"
-        + (f"《滴天髓》描其性情为「{_xg}」——" if _xg else "")
-        + f"身旺者底气足、敢担当；身弱者更需借力、善合作。本盘五行以「{day_element}」得气最厚"
-          f"（原始份数约 {_elem_score(day_element)}），构成您行事稳健、重实际的基本盘。"
+    # 0 十神命名原理（前置，消除"术语突兀冒出"）
+    lines.append(f"【怎么看十神（先读这段）】{_principle}")
+
+    # 1 性格底色 + 《滴天髓》逐句释义 + 本盘印证
+    _char = f"【性格底色】您是「{day_gan}」{day_element}日主，{strength}。"
+    if _xg:
+        _char += (
+            f"\n《滴天髓》对「{day_gan}」的性情古诀是：「{_xg}」。"
+            f"\n· 逐句大白话：{_xg_clause}"
+            f"\n· 本盘印证（古诀点到的天干/五行/生肖，逐条对照您这一盘）：\n{_xg_cross}"
+        )
+    _char += (
+        f"\n综上，本盘五行以「{day_element}」得气最厚（原始份数约 {_elem_score(day_element)}），"
+        f"构成您行事稳健、重实际的基本盘；"
+        f"{'身旺者底气足、敢担当，宜向外输出才华；' if strength in ('身旺', '中和偏旺') else '身弱者更需借力、善合作，宜靠近贵人与平台。'}"
     )
-    # 2 事业成就
+    lines.append(_char)
+    # 2 事业成就（官杀派生 + 落宫自解释）
     _guan = _scan("zheng_guan") + _scan("qi_sha")
-    _guan_txt = ("、".join(_guan) if _guan else "四柱天干地支未见明显官杀透出")
+    _guan_expl = [explain_ten_god(day_gan, day_element, s, c, loc) for (loc, s, c) in _guan]
+    _guan_body = ("；".join(_guan_expl) if _guan_expl else
+                  "本盘四柱天干地支未见明显官杀透出——您与规则/上司的张力不显，事业更靠自我驱动与专业立身。")
     lines.append(
-        f"【事业成就】事业名望看「官杀」({guan_e})：本盘{_guan_txt}，"
-        f"主您对规则、上司与责任既有压力也是锻炼；官杀透干者宜在体制、管理或专业权威上发力。"
+        f"【事业成就】事业名望看「官杀」({guan_e})——上面说过，官杀就是克您的那一行"
+        f"（{guan_e}克{day_element}），代表事业、名望、上司、规则与责任。"
+        f"{_guan_body}。"
         f"用神「{fy}」主贵人平台暖局，事业宜借贵人与稳定平台，而非单打独斗。"
     )
-    # 3 财富格局
-    _cai = _scan("zheng_cai") + _scan("pian_cai")
-    _cai_txt = ("、".join(_cai) if _cai else "财星暗藏、不显于明处")
+    # 3 财富格局（财派生 + 落宫自解释）
+    _cai_items = _scan("zheng_cai") + _scan("pian_cai")
+    _cai_expl = [explain_ten_god(day_gan, day_element, s, c, loc) for (loc, s, c) in _cai_items]
+    _cai_body = ("；".join(_cai_expl) if _cai_expl else
+                 "本盘财星暗藏、不显于明处——进财门路偏含蓄，宜踏实积累、不宜冒进投机。")
     lines.append(
-        f"【财富格局】财富看「财星」({cai_e})：本盘财星{_cai_txt}，五行中{cai_e}得气约 {_elem_score(cai_e)}。"
-        f"财星透干者进财有门路；只藏支者宜踏实积累、不宜冒进投机。"
-        f"您比劫({day_element})重，合作共事易有分财，账目与合伙宜分明。"
+        f"【财富格局】财富看「财星」({cai_e})——上面说过，财就是您所克的那一行"
+        f"（{day_element}克{cai_e}）。{_cai_body}。"
+        f"五行中{cai_e}得气约 {_elem_score(cai_e)}。您比劫({day_element})重，合作共事易有分财，账目与合伙宜分明。"
     )
-    # 4 感情婚姻
+    # 4 感情婚姻（配偶星元素派生）
     _spouse_palace_txt = (
         f"日支夫妻宫「{_day_zhi}」藏有「{''.join(spouse_in_palace)}」({spouse_name})"
         if spouse_in_palace else
         f"日支夫妻宫「{_day_zhi}」未见明显{spouse_name}，缘分偏含蓄内敛")
+    _spouse_elem_txt = (f"「{_spouse_elem}」" if _spouse_elem else "（需结合大局细看）")
     lines.append(
-        f"【感情婚姻】您{gender}命，{spouse_name}为「{_spouse_elem or '—'}」；{_spouse_palace_txt}。"
+        f"【感情婚姻】您{gender}命，{spouse_name}为{_spouse_elem_txt}"
+        f"——按上面的十神规则，配偶星由日主定出：男命以「正财」为妻星（您所克之{cai_e}），"
+        f"女命以「正官」为夫星（克您之{guan_e}）。{_spouse_palace_txt}。"
         f"{spouse_name}透干者感情明朗、宜早遇；只藏支者宜晚婚或借大运流年补足。"
         f"偏财/桃花为忌时，感情中注意财务边界与桃花分寸。"
     )
@@ -1209,26 +1371,33 @@ def build_overall_summary(day_gan: str, day_element: str, strength: str, pillars
     _weak = [e for e in (cai_e, guan_e, yin_e, shang_e) if 0 < _elem_score(e) <= 1]
     _weak_txt = ("、".join([f"{e}约{_elem_score(e)}" for e in _weak]) or "各五行须留意整体平衡")
     lines.append(
-        f"【健康寿元·传统意象，非医学诊断】五行讲究平衡：本盘以「{day_element}」偏重"
-        f"（约 {_elem_score(day_element)}），过旺之五行对应脏腑易滞；"
+        f"【健康寿元·传统意象，非医学诊断】五行讲究平衡：本盘「{day_element}」得气约 {_elem_score(day_element)}"
+        f"（{'偏旺' if _elem_score(day_element) >= 3 else '不属过旺'}）"
+        f"{'——过旺之五行对应脏腑易滞' if _elem_score(day_element) >= 3 else ''}；"
         f"偏弱者（{_weak_txt}）对应系统宜养护。调候用「{fy}」暖局，正可针对偏寒偏滞。"
         f"此仅为传统象义提示，健康问题务必以现代医学为准。"
     )
-    # 6 人际关系
+    # 6 人际关系（比劫派生 + 落宫自解释）
     _bi = _scan("bi_jian") + _scan("jie_cai")
+    _bi_expl = [explain_ten_god(day_gan, day_element, s, c, loc) for (loc, s, c) in _bi]
+    _bi_body = ("；".join(_bi_expl) if _bi_expl else "本盘比劫不显，人际更靠贵人(印)与规则(官)。")
     lines.append(
-        f"【人际关系】同辈朋友看「比劫」({day_element})：本盘"
-        + ("、".join(_bi) if _bi else "比劫不显，人际更靠贵人(印)与规则(官)")
-        + "。比劫多则人缘广、互助多，但同辈间也易有利益牵扯；"
-          f"喜神含「官」，守规矩、尊权威反得助力。"
+        f"【人际关系】同辈朋友看「比劫」({day_element})——即与您同五行的干支（{day_element}）。"
+        f"{_bi_body}。"
+        f"比劫多则人缘广、互助多，但同辈间也易有利益牵扯；"
+        f"喜神含「官」，守规矩、尊权威反得助力。"
     )
-    # 7 学业才学
+    # 7 学业才学（印/食伤派生 + 落宫自解释）
     _yin = _scan("zheng_yin") + _scan("pian_yin")
     _shang = _scan("shi_shen") + _scan("shang_guan")
+    _yin_expl = [explain_ten_god(day_gan, day_element, s, c, loc) for (loc, s, c) in _yin]
+    _shang_expl = [explain_ten_god(day_gan, day_element, s, c, loc) for (loc, s, c) in _shang]
+    _yin_body = ("；".join(_yin_expl) if _yin_expl else f"印星偏隐（{yin_e}得气约 {_elem_score(yin_e)}）")
+    _shang_body = ("；".join(_shang_expl) if _shang_expl else f"食伤偏隐（{shang_e}得气约 {_elem_score(shang_e)}）")
     lines.append(
-        f"【学业才学】学业根基看「印星」({yin_e})、才华输出看「食伤」({shang_e})："
-        f"本盘印星{('、'.join(_yin) if _yin else '偏隐')}（{yin_e}得气约 {_elem_score(yin_e)}），"
-        f"食伤{('、'.join(_shang) if _shang else '偏隐')}（{shang_e}得气约 {_elem_score(shang_e)}）。"
+        f"【学业才学】学业根基看「印星」({yin_e})——即生您的那一行（{yin_e}生{day_element}）；"
+        f"才华输出看「食伤」({shang_e})——即您所生的那一行（{day_element}生{shang_e}）。"
+        f"本盘印星：{_yin_body}；食伤：{_shang_body}。"
         f"印旺者善学、得师长缘；食伤旺者有一技之长可发挥；考试竞争力在官杀，偏弱则需借运。"
     )
     # 8 大运走势
@@ -1305,13 +1474,28 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
         f"三者齐备，正是您“{strength}”的底气来源——不是空口说“您旺”，而是这盘{day_element}势厚实、自己就能站稳。"
     )
 
-    # 引《滴天髓·论十天干》形象描摹日主性情，并逐层释义
+    # 引《滴天髓·论十天干》形象描摹日主性情，并逐层释义（逐句大白话 + 本盘印证）
     _xg = DITIANSUI_XINGXIANG.get(day_gan, "")
-    _xg_note = DITIANSUI_XINGXIANG_NOTE.get(day_gan, "")
+    _xg_clause = DITIANSUI_CLAUSE_PLAIN.get(day_gan, "")
     if _xg:
+        _pos = {"year": "年柱(祖上/父母宫)", "month": "月柱(父母兄弟宫)",
+                "day": "日柱(己身/夫妻宫)", "time": "时柱(子孙宫)"}
+        _all_stems = {}
+        for _p in ("year", "month", "day", "time"):
+            _d = _tdetails.get(_p, {})
+            _tg = _d.get("天干", "")
+            if _tg:
+                _all_stems.setdefault(_tg, []).append(f"{_pos[_p]}天干")
+            for _h in (_hidden.get(_p, []) or []):
+                _hg = _h.get("藏干", "")
+                if _hg:
+                    _all_stems.setdefault(_hg, []).append(f"{_pos[_p]}地支")
+        _branches = [parse_pillar(pillars[_p])[1] for _p in ("year", "month", "day", "time") if _p in pillars]
+        _xg_cross = dt_crosscheck(day_gan, _xg, _all_stems, (wuxing or {}).get("raw_weight", {}), _branches)
         strength_plain += (
             f"\n\n【古诀逐句释义】《滴天髓·论十天干》对「{day_gan}」的八字真言是：「{_xg}」。"
-            f"\n把它拆开看：{_xg_note}"
+            f"\n· 逐句大白话：{_xg_clause}"
+            f"\n· 本盘印证（古诀点到的天干/五行/生肖，逐条对照您这一盘）：\n{_xg_cross}"
         )
         # 顺势而为：结合身旺 / 身弱给具体行动建议
         if strength in ("身旺", "中和偏旺"):
@@ -1523,26 +1707,42 @@ def build_plain_language(day_gan: str, day_element: str, strength: str, month_zh
     _guan_e = _KE_WO.get(day_element, "")
     _yin_e = _SHENG_WO.get(day_element, "")
     _shang_e = _WO_SHENG.get(day_element, "")
+    _month_code = get_ten_god(day_gan, _month_tg)[0] if _month_tg else ""
+    _month_explain = (explain_ten_god(day_gan, day_element, _month_tg, _month_code, "月柱(父母兄弟宫)天干")
+                     if _month_tg else "")
     life_plain = (
-        f"把上面抽象的“用神/喜忌”翻译成您关心的六个方面。总原则：多亲近「{_xiyong_str}」类的人事物、"
-        f"行业、方位与年份；少碰「{_ji_str}」类。下面逐条结合您这一盘的真实五行强弱说——\n"
-        f"【财富】您是{day_element}日主，“我克者”为财。财星所在的「{_cai_e}」原始得气仅 {_raw.get(_cai_e,0)}（偏弱），"
+        f"把上面抽象的“用神/喜忌”翻译成您关心的六个方面。先说命名规则：您是{day_element}日主，"
+        f"克您的是「官杀」（{_guan_e}克{day_element}）、您所克的是「财」（{day_element}克{_cai_e}）、"
+        f"生您的是「印」（{_yin_e}）、您所生的是「食伤」（{_shang_e}）。"
+        f"总原则：多亲近「{_xiyong_str}」类的人事物、行业、方位与年份；少碰「{_ji_str}」类。"
+        f"下面逐条结合您这一盘的真实五行强弱说——\n"
+        f"【财富】您是{day_element}日主，“我克者”为财（即{day_element}所克之{_cai_e}）。财星所在的「{_cai_e}」原始得气仅 {_raw.get(_cai_e,0)}（偏弱），"
         f"而偏财「{fj or '—'}」又是忌神且弱，说明正财不算丰、横财更宜谨慎；您比劫（{day_element}）重，"
         f"合作共事易有“分财”，账目宜分明、莫糊涂合伙。\n"
-        f"【事业】“克我者”为官杀（事业、名望、上司）。您月干透「{_month_tg}」为「{_month_ts}」，"
-        f"有魄力担责之象；用神「{fy or '—'}」（印）主贵人平台暖局。但事业竞争力所在的「{_guan_e}」得气仅 {_raw.get(_guan_e,0)}（偏弱），"
+        f"【事业】“克我者”为官杀（事业、名望、上司）——即克您的{_guan_e}。"
+        + (_month_explain + "；" if _month_explain else "")
+        + f"用神「{fy or '—'}」（印）主贵人平台暖局。但事业竞争力所在的「{_guan_e}」得气仅 {_raw.get(_guan_e,0)}（偏弱），"
         f"临场发挥与升迁需借大运流年补{_guan_e}（喜用神中的{_guan_e}）方显。\n"
-        f"【健康（传统意象，非医学诊断）】五行讲究平衡：您「{day_element}」得气 {_raw.get(day_element,0)} 过重，传统上对应脾胃厚实易滞；"
-        f"「{_cai_e}」仅 {_raw.get(_cai_e,0)}（弱），对应肾系/泌尿系统、畏寒；「{_yin_e}」{_raw.get(_yin_e,0)}（偏弱），对应心阳与循环；"
-        f"「{_guan_e}」{_raw.get(_guan_e,0)}（弱），对应肝胆疏泄、情绪易郁结。调候用「{fy or '—'}」暖局，正可针对“{day_element}重偏弱”的偏寒偏滞。\n"
-        f"【感情婚姻】您{gender}命，{_spouse_label}为「{_spouse_elem}」（{_spouse_s or '—'}），"
+        f"【健康（传统意象，非医学诊断）】五行讲究平衡：您「{day_element}」得气约 {round(float(_raw.get(day_element,0)),1)}"
+        f"（{'旺（得气重）' if round(float(_raw.get(day_element,0)),1) >= 3 else ('偏弱' if round(float(_raw.get(day_element,0)),1) <= 1 else '中和')}）"
+        f"{'——过旺之五行对应脏腑易滞' if round(float(_raw.get(day_element,0)),1) >= 3 else ''}；"
+        f"「{_cai_e}」约 {round(float(_raw.get(_cai_e,0)),1)}"
+        f"（{'旺（得气重）' if round(float(_raw.get(_cai_e,0)),1) >= 3 else ('偏弱' if round(float(_raw.get(_cai_e,0)),1) <= 1 else '中和')}），对应肾系/泌尿系统、畏寒；"
+        f"「{_yin_e}」约 {round(float(_raw.get(_yin_e,0)),1)}"
+        f"（{'旺（得气重）' if round(float(_raw.get(_yin_e,0)),1) >= 3 else ('偏弱' if round(float(_raw.get(_yin_e,0)),1) <= 1 else '中和')}），对应心阳与循环；"
+        f"「{_guan_e}」约 {round(float(_raw.get(_guan_e,0)),1)}"
+        f"（{'旺（得气重）' if round(float(_raw.get(_guan_e,0)),1) >= 3 else ('偏弱' if round(float(_raw.get(_guan_e,0)),1) <= 1 else '中和')}），对应肝胆疏泄、情绪易郁结。"
+        f"调候用「{fy or '—'}」暖局，正可针对偏寒偏滞。\n"
+        f"【感情婚姻】您{gender}命，{_spouse_label}为「{_spouse_elem}」（{_spouse_s or '—'}）——"
+        f"男命妻星=正财（您所克之{_cai_e}），女命夫星=正官（克您之{_guan_e}）。"
         f"本盘得气 {_spouse_score}（{'偏弱，宜晚婚或借大运流年补足' if isinstance(_spouse_score, (int, float)) and _spouse_score <= 0.8 else '尚可'}）。"
         f"偏财「{fj or '—'}」为忌且藏于月支（父母宫），感情中注意财务边界与桃花分寸。\n"
         f"【人际】您比劫（同辈、朋友、同事）多，人缘广、互助也多，但同辈间也易有利益牵扯；"
-        f"月干透七杀/官，对上（上司、规则）既有压力也是锻炼；喜神「{fx or '—'}」（{_guan_e}）提示：守规矩、尊权威，反而得助力。\n"
-        f"【学业】印星（喜用神中的{_yin_e}）为学业根基，本盘{_yin_e}偏弱，需主动用功、环境暖助；"
-        f"食伤（{_shang_e}）为才华输出，{_shang_e}相（{_raw.get(_shang_e,0)}）尚可，有一技之长可发挥；"
-        f"官杀（{_guan_e}）为考试竞争力，{_guan_e}偏弱，临场宜借运。一句话：您底子厚（身旺），成事靠“向外输出才华 + 借贵人与规则”，而非死守。"
+        + (_month_explain + "——" if _month_explain else "")
+        + f"对上（上司、规则）既有压力也是锻炼；喜神「{fx or '—'}」（{_guan_e}）提示：守规矩、尊权威，反而得助力。\n"
+        f"【学业】印星（{_yin_e}，生您之物）为学业根基，本盘{_yin_e}偏弱，需主动用功、环境暖助；"
+        f"食伤（{_shang_e}，您所生之物）为才华输出，{_shang_e}相（{_raw.get(_shang_e,0)}）尚可，有一技之长可发挥；"
+        f"官杀（{_guan_e}，克您之物）为考试竞争力，{_guan_e}偏弱，临场宜借运。一句话：您底子厚（身旺），成事靠“向外输出才华 + 借贵人与规则”，而非死守。"
     )
 
     # —— 总体总评（财富/事业/健康/婚姻/人际/学业/大运，逐维度结合本盘真实数据）——
