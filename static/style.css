@@ -814,95 +814,228 @@ button:hover {
 }
 .hint-ok { color: #4caf50 !important; }
 
-/* ===== 紫微斗数命盘 ===== */
-.ziwei-card { margin-top: 24px; }
-.ziwei-summary {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 14px 0 18px;
+/* ===== 紫微斗数命盘（深蓝紫 · 星河风，参考 ui-design-system 令牌体系） ===== */
+:root {
+    --zi-gold: #ffd66e;
+    --zi-rose: #ff8eb8;
+    --zi-cyan: #6ee0d6;
+    --zi-green: #7ee090;
+    --zi-purple: #a890ff;
+    --zi-silver: #e8e4ff;
+    --zi-dim: #b8b4c8;
+    --zi-surface: rgba(120,100,200,0.08);
+    --zi-surface-hover: rgba(180,150,255,0.16);
+    --zi-border: rgba(168,144,255,0.22);
+    --zi-glow: 0 6px 20px rgba(168,144,255,0.28);
 }
-.ziwei-summary .summary-item {
-    min-width: 150px;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
+.ziwei-card {
+    margin-top: 24px;
+    background: linear-gradient(160deg, #0a0e2a 0%, #060818 100%);
+    border: 1px solid var(--zi-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 0 40px rgba(124,58,237,0.12);
+}
+.ziwei-card > h2 {
+    color: #c8b8ff;
+    border-left-color: #a890ff;
+}
+.zi-note {
+    color: #8b87b8;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    padding: 10px 14px;
+    background: rgba(168,144,255,0.06);
+    border-left: 3px solid rgba(168,144,255,0.35);
     border-radius: 8px;
-    background: var(--bg-card, #fff);
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    margin-bottom: 18px;
 }
-.ziwei-summary .summary-item .label {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-.ziwei-summary .summary-item .value {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--accent);
-}
-.ziwei-palaces {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-}
-.ziwei-palace {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    background: var(--bg-card, #fff);
-}
-.ziwei-palace.is-ming {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(0,0,0,.05) inset;
-}
-.ziwei-palace.is-empty { opacity: .72; }
-.zp-head {
-    font-weight: 700;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.zp-ganzhi { color: var(--text-secondary); font-weight: 500; font-size: 13px; }
-.ziwei-tag {
-    font-size: 11px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    color: #fff;
-}
-.tag-ming { background: #e53935; }
-.tag-shen { background: #1e88e5; }
-.zp-stars { display: flex; flex-wrap: wrap; gap: 4px; }
-.ziwei-star {
-    font-size: 13px;
-    padding: 1px 7px;
-    border-radius: 4px;
-    line-height: 1.6;
-}
-.ziwei-star.star-major {
-    background: rgba(229,57,53,.10);
-    color: #c62828;
-    font-weight: 600;
-    border: 1px solid rgba(229,57,53,.30);
-}
-.ziwei-star.star-minor {
-    background: rgba(30,136,229,.08);
-    color: #1565c0;
-    border: 1px solid rgba(30,136,229,.25);
-}
-.empty-hint { color: var(--text-secondary); font-size: 13px; }
-.ziwei-decadals {
+.zi-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    margin-bottom: 22px;
 }
-.decadal-item {
-    font-size: 13px;
-    padding: 4px 10px;
-    border: 1px solid var(--border);
+.zi-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--zi-surface);
+    border: 1px solid var(--zi-border);
+    border-radius: 999px;
+    font-size: 0.82rem;
+}
+.zi-chip-label { color: #8b87b8; }
+.zi-chip-val { color: #e8e4ff; font-weight: 600; }
+
+.ziwei-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+    max-width: 540px;
+    margin: 0 auto 26px;
+    aspect-ratio: 1 / 1;
+    padding: 4px;
+    border-radius: 14px;
+    background-image:
+        radial-gradient(1.5px 1.5px at 18% 24%, rgba(255,255,255,.55), transparent),
+        radial-gradient(1px 1px at 62% 40%, rgba(255,255,255,.40), transparent),
+        radial-gradient(1px 1px at 80% 72%, rgba(255,255,255,.35), transparent),
+        radial-gradient(1.5px 1.5px at 40% 82%, rgba(255,255,255,.40), transparent);
+}
+.zi-cell {
+    background: var(--zi-surface);
+    border: 1px solid var(--zi-border);
+    border-radius: 10px;
+    padding: 7px 8px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.zi-cell:hover {
+    transform: translateY(-2px);
+    background: var(--zi-surface-hover);
+    box-shadow: var(--zi-glow);
+}
+.zi-cell.ming { border-color: #ffd66e; box-shadow: 0 0 0 1px rgba(255,214,110,0.5) inset; }
+.zi-cell.shen { border-color: #6ee0d6; }
+.zi-cell.dx { border-color: #ff8eb8; }
+.zi-cell.ln { border-color: #7ee090; }
+.zi-pn {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    color: #e8e4ff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    border-bottom: 1px dashed rgba(168,144,255,0.25);
+    padding-bottom: 3px;
+}
+.zi-ganzhi { color: #8b87b8; font-weight: 500; font-size: 0.78rem; }
+.zi-stars { display: flex; flex-wrap: wrap; gap: 3px; }
+.st.major { color: #e8e4ff; font-size: 0.82rem; font-weight: 600; }
+.st.minor { color: #6ee0d6; font-size: 0.7rem; opacity: 0.9; }
+.st.minor::before { content: '·'; color: #8b87b8; margin-right: 1px; }
+.zi-empty { color: #8b87b8; font-size: 0.72rem; }
+.zi-badge {
+    font-size: 0.62rem;
+    padding: 1px 6px;
     border-radius: 6px;
-    background: var(--bg-card, #fff);
+    font-weight: 600;
+    line-height: 1.5;
+}
+.zi-badge.ming { background: #ffd66e; color: #2a1f00; }
+.zi-badge.shen { background: #6ee0d6; color: #06251f; }
+.zi-badge.dx { background: #ff8eb8; color: #2a0f1c; }
+.zi-badge.ln { background: #7ee090; color: #0c2417; }
+
+.zi-center {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+    background: linear-gradient(135deg, rgba(168,144,255,0.16), rgba(110,224,214,0.06));
+    border: 1px solid #a890ff;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(168,144,255,0.3);
+}
+.zi-c-title {
+    color: #c8b8ff;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(168,144,255,0.6);
+}
+.zi-c-line { color: #c8b8ff; font-size: 0.8rem; }
+.zi-c-line b { color: #e8e4ff; }
+.zi-c-sihua {
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(168,144,255,0.3);
+    font-size: 0.78rem;
+}
+
+.zi-sub {
+    margin: 26px 0 14px;
+    font-size: 1.05rem;
+    color: #c8b8ff;
+    border-left: 3px solid #a890ff;
+    padding-left: 10px;
+}
+.zi-triple { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.zi-tc {
+    background: var(--zi-surface);
+    border: 1px solid var(--zi-border);
+    border-radius: 10px;
+    padding:12px 10px;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.zi-tc:hover { transform: translateY(-2px); background: var(--zi-surface-hover); }
+.zi-tc-name { color: #c8b8ff; font-size: 0.82rem; margin-bottom: 6px; }
+.zi-tc-stars { color: #e8e4ff; font-size: 0.86rem; line-height: 1.5; }
+
+.zi-hua { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.zi-hua-card {
+    background: var(--zi-surface);
+    border: 1px solid var(--zi-border);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+.zi-hua-card:hover { transform: translateY(-2px); }
+.zi-hua-h { font-size: 0.9rem; color: #8b87b8; letter-spacing: 2px; margin-bottom: 6px; }
+.zi-hua-star { font-size: 1.25rem; font-weight: 600; }
+.zi-hua-card.lu .zi-hua-star { color: #ffd66e; }
+.zi-hua-card.quan .zi-hua-star { color: #ff8eb8; }
+.zi-hua-card.ke .zi-hua-star { color: #6ee0d6; }
+.zi-hua-card.ji .zi-hua-star { color: #b8b4c8; }
+
+.zi-decadals { display: flex; flex-wrap: wrap; gap: 8px; }
+.zi-dx {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border: 1px solid var(--zi-border);
+    border-radius: 8px;
+    background: var(--zi-surface);
+    color: #c8b8ff;
+}
+.zi-dx.active {
+    border-color: #ff8eb8;
+    background: rgba(255,142,184,0.14);
+    color: #ffd0e0;
+    font-weight: 600;
 }
 .hint-warn { color: #ff9800 !important; font-size: 0.82rem; }
+
+/* 打印 / 导出 PDF：仅输出结果区，隐藏导航与表单，步骤强制展开，保留深色星河配色 */
+@media print {
+    body { background: #060818 !important; }
+    .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    header, .manual-card, .input-section, .form-actions, .loading, .error, .info-card { display: none !important; }
+    section { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; margin-bottom: 18px !important; }
+    #result { display: block !important; }
+    .ziwei-card { background: #0a0e2a !important; box-shadow: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .step-card .step-body { max-height: none !important; overflow: visible !important; padding: 18px !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+    .ziwei-grid { max-width: 100%; }
+    .zi-cell { padding: 4px 5px; }
+    .zi-pn { font-size: 0.68rem; }
+    .st.major { font-size: 0.68rem; }
+    .st.minor { font-size: 0.6rem; }
+    .zi-triple, .zi-hua { grid-template-columns: repeat(2, 1fr); }
+    .zi-center { padding: 10px; }
+    .zi-c-title { font-size: 0.85rem; }
+    .zi-c-line, .zi-c-sihua { font-size: 0.7rem; }
+}

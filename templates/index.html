@@ -112,7 +112,7 @@
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">开始推演</button>
                     <button type="button" class="btn-secondary" id="btnExample">载入示例</button>
-                    <button type="button" class="btn-secondary" id="btnExport">导出JSON</button>
+                    <button type="button" class="btn-secondary" id="btnPrint">打印 / 导出 PDF</button>
                 </div>
             </form>
         </section>
@@ -200,6 +200,10 @@
 
         let currentResult = null;
 
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
         document.getElementById('baziForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             await runCalculation();
@@ -265,15 +269,8 @@
             await runCalculation();
         });
 
-        document.getElementById('btnExport').addEventListener('click', () => {
-            if (!currentResult) return;
-            const blob = new Blob([JSON.stringify(currentResult, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `子平推演_${currentResult.input.birth}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
+        document.getElementById('btnPrint').addEventListener('click', () => {
+            window.print();
         });
 
         async function runCalculation() {
@@ -383,44 +380,105 @@
             const zw = data.ziwei;
             const body = document.getElementById('ziweiBody');
             if (!zw || zw.error) {
-                body.innerHTML = '<p class="step-note">（紫微排盘暂不可用：' + (zw && zw.error ? zw.error : '无数据') + '）</p>';
+                body.innerHTML = '<p class="zi-note">（紫微排盘暂不可用：' + (zw && zw.error ? esc(zw.error) : '无数据') + '）</p>';
                 return;
             }
             const lunar = zw.lunar || {};
             const sihua = zw.sihua || {};
-            const ming = zw.palaces.find(p => p.is_ming);
-            const shen = zw.palaces.find(p => p.is_shen);
-            let html = '<p class="step-note">说明：紫微斗数以农历生日与出生时辰排盘（年界同八字取立春），与子平八字是两套并行的命理体系，互相参照、各有所重。排盘核心移植自 iztro（SylarLong/iztro, MIT）与 Renhuai123/ziwei-doushu 常量，已单测校验。</p>';
+            const palaces = zw.palaces || [];
+            const ming = palaces.find(p => p.is_ming);
+            const shen = palaces.find(p => p.is_shen);
+            const decadals = zw.decadals || [];
 
-            // 概要
-            html += '<div class="ziwei-summary">';
-            html += '<div class="summary-item"><span class="label">农历</span><span class="value">' + (lunar.year_stem || '') + (lunar.year_branch || '') + '年 ' + (lunar.lunar_month || '') + '月' + (lunar.lunar_day || '') + '日 ' + (lunar.time_branch || '') + '时</span></div>';
-            html += '<div class="summary-item"><span class="label">命宫</span><span class="value">' + zw.soul_branch + (ming ? '（' + ming.stem + ming.branch + '）' : '') + '</span></div>';
-            html += '<div class="summary-item"><span class="label">身宫</span><span class="value">' + zw.body_branch + (shen ? '（' + shen.stem + shen.branch + '）' : '') + '</span></div>';
-            html += '<div class="summary-item"><span class="label">五行局</span><span class="value">' + zw.wuxing_ju_name + '</span></div>';
-            html += '<div class="summary-item"><span class="label">紫微</span><span class="value">在' + zw.ziwei_branch + '</span></div>';
-            html += '<div class="summary-item"><span class="label">天府</span><span class="value">在' + zw.tianfu_branch + '</span></div>';
-            html += '<div class="summary-item"><span class="label">本命四化</span><span class="value">禄' + (sihua['化禄'] || '-') + ' 权' + (sihua['化权'] || '-') + ' 科' + (sihua['化科'] || '-') + ' 忌' + (sihua['化忌'] || '-') + '</span></div>';
+            // 当前年龄 / 大限 / 流年（流年地支取八字流年干支第二字，与命盘地支对应）
+            const step11 = data.steps.find(s => s.step === 11) || {};
+            const age = step11.age;
+            const liunianGz = (step11.liunian && step11.liunian.ganzhi) || '';
+            const flowBranch = liunianGz ? liunianGz[1] : null;
+            const flowPalace = flowBranch ? palaces.find(p => p.branch === flowBranch) : null;
+            let curDecadalName = null;
+            if (age != null) {
+                const cd = decadals.find(d => age >= d.age_range[0] && age <= d.age_range[1]);
+                if (cd) curDecadalName = cd.palace_name;
+            }
+
+            // 标准方形盘：中宫占中心 2×2，十二宫环绕四周；地支位置固定，命宫落其地支位
+            const BRANCH_POS = {
+                "巳": [0,0], "午": [0,1], "未": [0,2], "申": [0,3],
+                "辰": [1,0], "酉": [1,3],
+                "卯": [2,0], "戌": [2,3],
+                "寅": [3,0], "丑": [3,1], "子": [3,2], "亥": [3,3]
+            };
+
+            const mingStars = ming ? ming.stars.filter(s => s.type === 'major').map(s => s.name).join('、') : '空宫';
+            const chip = (label, val) =>
+                '<span class="zi-chip"><span class="zi-chip-label">' + label + '</span><span class="zi-chip-val">' + esc(val) + '</span></span>';
+
+            let html = '<p class="zi-note">紫微斗数以农历生日与出生时辰排盘（年界同八字取立春），与子平八字是两套并行体系，互相参照。排盘核心移植自 iztro（SylarLong/iztro, MIT）与 Renhuai123/ziwei-doushu 常量，已单测校验。</p>';
+
+            // 概要 chips
+            html += '<div class="zi-chips">';
+            html += chip('农历', (lunar.year_stem||'') + (lunar.year_branch||'') + '年 ' + (lunar.lunar_month||'') + '月' + (lunar.lunar_day||'') + '日 ' + (lunar.time_branch||'') + '时');
+            html += chip('命宫', zw.soul_branch + (ming ? '（' + ming.stem + ming.branch + '）' : ''));
+            html += chip('身宫', zw.body_branch + (shen ? '（' + shen.stem + shen.branch + '）' : ''));
+            html += chip('五行局', zw.wuxing_ju_name);
+            html += chip('紫微', '在' + zw.ziwei_branch);
+            html += chip('天府', '在' + zw.tianfu_branch);
             html += '</div>';
 
-            // 十二宫
-            html += '<h3>十二宫星曜</h3><div class="ziwei-palaces">';
-            for (const p of zw.palaces) {
-                const stars = p.stars.map(s =>
-                    '<span class="ziwei-star ' + (s.type === 'major' ? 'star-major' : 'star-minor') + '">' + s.name + '</span>'
-                ).join('');
-                const tag = p.is_ming ? '<span class="ziwei-tag tag-ming">命宫</span>' : (p.is_shen ? '<span class="ziwei-tag tag-shen">身宫</span>' : '');
-                html += '<div class="ziwei-palace ' + (p.is_ming ? 'is-ming' : '') + (p.empty ? ' is-empty' : '') + '">'
-                    + '<div class="zp-head">' + p.name + ' <span class="zp-ganzhi">' + p.stem + p.branch + '</span> ' + tag + '</div>'
-                    + '<div class="zp-stars">' + (stars || '<span class="empty-hint">（空宫）</span>') + '</div>'
+            // 4×4 星河盘
+            html += '<div class="ziwei-grid">';
+            html += '<div class="zi-center">'
+                + '<div class="zi-c-title">紫微在' + zw.ziwei_branch + '　天府在' + zw.tianfu_branch + '</div>'
+                + '<div class="zi-c-line">命宫：<b>' + zw.soul_branch + '</b>（' + esc(mingStars) + '）</div>'
+                + '<div class="zi-c-line">身宫：<b>' + zw.body_branch + '</b></div>'
+                + '<div class="zi-c-line">五行局：<b>' + zw.wuxing_ju_name + '</b></div>'
+                + '<div class="zi-c-line">流年：<b>' + (flowPalace ? flowPalace.name : '—') + '（' + esc(liunianGz) + '）</b></div>'
+                + '<div class="zi-c-sihua">禄 <span style="color:var(--zi-gold)">' + esc(sihua['化禄']||'-') + '</span> · 权 <span style="color:var(--zi-rose)">' + esc(sihua['化权']||'-') + '</span> · 科 <span style="color:var(--zi-cyan)">' + esc(sihua['化科']||'-') + '</span> · 忌 <span style="color:var(--zi-dim)">' + esc(sihua['化忌']||'-') + '</span></div>'
+                + '</div>';
+
+            for (const p of palaces) {
+                const pos = BRANCH_POS[p.branch];
+                if (!pos) continue;
+                const r = pos[0], c = pos[1];
+                const cls = ['zi-cell'];
+                const badges = [];
+                if (p.is_ming) { cls.push('ming'); badges.push('<span class="zi-badge ming">命宫</span>'); }
+                if (p.is_shen) { cls.push('shen'); badges.push('<span class="zi-badge shen">身宫</span>'); }
+                if (curDecadalName && p.name === curDecadalName) { cls.push('dx'); badges.push('<span class="zi-badge dx">大限</span>'); }
+                if (flowPalace && p === flowPalace) { cls.push('ln'); badges.push('<span class="zi-badge ln">流年</span>'); }
+                const major = p.stars.filter(s => s.type === 'major').map(s => '<span class="st major">' + esc(s.name) + '</span>').join('');
+                const minor = p.stars.filter(s => s.type !== 'major').map(s => '<span class="st minor">' + esc(s.name) + '</span>').join('');
+                html += '<div class="' + cls.join(' ') + '" style="grid-column:' + (c + 1) + ';grid-row:' + (r + 1) + '">'
+                    + '<div class="zi-pn">' + esc(p.name) + ' <span class="zi-ganzhi">' + p.stem + p.branch + '</span> ' + badges.join('') + '</div>'
+                    + '<div class="zi-stars">' + (major || '<span class="zi-empty">空宫</span>') + minor + '</div>'
                     + '</div>';
             }
             html += '</div>';
 
+            // 三方四正
+            html += '<h3 class="zi-sub">命宫三方四正</h3><div class="zi-triple">';
+            for (const nm of ['命宫','财帛宫','官禄宫','迁移宫']) {
+                const p = palaces.find(x => x.name === nm);
+                if (!p) continue;
+                const ms = p.stars.filter(s => s.type === 'major').map(s => s.name).join('、') || '空宫';
+                html += '<div class="zi-tc"><div class="zi-tc-name">' + esc(p.name) + ' ' + p.stem + p.branch + '</div><div class="zi-tc-stars">' + esc(ms) + '</div></div>';
+            }
+            html += '</div>';
+
+            // 四化
+            const hua = [['化禄', sihua['化禄'], 'lu'], ['化权', sihua['化权'], 'quan'], ['化科', sihua['化科'], 'ke'], ['化忌', sihua['化忌'], 'ji']];
+            html += '<h3 class="zi-sub">本命四化</h3><div class="zi-hua">';
+            for (const h of hua) {
+                html += '<div class="zi-hua-card ' + h[2] + '"><div class="zi-hua-h">' + h[0].replace('化','') + '</div><div class="zi-hua-star">' + esc(h[1] || '-') + '</div></div>';
+            }
+            html += '</div>';
+
             // 大限
-            html += '<h3>大限（起运）</h3><div class="ziwei-decadals">';
-            for (const d of zw.decadals) {
-                html += '<span class="decadal-item">' + d.age_range[0] + '–' + d.age_range[1] + '岁：' + d.stem + d.branch + '（' + d.palace_name + '）</span>';
+            html += '<h3 class="zi-sub">大限（起运）</h3><div class="zi-decadals">';
+            for (const d of decadals) {
+                const active = (age != null && age >= d.age_range[0] && age <= d.age_range[1]);
+                html += '<span class="zi-dx ' + (active ? 'active' : '') + '">' + d.age_range[0] + '–' + d.age_range[1] + '岁：' + d.stem + d.branch + '（' + esc(d.palace_name) + '）</span>';
             }
             html += '</div>';
 

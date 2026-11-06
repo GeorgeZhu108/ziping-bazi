@@ -89,11 +89,11 @@ sihua = zw["sihua"]                              # {化禄,化权,化科,化忌 
 palaces = zw["palaces"]
 decadals = zw["decadals"]
 
-# 地支 -> 紫微标准盘网格坐标（盘面地支固定，命宫落在其地支位）
+# 地支 -> 紫微标准方形盘网格坐标（中宫占中心 2×2，十二宫环绕四周；地支位置固定，命宫落其地支位）
 BRANCH_POS = {
     "巳": (0, 0), "午": (0, 1), "未": (0, 2), "申": (0, 3),
-    "辰": (1, 0), "酉": (1, 2),
-    "卯": (2, 0), "戌": (2, 2),
+    "辰": (1, 0), "酉": (1, 3),
+    "卯": (2, 0), "戌": (2, 3),
     "寅": (3, 0), "丑": (3, 1), "子": (3, 2), "亥": (3, 3),
 }
 # 当前大限所在宫（33-42 岁对应的 palace_index）
@@ -294,41 +294,34 @@ for d in dayun:
                    f'<div>{esc(d["start_age"])}-{esc(d["end_age"])}岁</div></div>')
 dy_html = "".join(dy_html)
 
-# 紫微 12 宫网格
-grid_cells = {}
+# 紫微 12 宫网格（标准方形盘：中宫占中心 2×2，十二宫环绕四周；显式定位，地支位置固定）
+grid_cells = []
 for p in palaces:
     r, c = BRANCH_POS[p["branch"]]
     badges = []
+    cls = "zi-cell"
     if p["is_ming"]:
-        badges.append('<span class="badge ming">命宫</span>')
+        badges.append('<span class="badge ming">命宫</span>'); cls += " ming"
     if p["is_shen"]:
-        badges.append('<span class="badge shen">身宫</span>')
+        badges.append('<span class="badge shen">身宫</span>'); cls += " shen"
     if cur_decadal and p["name"] == cur_decadal["palace_name"]:
-        badges.append(f'<span class="badge dx">{age_now}岁大限</span>')
+        badges.append(f'<span class="badge dx">{age_now}岁大限</span>'); cls += " dx"
     if liunian_palace and p["name"] == liunian_palace:
-        badges.append(f'<span class="badge ln">{CURRENT_YEAR}流年</span>')
-    cls = " zi-cell"
-    if p["is_ming"]:
-        cls += " ming"
-    if p["is_shen"]:
-        cls += " shen"
-    if cur_decadal and p["name"] == cur_decadal["palace_name"]:
-        cls += " dx"
-    if liunian_palace and p["name"] == liunian_palace:
-        cls += " ln"
+        badges.append(f'<span class="badge ln">{CURRENT_YEAR}流年</span>'); cls += " ln"
     major_stars = [s["name"] for s in p["stars"] if s["type"] == "major"] or ["（空宫）"]
     minor_stars = [s["name"] for s in p["stars"] if s["type"] in ("lucky", "sha")]
     stars_html = "".join(f'<span class="st major">{esc(s)}</span>' for s in major_stars)
     if minor_stars:
         stars_html += "".join(f'<span class="st minor">{esc(s)}</span>' for s in minor_stars)
-    grid_cells[(r, c)] = (
-        f'<div class="{cls.strip()}"><div class="pn">{esc(p["name"])}{"".join(badges)}</div>'
+    grid_cells.append(
+        f'<div class="{cls}" style="grid-column:{c+1};grid-row:{r+1}">'
+        f'<div class="pn">{esc(p["name"])}{"".join(badges)}</div>'
         f'{stars_html}<div class="ft"><span class="ag">{esc(p["stem"])}</span>'
         f'<span class="br">{esc(p["branch"])}</span></div></div>')
 
-# 中宫
+# 中宫（中心 2×2）
 center_html = f"""
-  <div class="zi-center">
+  <div class="zi-center" style="grid-column:2/4;grid-row:2/4">
     <div class="ct">紫微在{esc(ziwei_branch)}　天府在{esc(tianfu_branch)}</div>
     <div class="il">命宫：<span>{esc(soul_branch)}</span>（{'、'.join(s['name'] for s in next(p for p in palaces if p['is_ming'])['stars'] if s['type']=='major') or '空宫'}）</div>
     <div class="il">身宫：<span>{esc(body_branch)}</span></div>
@@ -340,17 +333,7 @@ center_html = f"""
       忌<span style="color:#b8b4c8">{esc(sihua['化忌'])}</span></div>
   </div>"""
 
-# 组装网格（4x4，中心位于 (1,1)）
-grid_rows = []
-for r in range(4):
-    row_cells = []
-    for c in range(4):
-        if r == 1 and c == 1:
-            row_cells.append(center_html)
-        else:
-            row_cells.append(grid_cells.get((r, c), ""))
-    grid_rows.append("".join(row_cells))
-zi_grid_html = "".join(f'<div style="display:contents">{r}</div>' for r in grid_rows)
+zi_grid_html = center_html + "".join(grid_cells)
 
 # 三方四正（命宫 + 财帛 + 官禄 + 迁移）
 def find_palace(name):
