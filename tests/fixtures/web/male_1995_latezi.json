@@ -1,1 +1,1284 @@
-{"data":{"input":{"birth":"1995-11-11 23:00","corrected_birth":"1995-11-11 23:00","current_year":2026,"dst_warning":{"is_dst":false,"range":null},"gender":"\u7537","late_zishi_rule":"current-day","longitude":null},"pillars":{"day":"\u4e19\u5348","month":"\u4e01\u4ea5","time":"\u5e9a\u5b50","year":"\u4e59\u4ea5"},"steps":[{"input":{"\u516c\u5386(\u949f\u8868\u65f6\u95f4)":"1995-11-11 23:00","\u5386\u6cd5":"\u516c\u5386/\u683c\u91cc\u5386"},"name":"\u5386\u6cd5\u8f6c\u6362","output":{"\u516b\u5b57":"\u4e59\u4ea5 \u4e01\u4ea5 \u4e19\u5348 \u5e9a\u5b50","\u519c\u5386":"\u4e00\u4e5d\u4e5d\u4e94\u5e74\u4e5d\u6708\u5341\u4e5d","\u5e74\u67f1":"\u4e59\u4ea5","\u65e5\u67f1":"\u4e19\u5348","\u65f6\u67f1":"\u5e9a\u5b50","\u6708\u67f1":"\u4e01\u4ea5","\u751f\u8096":"\u732a","\u8282\u6c14\u4fe1\u606f":{"\u4e0a\u4e00\u8282\u6c14":"\u7acb\u51ac","\u4e0b\u4e00\u8282\u6c14":"\u5c0f\u96ea","\u5f53\u524d\u8282\u6c14":"\u65e0"}},"source":"\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u6392\u516b\u5b57\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u8282\u5019","step":1,"\u5386\u6cd5\u6821\u6b63":{"\u4e2d\u56fd\u590f\u4ee4\u65f6":{"is_dst":false,"range":null},"\u5747\u65f6\u5dee(\u5206)":0.0,"\u603b\u4fee\u6b63(\u5206)":0.0,"\u6392\u76d8\u65e5\u504f\u79fb":0,"\u662f\u5426\u6821\u6b63\u771f\u592a\u9633\u65f6":false,"\u665a\u5b50\u65f6\u53e3\u5f84":"current-day","\u7ecf\u5ea6\u4fee\u6b63(\u5206)":0.0}},{"baizi":"\u4e59\u4ea5 \u4e01\u4ea5 \u4e19\u5348 \u5e9a\u5b50","details":{"day":{"\u5730\u652f":"\u5348","\u5730\u652f\u5c5e\u6027":{"element":"\u706b","order":7,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f","yin":false},"\u5929\u5e72":"\u4e19","\u5929\u5e72\u5c5e\u6027":{"element":"\u706b","order":3,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72","yin":false},"\u7eb3\u97f3":"\u5929\u6cb3\u6c34"},"month":{"\u5730\u652f":"\u4ea5","\u5730\u652f\u5c5e\u6027":{"element":"\u6c34","order":12,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f","yin":false},"\u5929\u5e72":"\u4e01","\u5929\u5e72\u5c5e\u6027":{"element":"\u706b","order":4,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72","yin":true},"\u7eb3\u97f3":"\u5c4b\u4e0a\u571f"},"time":{"\u5730\u652f":"\u5b50","\u5730\u652f\u5c5e\u6027":{"element":"\u6c34","order":1,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f","yin":false},"\u5929\u5e72":"\u5e9a","\u5929\u5e72\u5c5e\u6027":{"element":"\u91d1","order":7,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72","yin":false},"\u7eb3\u97f3":"\u58c1\u4e0a\u571f"},"year":{"\u5730\u652f":"\u4ea5","\u5730\u652f\u5c5e\u6027":{"element":"\u6c34","order":12,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f","yin":false},"\u5929\u5e72":"\u4e59","\u5929\u5e72\u5c5e\u6027":{"element":"\u6728","order":2,"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72","yin":true},"\u7eb3\u97f3":"\u5c71\u5934\u706b"}},"name":"\u56db\u67f1\u6392\u76d8","nayin":"\u5c71\u5934\u706b \u5c4b\u4e0a\u571f \u5929\u6cb3\u6c34 \u58c1\u4e0a\u571f","pillars":{"day":"\u4e19\u5348","month":"\u4e01\u4ea5","time":"\u5e9a\u5b50","year":"\u4e59\u4ea5"},"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u56db\u67f1\uff1b\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u516b\u5b57\u6392\u6cd5","step":2},{"dayun":[{"end_age":10,"gan":"\u4e19","ganzhi":"\u4e19\u620c","number":1,"start_age":1,"zhi":"\u620c"},{"end_age":20,"gan":"\u4e59","ganzhi":"\u4e59\u9149","number":2,"start_age":11,"zhi":"\u9149"},{"end_age":30,"gan":"\u7532","ganzhi":"\u7532\u7533","number":3,"start_age":21,"zhi":"\u7533"},{"end_age":40,"gan":"\u7678","ganzhi":"\u7678\u672a","number":4,"start_age":31,"zhi":"\u672a"},{"end_age":50,"gan":"\u58ec","ganzhi":"\u58ec\u5348","number":5,"start_age":41,"zhi":"\u5348"},{"end_age":60,"gan":"\u8f9b","ganzhi":"\u8f9b\u5df3","number":6,"start_age":51,"zhi":"\u5df3"},{"end_age":70,"gan":"\u5e9a","ganzhi":"\u5e9a\u8fb0","number":7,"start_age":61,"zhi":"\u8fb0"},{"end_age":80,"gan":"\u5df1","ganzhi":"\u5df1\u536f","number":8,"start_age":71,"zhi":"\u536f"},{"end_age":90,"gan":"\u620a","ganzhi":"\u620a\u5bc5","number":9,"start_age":81,"zhi":"\u5bc5"},{"end_age":100,"gan":"\u4e01","ganzhi":"\u4e01\u4e11","number":10,"start_age":91,"zhi":"\u4e11"},{"end_age":110,"gan":"\u4e19","ganzhi":"\u4e19\u5b50","number":11,"start_age":101,"zhi":"\u5b50"},{"end_age":120,"gan":"\u4e59","ganzhi":"\u4e59\u4ea5","number":12,"start_age":111,"zhi":"\u4ea5"}],"direction":"\u9006\u884c","direction_reason":"\u5e74\u5e72\u4e59\u4e3a\u9634\u5e72\uff0c\u7537\u547d\u9006\u884c","jieqi":{"days_to_jieqi":3.73,"forward":false,"reference":"\u7acb\u51ac","start_age":1},"name":"\u5927\u8fd0\u6392\u5217","source":"\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\u00b7\u5927\u8fd0\u6392\u6cd5\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5927\u8fd0","step":3},{"day_branch":"\u5348","day_stem":"\u4e19","details":{"day":{"\u5341\u795e":"\u65e5\u4e3b","\u5341\u795e\u4ee3\u7801":"ri_zhu","\u5730\u652f":"\u5348","\u5929\u5e72":"\u4e19"},"month":{"\u5341\u795e":"\u52ab\u8d22","\u5341\u795e\u4ee3\u7801":"jie_cai","\u5730\u652f":"\u4ea5","\u5929\u5e72":"\u4e01"},"time":{"\u5341\u795e":"\u504f\u8d22","\u5341\u795e\u4ee3\u7801":"pian_cai","\u5730\u652f":"\u5b50","\u5929\u5e72":"\u5e9a"},"year":{"\u5341\u795e":"\u6b63\u5370","\u5341\u795e\u4ee3\u7801":"zheng_yin","\u5730\u652f":"\u4ea5","\u5929\u5e72":"\u4e59"}},"hidden_tenshen":{"day":[{"\u5341\u795e":"\u52ab\u8d22","\u6743\u91cd":0.7,"\u85cf\u5e72":"\u4e01"},{"\u5341\u795e":"\u4f24\u5b98","\u6743\u91cd":0.3,"\u85cf\u5e72":"\u5df1"}],"month":[{"\u5341\u795e":"\u4e03\u6740","\u6743\u91cd":0.7,"\u85cf\u5e72":"\u58ec"},{"\u5341\u795e":"\u504f\u5370","\u6743\u91cd":0.3,"\u85cf\u5e72":"\u7532"}],"time":[{"\u5341\u795e":"\u6b63\u5b98","\u6743\u91cd":1.0,"\u85cf\u5e72":"\u7678"}],"year":[{"\u5341\u795e":"\u4e03\u6740","\u6743\u91cd":0.7,"\u85cf\u5e72":"\u58ec"},{"\u5341\u795e":"\u504f\u5370","\u6743\u91cd":0.3,"\u85cf\u5e72":"\u7532"}]},"name":"\u5341\u795e\u6807\u6ce8","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u5341\u795e\u8bba\uff1b\u6ef4\u5929\u9ad3\u00b7\u516d\u4eb2\u8bba","step":4},{"element_weight_from_hidden":{"\u571f":0.3,"\u6728":0.6,"\u6c34":2.4,"\u706b":0.7,"\u91d1":0.0},"hidden":{"day":{"\u5730\u652f":"\u5348","\u85cf\u5e72":[{"\u4e94\u884c":"\u706b","\u5e72":"\u4e01","\u6743\u91cd":0.7},{"\u4e94\u884c":"\u571f","\u5e72":"\u5df1","\u6743\u91cd":0.3}]},"month":{"\u5730\u652f":"\u4ea5","\u85cf\u5e72":[{"\u4e94\u884c":"\u6c34","\u5e72":"\u58ec","\u6743\u91cd":0.7},{"\u4e94\u884c":"\u6728","\u5e72":"\u7532","\u6743\u91cd":0.3}]},"time":{"\u5730\u652f":"\u5b50","\u85cf\u5e72":[{"\u4e94\u884c":"\u6c34","\u5e72":"\u7678","\u6743\u91cd":1.0}]},"year":{"\u5730\u652f":"\u4ea5","\u85cf\u5e72":[{"\u4e94\u884c":"\u6c34","\u5e72":"\u58ec","\u6743\u91cd":0.7},{"\u4e94\u884c":"\u6728","\u5e72":"\u7532","\u6743\u91cd":0.3}]}},"name":"\u85cf\u5e72\u5c55\u5f00","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u5730\u652f\u85cf\u5e72","step":5},{"branches":{"\u5e74\u652f":"\u4ea5","\u65e5\u652f":"\u5348","\u65f6\u652f":"\u5b50","\u6708\u652f":"\u4ea5"},"name":"\u5211\u51b2\u5408\u5bb3","relations":[{"branches":["\u5348","\u5b50"],"meaning":"\u51b2\u7a81\u3001\u53d8\u52a8\u3001\u5206\u79bb\u3001\u51b2\u52a8\u3001\u5bf9\u7acb\u3002","pair":["\u65e5\u652f","\u65f6\u652f"],"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f\u516d\u51b2","type":"\u516d\u51b2"},{"branches":["\u4ea5","\u4ea5"],"meaning":"\u5211\u7f5a\u3001\u662f\u975e\u3001\u77db\u76fe\u3001\u9690\u75be\u3002","pair":["\u5e74\u652f","\u6708\u652f"],"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5730\u652f\u4e09\u5211","type":"\u5211","xing_name":"\u81ea\u5211"},{"meaning":"\u5316\u5408\u3001\u7f81\u7eca\u3001\u6027\u60c5\u8f6c\u5316\u3002","pair":["\u5e74\u5e72","\u65f6\u5e72"],"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5929\u5e72\u4e94\u5408","stems":["\u4e59","\u5e9a"],"type":"\u5929\u5e72\u4e94\u5408","\u5316\u5408\u4e94\u884c":"\u91d1"}],"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u5730\u652f\u5211\u51b2\u5408\u5bb3\u8bba\uff1b\u6ef4\u5929\u9ad3\u00b7\u77e5\u547d","step":6},{"name":"\u795e\u715e\u8ba1\u7b97","shensha":[{"matched":["\u65e5\u5e72\u4e19 \u2192 \u5e74\u652f\u4ea5","\u65e5\u5e72\u4e19 \u2192 \u6708\u652f\u4ea5"],"name":"\u5929\u4e59\u8d35\u4eba","rule":"\u4ee5\u65e5\u5e72\u67e5\u56db\u67f1\u5730\u652f","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u5929\u4e59\u8d35\u4eba\uff08\u91c7\u7528\u300c\u7532\u620a\u5e9a\u725b\u7f8a\u2026\u516d\u8f9b\u9022\u9a6c\u864e\u300d\u53e3\u8bc0\uff1a\u5e9a\u53d6\u4e11\u672a\u3001\u8f9b\u53d6\u5bc5\u5348\uff1b\u5f02\u672c\u300c\u5e9a\u8f9b\u9022\u864e\u9a6c\u300d\u5c06\u5e9a\u5e76\u5165\u5bc5\u5348\uff0c\u6b64\u5904\u672a\u91c7\uff0c\u5c5e\u6d41\u6d3e\u5206\u6b67\uff09"},{"matched":["\u5e74\u652f\u4ea5 \u2192 \u65f6\u652f\u5b50"],"name":"\u6843\u82b1","rule":"\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u7684\u6c90\u6d74\u4f4d","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u6843\u82b1"},{"matched":["\u65e5\u652f\u5348 \u2192 \u65e5\u652f\u5348"],"name":"\u5c06\u661f","rule":"\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u7684\u4e2d\u4f4d","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u5c06\u661f"},{"matched":["\u65e5\u652f\u5348 \u2192 \u5e74\u652f\u4ea5","\u65e5\u652f\u5348 \u2192 \u6708\u652f\u4ea5"],"name":"\u52ab\u715e","rule":"\u4ee5\u5e74\u652f\u6216\u65e5\u652f\u67e5\u4e09\u5408\u5c40\u7edd\u4f4d\u540e\u4e00\u4f4d","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u52ab\u715e"},{"matched":["\u65e5\u5e72\u4e19 \u2192 \u65e5\u652f\u5348"],"name":"\u7f8a\u5203","rule":"\u4ee5\u65e5\u5e72\u67e5\u5e1d\u65fa\u4f4d\uff08\u7532\u7f8a\u5203\u5728\u536f\uff0c\u5e9a\u7f8a\u5203\u5728\u9149\u7b49\uff09","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u7f8a\u5203"},{"matched":["\u65e5\u5e72\u4e19 \u2192 \u65f6\u652f\u5b50"],"name":"\u798f\u661f\u8d35\u4eba","rule":"\u4ee5\u65e5\u5e72\u67e5\u5730\u652f","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u00b7\u798f\u661f\u8d35\u4eba"}],"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u795e\u715e\u7bc7","step":7},{"condition":{"\u5f97\u4ee4":false,"\u5f97\u52bf":true,"\u5f97\u5730":true,"\u5f97\u5730\u4f4d\u7f6e":["\u65e5\u67f1"]},"day_element":"\u706b","day_score":5.68,"name":"\u4e94\u884c\u5f3a\u5f31","raw_weight":{"\u571f":0.3,"\u6728":1.6,"\u6c34":2.9,"\u706b":2.7,"\u91d1":1.0},"scores":{"\u571f":1.26,"\u6728":23.58,"\u6c34":61.05,"\u706b":5.68,"\u91d1":8.42},"season":"\u51ac","source":"\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u4e94\u884c\u65fa\u76f8\u4f11\u56da","step":8,"strength":"\u4e2d\u548c\u504f\u5f31","strength_reason":"\u5931\u4ee4\uff08\u6708\u4ee4\u6b7b\uff09\uff1b\u5f97\u5730\uff08\u5730\u652f\u901a\u6839\uff09\uff1b\u5f97\u52bf\uff08\u5929\u5e72\u6709\u5370\u6bd4\uff09\u3002","support_vs_consume":{"\u514b\u6cc4\u8017\u65e5\u4e3b":70.73,"\u751f\u52a9\u65e5\u4e3b":29.26},"wangshuai":{"\u571f":"\u56da","\u6728":"\u76f8","\u6c34":"\u65fa","\u706b":"\u6b7b","\u91d1":"\u4f11"}},{"description":"\u6708\u652f\u4e03\u6740\u900f\u51fa\uff0c\u4e3b\u6743\u5a01\u3001\u538b\u529b\u3001\u6311\u6218\u3002","name":"\u683c\u5c40\u5224\u5b9a","pattern":"\u4e03\u6740\u683c","reason":{"\u6708\u652f":"\u4ea5","\u6708\u652f\u672c\u6c14\u5341\u795e":"\u4e03\u6740","\u6708\u652f\u672c\u6c14\u85cf\u5e72":"\u58ec","\u900f\u51fa\u5929\u5e72":[]},"source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u4e03\u6740\u683c","step":9},{"components":{"\u683c\u5c40\u7528\u795e":{"\u51fa\u5904":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u4e03\u6740\u683c","\u683c\u5c40":"\u4e03\u6740\u683c","\u683c\u5c40\u7528\u795e":"\u5370","\u8bf4\u660e":"\u5b98\u6740\u683c\u8eab\u5f31\u559c\u5370\u5316\u6740\u751f\u8eab\uff0c\u8eab\u65fa\u559c\u8d22\u6ecb\u6740"},"\u6ef4\u5929\u9ad3\u6276\u6291":{"\u51fa\u5904":"\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61","\u559c\u7528\u4e94\u884c":["\u571f","\u706b"],"\u6276\u6291\u65b9\u5411":"\u65e5\u4e3b\u4e2d\u548c\u504f\u5f31\uff0c\u559c\u5370\u6bd4\u751f\u6276","\u6276\u6291\u7528\u795e":"\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09","\u65e5\u4e3b\u5f3a\u5f31":"\u4e2d\u548c\u504f\u5f31"},"\u7a77\u901a\u5b9d\u9274":{"\u51fa\u5904":"\u7a77\u901a\u5b9d\u9274\u00b7\u4e19\u65e5\u5341\u6708(\u6881\u6e58\u6da6\u8bc4\u6ce8P70,81,\u4e19\u706b\u603b\u63d0\u8981\u8865)","\u559c\u795e":"\u58ec","\u5fcc\u795e":"\u620a","\u7528\u795e":"\u7532","\u7528\u795e\u4e94\u884c":"\u6728","\u8bf4\u660e":"\u5341\u6708\u4e19\u706b\uff0c\u592a\u9633\u5931\u4ee4\uff0c\u4f11\u56da\u6781\u5f31\uff0c\u4e13\u7528\u7532\u6728\uff0c\u58ec\u6c34\u4e3a\u4f50\uff1b\u6c34\u65fa\u5b9c\u620a\u5236\u3002\u7528\u7532\u3001\u559c\u58ec\u3001\u6c34\u65fa\u559c\u620a\u3002"}},"final_ji":"\u620a","final_xi":"\u58ec","final_yong":"\u7532","method":"\u4e09\u6e90\u5408\u53c2\uff1a\u7a77\u901a\u5b9d\u9274\u8c03\u5019 + \u6ef4\u5929\u9ad3\u6276\u6291 + \u683c\u5c40\u7528\u795e","name":"\u7528\u795e\u63a8\u8350","source":"\u7a77\u901a\u5b9d\u9274\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u7528\u795e","step":10,"synthesis":{"\u6276\u6291\u7528\u795e":"\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09","\u662f\u5426\u540c\u5411":{"\u683c\u5c40\u4e0e\u6276\u6291\u4e00\u81f4":true,"\u8c03\u5019\u4e0e\u6276\u6291\u4e00\u81f4":false},"\u683c\u5c40\u7528\u795e":"\u5370","\u7efc\u5408\u5efa\u8bae":"\u8c03\u5019\u7528\u795e\u4e3a\u7532\uff08\u6728\uff09\uff0c\u6276\u6291\u559c\u7528\u4e3a\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09\u3002\u82e5\u547d\u5c40\u5bd2\u6696\u71e5\u6e7f\u5931\u8c03\u660e\u663e\uff0c\u4ee5\u8c03\u5019\u7532\u4e3a\u5148\uff1b\u5426\u5219\u4ee5\u6276\u6291\u4e3a\u4e3b\u3002","\u8c03\u5019\u7528\u795e":"\u7532"}},{"age":31,"comment":"\u5927\u8fd0\u4e0e\u6d41\u5e74\u559c\u5fcc\u6709\u4ea4\u9519\uff0c\u9700\u7ed3\u5408\u5177\u4f53\u4e8b\u9879\u5224\u65ad\u3002","current_dayun":{"end_age":40,"gan":"\u7678","ganzhi":"\u7678\u672a","number":4,"start_age":31,"zhi":"\u672a"},"current_year":2026,"dayun_comment":"\u5f53\u524d\u5927\u8fd0\u5929\u5e72\u4e3a\u5fcc\u795e\uff0c\u5341\u5e74\u6574\u4f53\u538b\u529b\u8f83\u5927\uff0c\u5b9c\u7a33\u5065\u3002","dayun_judgment":"\u51f6","judgment":"\u5e73","liunian":{"gan":"\u4e19","ganzhi":"\u4e19\u5348","zhi":"\u5348"},"liunian_comment":"\u6d41\u5e74\u5929\u5e72\u4e3a\u559c\u7528\uff0c\u6574\u4f53\u987a\u9042\uff0c\u5b9c\u79ef\u6781\u8fdb\u53d6\u3002","liunian_judgment":"\u5409","liunian_relations":["\u5211\u65e5\u67f1\uff08\u81ea\u5211\uff09"],"name":"\u5927\u8fd0\u6d41\u5e74","overall_judgment":"\u5e73","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5927\u8fd0\u6d41\u5e74\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u7528","step":11},{"cautions":["\u5fcc\u795e\uff1a\u620a\uff0c\u6d41\u5e74\u9022\u4e4b\u591a\u9700\u6536\u655b\u3002","\u6d41\u5e74\u5730\u652f\u5173\u7cfb\uff1a\u5211\u65e5\u67f1\uff08\u81ea\u5211\uff09\u3002"],"chengu":{"day_w":5,"hour_w":16,"month_w":18,"song":"\u5e7c\u5e74\u8fd0\u9053\u672a\u66fe\u4eab\uff0c\u82e6\u662f\u8e49\u8dce\u518d\u4e0d\u5174\uff0c\u5144\u5f1f\u516d\u4eb2\u7686\u65e0\u9760\uff0c\u4e00\u8eab\u4e8b\u4e1a\u665a\u5e74\u6210\u3002","song_band":48,"source":"\u8881\u5929\u7f61\u79f0\u9aa8\u6b4c","total_qian":48,"total_str":"4\u4e248\u94b1","year_w":9},"key_observations":["\u65e5\u4e3b\u4e19\uff08\u706b\uff09\u4e2d\u548c\u504f\u5f31\u3002\u5931\u4ee4\uff08\u6708\u4ee4\u6b7b\uff09\uff1b\u5f97\u5730\uff08\u5730\u652f\u901a\u6839\uff09\uff1b\u5f97\u52bf\uff08\u5929\u5e72\u6709\u5370\u6bd4\uff09\u3002","\u6708\u4ee4\u4ea5\u4e3a\u63d0\u7eb2\uff0c\u4e03\u6740\u683c\uff1a\u6708\u652f\u4e03\u6740\u900f\u51fa\uff0c\u4e3b\u6743\u5a01\u3001\u538b\u529b\u3001\u6311\u6218\u3002","\u7528\u795e\u4e09\u6e90\uff1a\u8c03\u5019\u7532\uff0c\u6276\u6291\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09\uff0c\u683c\u5c40\u5370\u3002\u8c03\u5019\u7528\u795e\u4e3a\u7532\uff08\u6728\uff09\uff0c\u6276\u6291\u559c\u7528\u4e3a\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09\u3002\u82e5\u547d\u5c40\u5bd2\u6696\u71e5\u6e7f\u5931\u8c03\u660e\u663e\uff0c\u4ee5\u8c03\u5019\u7532\u4e3a\u5148\uff1b\u5426\u5219\u4ee5\u6276\u6291\u4e3a\u4e3b\u3002","\u547d\u5c40\u5b58\u5728\uff1a\u5929\u5e72\u4e94\u5408, \u516d\u51b2, \u5211","\u4e3b\u8981\u795e\u715e\uff1a\u5929\u4e59\u8d35\u4eba, \u6843\u82b1, \u5c06\u661f, \u52ab\u715e, \u7f8a\u5203"],"name":"\u7efc\u5408\u62a5\u544a","plain_language":{"glossary":[{"plain":"\u4ee5\u201c\u65e5\u4e3b\u201d\u4e3a\u4e2d\u5fc3\uff0c\u5176\u4f59\u4e03\u4e2a\u5b57\u4e0e\u60a8\u7684\u5173\u7cfb\u89d2\u8272\uff08\u5982\u6bd4\u80a9=\u540c\u8f88\u3001\u6b63\u8d22=\u7a33\u5b9a\u6536\u5165\u3001\u6b63\u5b98=\u4e8b\u4e1a\u89c4\u77e9\u7b49\uff09\u3002\u5c31\u50cf\u60a8\u8eab\u8fb9\u4e0d\u540c\u8eab\u4efd\u7684\u4eba\u3002","term":"\u5341\u795e"},{"plain":"\u53e4\u4eba\u5728\u5e72\u652f\u7ec4\u5408\u4e0a\u9644\u52a0\u7684\u4e00\u4e9b\u5409\u51f6\u6807\u8bb0\uff08\u5982\u5929\u4e59\u8d35\u4eba\u3001\u6587\u660c\u7b49\uff09\uff0c\u5c5e\u4e8e\u4f20\u7edf\u8f85\u52a9\u4fe1\u606f\uff0c\u4ec5\u4f9b\u53c2\u8003\uff0c\u4e0d\u5fc5\u8ff7\u4fe1\u3002","term":"\u795e\u715e"},{"plain":"\u5730\u652f\u4e4b\u95f4\u7684\u51e0\u79cd\u4e92\u52a8\u5173\u7cfb\uff1a\u201c\u5408\u201d\u50cf\u4eb2\u8fd1\u5408\u4f5c\uff0c\u201c\u51b2\u201d\u50cf\u5bf9\u51b2\u51b2\u7a81\uff0c\u201c\u5211/\u5bb3\u201d\u50cf\u6697\u4e2d\u6469\u64e6\u3002\u7528\u6765\u5224\u65ad\u4eba\u9645\u4e0e\u4e8b\u4ef6\u7684\u987a\u9006\u3002","term":"\u5211\u51b2\u5408\u5bb3"},{"plain":"\u516d\u5341\u7532\u5b50\u6bcf\u5bf9\u5e72\u652f\u88ab\u8d4b\u4e88\u7684\u53e6\u4e00\u4e2a\u4e94\u884c\u540d\u79f0\uff08\u5982\u4e19\u5348=\u5929\u6cb3\u6c34\uff09\uff0c\u5e38\u7528\u4e8e\u8c61\u4e49\u8f85\u52a9\uff0c\u4e0e\u201c\u6b63\u4e94\u884c\u201d\u5e76\u884c\uff0c\u4e0d\u53ef\u6df7\u4e3a\u4e00\u8c08\u3002","term":"\u7eb3\u97f3\u4e94\u884c"},{"plain":"\u56e0\u7ecf\u5ea6\u4e0d\u540c\uff0c\u5404\u5730\u7684\u201c\u771f\u5b9e\u592a\u9633\u65f6\u201d\u548c\u949f\u8868\u65f6\u95f4\u6709\u5dee\uff08\u7ea6\u6bcf\u5dee1\u5ea6\u5dee4\u5206\u949f\uff09\u3002\u51fa\u751f\u5730\u8d8a\u504f\u897f\uff0c\u771f\u592a\u9633\u65f6\u8d8a\u665a\u3002\u6821\u6b63\u540e\u624d\u6392\u5f97\u51c6\u3002","term":"\u771f\u592a\u9633\u65f6"}],"overview":"\u7b80\u5355\u6765\u8bf4\uff1a\u60a8\u662f\u300c\u4e19\u300d\u65e5\u4e3b\uff08\u4e94\u884c\u5c5e\u706b\uff09\uff0c\u4e2d\u548c\u504f\u5f31\uff1b\u751f\u4e8e\u300c\u4ea5\u300d\u6708\u4ee4\uff0c\u6784\u6210\u300c\u4e03\u6740\u683c\u300d\u683c\u5c40\uff1b\u5bf9\u60a8\u6700\u6709\u5229\u7684\u7528\u795e\u662f\u300c\u7532\u300d\uff08\u559c\u58ec\u3001\u5fcc\u620a\uff09\u3002\u73b0\u5e74\u7ea6 31 \u5c81\uff0c\u884c\u300c\u7678\u672a\u300d\u5927\u8fd0\uff0c\u4eca\u5e74\uff082026\uff09\u6d41\u5e74\u300c\u4e19\u5348\u300d\u6574\u4f53\u5e73\u3002\u4e0b\u9762\u5206\u6761\u7528\u5927\u767d\u8bdd\u7ed9\u60a8\u8bb2\u6e05\u695a\u6bcf\u4e2a\u672f\u8bed\u662f\u4ec0\u4e48\u610f\u601d\u3002\uff1b\u53e6\u6709\u5510\u4ee3\u8881\u5929\u7f61\u300a\u79f0\u9aa8\u6b4c\u300b\u7b97\u5f97\u60a8\u547d\u91cd 4\u4e248\u94b1\uff0c\u53e4\u6279\u5df2\u9644\u4e8e\u4e0b\u65b9\u5206\u6761\u89e3\u8bfb\u4e2d\u3002","sections":[{"plain":"\u516b\u5b57\u7531\u56db\u67f1\u516b\u4e2a\u5b57\u7ec4\u6210\uff0c\u5176\u4e2d\u201c\u65e5\u5e72\u201d\uff08\u51fa\u751f\u90a3\u5929\u7684\u5929\u5e72\uff09\u4ee3\u8868\u60a8\u672c\u4eba\uff0c\u53eb\u300c\u65e5\u4e3b\u300d\u3002\u60a8\u7684\u65e5\u4e3b\u662f\u300c\u4e19\u300d\uff0c\u4e94\u884c\u5c5e\u706b\u3002\u770b\u547d\uff0c\u9996\u5148\u5c31\u662f\u770b\u8fd9\u4e2a\u201c\u60a8\u201d\u5728\u6574\u76d8\u91cc\u7684\u5f3a\u5f31\u4e0e\u5904\u5883\u3002","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u65e5\u5e72\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61","term":"\u60a8\u662f\u8c01\uff08\u65e5\u4e3b\uff09"},{"plain":"\u60a8\u7684\u300c\u65e5\u4e3b\u4e19\u300d\uff08\u4ee3\u8868\u60a8\u81ea\u5df1\uff09\u4e2d\u548c\u504f\u5f31\u3002\u901a\u4fd7\u8bf4\uff0c\u60a8\u5929\u751f\u5e95\u5b50\u504f\u8584\uff0c\u66f4\u9700\u8981\u5916\u754c\u52a9\u529b\u2014\u2014\u8d35\u4eba\u3001\u670b\u53cb\u3001\u5b66\u4e60\u5145\u7535\u3001\u7a33\u5b9a\u5e73\u53f0\uff0c\u6765\u4e3a\u60a8\u201c\u8865\u5f3a\u201d\u3002\u9047\u5927\u4e8b\u5b9c\u501f\u529b\u3001\u4e0d\u5b9c\u786c\u625b\uff1b\u547d\u7406\u4e0a\u628a\u8fd9\u53eb\u201c\u559c\u5370\u6bd4\u751f\u6276\u201d\uff08\u5370\u661f\u3001\u6bd4\u80a9\u52ab\u8d22\u6765\u5e2e\u60a8\uff09\u3002\n\n\u3010\u5e95\u6c14\u4ece\u4f55\u800c\u6765\u2014\u2014\u7528\u6570\u636e\u8bf4\u8bdd\u3011\u60a8\u8fd9\u4e00\u76d8\u4e94\u884c\u539f\u59cb\u5f97\u6c14\u4efd\u6570\u4e3a\uff1a\u67281.6\u3001\u706b2.7\u3001\u571f0.3\u3001\u91d11.0\u3001\u6c342.9\u3002\u5176\u4e2d\u300c\u706b\u300d\u72ec\u5360 2.7\u3001\u6298\u7b97\u540e\u5f97\u5206\u7ea6 5.68 \u5206\uff1b\u751f\u52a9\u60a8\u7684\u529b\u91cf\u5360 29.26%\uff0c\u514b\u6cc4\u8017\u60a8\u7684\u53ea\u5360 70.73%\u3002\u547d\u7406\u5224\u5b9a\u6839\u7531\u6709\u4e09\uff1a\u5f97\u4ee4\uff08\u6708\u4ee4\u300c\u4ea5\u300d\u5f53\u65fa\uff0c\u5426\uff09\u3001\u5f97\u5730\uff08\u5730\u652f\u901a\u6839\u4e8e \u65e5\u67f1\uff09\u3001\u5f97\u52bf\uff08\u5929\u5e72\u6709\u5370\u6bd4\u76f8\u52a9\uff0c\u662f\uff09\u3002\u4e09\u8005\u9f50\u5907\uff0c\u6b63\u662f\u60a8\u201c\u4e2d\u548c\u504f\u5f31\u201d\u7684\u5e95\u6c14\u6765\u6e90\u2014\u2014\u4e0d\u662f\u7a7a\u53e3\u8bf4\u201c\u60a8\u65fa\u201d\uff0c\u800c\u662f\u8fd9\u76d8\u706b\u52bf\u539a\u5b9e\u3001\u81ea\u5df1\u5c31\u80fd\u7ad9\u7a33\u3002\n\n\u3010\u53e4\u8bc0\u9010\u53e5\u91ca\u4e49\u3011\u300a\u6ef4\u5929\u9ad3\u00b7\u8bba\u5341\u5929\u5e72\u300b\u5bf9\u300c\u4e19\u300d\u7684\u516b\u5b57\u771f\u8a00\u662f\uff1a\u300c\u4e19\u706b\u731b\u70c8\uff0c\u6b3a\u971c\u4fae\u96ea\u3002\u80fd\u7145\u5e9a\u91d1\uff0c\u9022\u8f9b\u53cd\u602f\u3002\u571f\u4f17\u6210\u6148\uff0c\u6c34\u7316\u663e\u8282\u3002\u864e\u9a6c\u72ac\u4e61\uff0c\u7532\u6765\u6709\u6b83\u3002\u300d\u3002\n\u628a\u5b83\u62c6\u5f00\u770b\uff1a\u4e19\u706b\u662f\u592a\u9633\u3002\u5149\u660e\u6b63\u5927\uff0c\u80fd\u953b\u5e9a\u91d1\u6210\u5668\u3001\u5374\u6015\u4e0e\u8f9b\u91d1\u76f8\u5408\u800c\u602f\uff08\u9022\u8f9b\u53cd\u602f\uff09\uff1b\u571f\u4f17\u6210\u6148\u3001\u6c34\u7316\u663e\u8282\u3002\u559c\u6728\u6765\u751f\u3001\u5fcc\u571f\u91cd\u6666\u5176\u5149\u3002\n\n\u3010\u8be5\u5982\u4f55\u987a\u52bf\u800c\u4e3a\u3011\u60a8\u8eab\u5f31\uff0c\u597d\u6bd4\u571f\u8584\u4e4b\u5730\uff0c\u987a\u52bf\u7684\u5173\u952e\u662f\u201c\u501f\u529b\u8865\u5f3a\u201d\uff1a\u9760\u8fd1\u8d35\u4eba\u3001\u624e\u8fdb\u7a33\u5b9a\u5e73\u53f0\u3001\u6301\u7eed\u5b66\u4e60\uff08\u5370\u661f\u751f\u6276\uff09\uff0c\u4e0e\u540c\u8f88\u62b1\u56e2\uff08\u6bd4\u52ab\u5e2e\u8eab\uff09\uff0c\u9047\u5927\u4e8b\u501f\u52bf\u800c\u4e0d\u786c\u625b\uff0c\u65b9\u80fd\u628a\u5e95\u6c14\u4e00\u70b9\u70b9\u517b\u8d77\u6765\u3002\n\n\u3010\u60a8\u8fd9\u4e00\u76d8\u7684\u4e13\u5c5e\u559c\u4e0e\u5fcc\u3011\u7efc\u5408\u7a77\u901a\u5b9d\u9274 / \u6ef4\u5929\u9ad3 / \u4e09\u547d\u901a\u4f1a\u4e09\u6e90\u5408\u53c2\uff0c\u5bf9\u60a8\u6700\u6709\u7528\u7684\u662f\u300c\u7528\u795e \u7532\u300d\u300c\u559c\u795e \u58ec\u300d\uff0c\u7ed9\u60a8\u6dfb\u4e71\u7684\u662f\u300c\u5fcc\u795e \u620a\u300d\u3002\u4e0b\u65b9\u201c\u7528\u795e\u201d\u4e00\u8282\u4f1a\u628a\u5b83\u4eec\u9010\u5b57\u8bb2\u900f\uff0c\u5e76\u843d\u5230\u8d22\u5bcc\u3001\u4e8b\u4e1a\u3001\u5065\u5eb7\u3001\u611f\u60c5\u7b49\u5177\u4f53\u89d2\u5ea6\u3002","source":"\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u4e94\u884c\u65fa\u76f8\u4f11\u56da","term":"\u60a8\u7684\u5f3a\u5f31\uff08\u8eab\u65fa / \u8eab\u5f31\uff09"},{"plain":"\u516b\u5b57\u91cc\u7684\u201c\u683c\u5c40\u201d\uff0c\u76f8\u5f53\u4e8e\u7ed9\u60a8\u7684\u547d\u5c40\u5b9a\u4e00\u4e2a\u57fa\u672c\u7c7b\u578b\u4e0e\u6c14\u8d28\u503e\u5411\u3002\u5b83\u4e3b\u8981\u770b\u60a8\u51fa\u751f\u7684\u201c\u6708\u4ee4\u201d\uff08\u51fa\u751f\u90a3\u4e2a\u6708\u7684\u5730\u652f\uff0c\u8fd9\u91cc\u662f\u300c\u4ea5\u300d\uff09\u3002\u6708\u4ee4\u5c31\u50cf\u5f53\u5b63\u7684\u6c14\u5019\uff0c\u51b3\u5b9a\u54ea\u79cd\u4e94\u884c\u6700\u65fa\uff0c\u662f\u5b9a\u683c\u5c40\u7684\u201c\u63d0\u7eb2\u201d\u3002\u60a8\u6784\u6210\u300c\u4e03\u6740\u683c\u300d\uff1a\u6708\u652f\u4e03\u6740\u900f\u51fa\uff0c\u4e3b\u6743\u5a01\u3001\u538b\u529b\u3001\u6311\u6218\u3002\n\n\u3010\u201c\u4e03\u6740\u683c\u201d\u662f\u600e\u4e48\u5b9a\u51fa\u6765\u7684\u3011\u5b9a\u683c\u5c40\u4ee5\u6708\u4ee4\uff08\u6708\u652f\u300c\u4ea5\u300d\uff09\u4e3a\u63d0\u7eb2\uff0c\u672c\u6c14\u85cf\u5e72\u4e3a\u300c\u58ec\u300d\uff08\u5341\u795e\u4e3a\u4e03\u6740\uff09\uff1b\u518d\u770b\u6708\u652f\u85cf\u5e72\u54ea\u4e2a\u900f\u51fa\u5929\u5e72\uff1a\u672c\u76d8\u900f\u51fa\u7684\u662f \u6708\u652f\u672c\u6c14\u58ec\uff08\u4e03\u6740\uff09\uff0c\u636e\u6b64\u7acb\u4e3a\u300c\u4e03\u6740\u683c\u300d\u3002\u7b80\u8a00\u4e4b\uff1a\u6708\u4ee4\u7ed9\u4e86\u4e00\u76d8\u6c14\u7684\u201c\u4e3b\u8272\u8c03\u201d\uff0c\u900f\u5e72\u7684\u90a3\u4e00\u795e\u628a\u683c\u5c40\u201c\u70b9\u201d\u4e86\u51fa\u6765\u3002\n\n\u300a\u5b50\u5e73\u771f\u8be0\u00b7\u8bba\u7528\u795e\u300b\u628a\u683c\u5c40\u5206\u4f5c\u300e\u5584\u683c\u300f\u4e0e\u300e\u4e0d\u5584\u683c\u300f\uff1a\u60a8\u8fd9\u300c\u4e03\u6740\u683c\u300d\u5c5e\u300c\u4e0d\u5584\u683c\u300d\u4e2d\u7684\u300c\u4e03\u6740\u683c\u300d\uff0c\u8bba\u5176\u201c\u53d6\u7528\u4e4b\u6cd5\u201d\u5f53\u300e\u9006\u7528\u300f\u2014\u2014\u559c\u98df\u795e\u4ee5\u5236\u4f0f\uff0c\u5fcc\u8d22\u661f\u8d44\u6276\u3001\u5370\u661f\u574f\u98df\u3002\uff08\u6ce8\uff1a\u6b64\u5904\u7684\u300e\u987a\u7528/\u9006\u7528\u300f\u662f\u300a\u5b50\u5e73\u771f\u8be0\u300b\u5bf9\u5404\u683c\u201c\u5982\u4f55\u53d6\u7528\u795e\u201d\u7684\u7279\u5b9a\u8bf4\u6cd5\uff0c\u6307\u987a\u5176\u6027\u800c\u751f\u62a4\u3001\u6216\u9006\u5176\u6027\u800c\u5236\u7ea6\uff1b\u4e0e\u4e0a\u65b9\u201c\u683c\u5c40\u7528\u795e\u4e0e\u6276\u6291\u65b9\u5411\u4e00\u81f4\u201d\u6240\u8bf4\u7684\u201c\u987a\u201d\u662f\u4e0d\u540c\u5c42\u9762\u7684\u542b\u4e49\uff0c\u5e76\u975e\u77db\u76fe\u3002\uff09","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u4e03\u6740\u683c","term":"\u60a8\u51fa\u751f\u7684\u65f6\u4ee4\u4e0e\u683c\u5c40"},{"plain":"\u53d6\u201c\u7528\u795e\u201d\u662f\u516b\u5b57\u7684\u6838\u5fc3\uff1a\u7528\u795e\u5c31\u662f\u5bf9\u60a8\u6700\u6709\u5e2e\u52a9\u7684\u4e94\u884c/\u5341\u795e\uff0c\u76f8\u5f53\u4e8e\u60a8\u7684\u201c\u8865\u836f\u201d\uff1b\u559c\u795e\u662f\u5e2e\u7528\u795e\u4e00\u81c2\u4e4b\u529b\u7684\uff1b\u5fcc\u795e\u662f\u7ed9\u60a8\u6dfb\u4e71\u7684\uff0c\u9022\u4e4b\u5b9c\u8c28\u614e\u3002\n\u53e4\u6cd5\u6709\u4e09\u5957\u4f53\u7cfb\u5408\u53c2\u2014\u2014\u7a77\u901a\u5b9d\u9274\u770b\u5bd2\u6696\u71e5\u6e7f\uff08\u8c03\u5019\u7528\u795e\uff09\u3001\u6ef4\u5929\u9ad3\u770b\u5f3a\u5f31\uff08\u6276\u6291\u7528\u795e\uff09\u3001\u4e09\u547d\u901a\u4f1a\u770b\u683c\u5c40\uff08\u683c\u5c40\u7528\u795e\uff09\u3002\u4e09\u8005\u5408\u53c2\u540e\uff1a\u60a8\u7684\u7528\u795e\u662f\u300c\u7532\u300d\uff1b\u559c\u795e\u300c\u58ec\u300d\uff1b\u5fcc\u795e\u300c\u620a\u300d\u3002\n\n\u3010\u7528\u795e / \u559c\u795e / \u5fcc\u795e \u9010\u5b57\u8bb2\u900f\u3011\n\u00b7 \u300c\u7528\u795e \u7532\u300d\uff08\u6728\uff09\uff1a\u5728\u60a8\u76d8\u91cc\u662f\u300c\u504f\u5370\u300d\u2014\u2014\u504f\u5370\u2014\u2014\u504f\u95e8\u5b66\u8bc6\u3001\u51b7\u8d35\u4eba\uff0c\u662f\u201c\u751f\u6211\u800c\u504f\u201d\u7684\u529b\u91cf\u3002\u6728\u4e3b\u751f\u957f\u3001\u8212\u5c55\u3001\u6761\u8fbe\uff08\u5bf9\u5e94\u4e8b\u4e1a\u3001\u5b98\u6740\u3001\u884c\u52a8\u529b\uff09\u3002\u5c24\u5176\u8981\u9760\u8fd1/\u591a\u7528\u3002\n\u00b7 \u300c\u559c\u795e \u58ec\u300d\uff08\u6c34\uff09\uff1a\u5728\u60a8\u76d8\u91cc\u662f\u300c\u4e03\u6740\u300d\u2014\u2014\u4e03\u6740\u2014\u2014\u9b44\u529b\u3001\u6311\u6218\u3001\u538b\u529b\u3001\u513f\u5b50\uff08\u7537\u547d\uff09\u3001\u504f\u592b\uff08\u5973\u547d\uff09\uff0c\u662f\u201c\u514b\u6211\u800c\u504f\u201d\u7684\u529b\u91cf\u3002\u6c34\u4e3b\u6d41\u52a8\u3001\u8d22\u5bcc\u3001\u667a\u6167\uff08\u5bf9\u5e94\u8d22\u661f\u3001\u60c5\u611f\u3001\u7075\u52a8\uff09\u3002\u5c24\u5176\u8981\u9760\u8fd1/\u591a\u7528\u3002\n\u00b7 \u300c\u5fcc\u795e \u620a\u300d\uff08\u571f\uff09\uff1a\u5728\u60a8\u76d8\u91cc\u662f\u300c\u98df\u795e\u300d\u2014\u2014\u98df\u795e\u2014\u2014\u624d\u534e\u3001\u53e3\u798f\u3001\u5973\u513f\uff08\u5973\u547d\uff09\u3001\u6e29\u548c\u8f93\u51fa\uff0c\u662f\u201c\u6211\u751f\u800c\u6b63\u201d\u7684\u529b\u91cf\u3002\u571f\u4e3b\u627f\u8f7d\u3001\u7a33\u5b9a\u3001\u79ef\u85cf\uff08\u5bf9\u5e94\u6839\u57fa\u3001\u6bd4\u52ab\u3001\u52a1\u5b9e\uff09\u3002\u8981\u8b66\u60d5/\u56de\u907f\u3002\n\n\u3010\u8c03\u5019\u7528\u795e \u4e0e \u6276\u6291\u7528\u795e\uff0c\u662f\u4e24\u4e2a\u4e0d\u540c\u7ef4\u5ea6\uff0c\u522b\u6df7\u3011\n\u00b7 \u8c03\u5019\uff08\u7a77\u901a\u5b9d\u9274\uff09\uff1a\u7ba1\u201c\u5bd2\u6696\u71e5\u6e7f\u201d\u7684\u6c14\u5019\u95ee\u9898\u2014\u2014\u50cf\u51ac\u5929\u751f\u4eba\u51b7\uff0c\u8981\u706b\u6765\u6696\uff1b\u590f\u5929\u751f\u4eba\u71e5\uff0c\u8981\u6c34\u6765\u6da6\u3002\u60a8\u65e5\u4e3b\u4e19\u751f\u4e8e\u300c\u4ea5\u300d\u6708\uff08\u51ac\u4e4b\u4ee4\uff09\uff0c\u5168\u5c40\u6c342.9\u3001\u706b2.7\u3001\u571f0.3\u2014\u2014\u8c03\u5019\u7528\u795e\u662f\u300c\u7532\u300d\uff08\u6728\uff09\uff0c\u9700\u8981\u5b83\u6765\u8c03\u5019\uff0c\u6b63\u8bf4\u660e\u672c\u5c40\u5bd2\u6696\u5c1a\u5300\u3002\n\u00b7 \u6276\u6291\uff08\u6ef4\u5929\u9ad3\uff09\uff1a\u7ba1\u201c\u8eab\u65fa\u8eab\u5f31\u201d\u7684\u5f3a\u5f31\u95ee\u9898\u2014\u2014\u60a8\u4e2d\u548c\u504f\u5f31\uff0c\u559c\u751f\u6276\uff08\u501f\u529b\u8865\u5f3a\uff09\u3002\n\u00b7 \u4e24\u8005\u662f\u5426\u540c\u5411\uff1a\u8c03\u5019\u4e0e\u6276\u6291\u4e00\u81f4=\u5426\uff1b\u683c\u5c40\u4e0e\u6276\u6291\u4e00\u81f4=\u662f\u3002\u6240\u4ee5\u7efc\u5408\u4e0a\uff1a\u8c03\u5019\u7528\u795e\u4e3a\u7532\uff08\u6728\uff09\uff0c\u6276\u6291\u559c\u7528\u4e3a\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09\u3002\u82e5\u547d\u5c40\u5bd2\u6696\u71e5\u6e7f\u5931\u8c03\u660e\u663e\uff0c\u4ee5\u8c03\u5019\u7532\u4e3a\u5148\uff1b\u5426\u5219\u4ee5\u6276\u6291\u4e3a\u4e3b\u3002\u3002\n\u4e00\u53e5\u8bdd\u8bb0\u4f4f\uff1a\u8c03\u5019\u7528\u795e\u4e3a\u7532\uff08\u6728\uff09\uff0c\u6276\u6291\u559c\u7528\u4e3a\u5370\u6bd4\uff08\u6b63\u5370\u3001\u504f\u5370\u3001\u6bd4\u80a9\u3001\u52ab\u8d22\uff09\u3002\u82e5\u547d\u5c40\u5bd2\u6696\u71e5\u6e7f\u5931\u8c03\u660e\u663e\uff0c\u4ee5\u8c03\u5019\u7532\u4e3a\u5148\uff1b\u5426\u5219\u4ee5\u6276\u6291\u4e3a\u4e3b\u3002\n\n\u82e5\u7528\u660e\u4ee3\u5f20\u6960\u300a\u795e\u5cf0\u901a\u8003\u00b7\u75c5\u836f\u8bf4\u300b\u6765\u6253\u6bd4\u65b9\uff1a\u547d\u5c40\u4e2d\u300e\u4e0d\u59a5\u5f53\u4e4b\u5904\u300f\u4fbf\u662f\u300e\u75c5\u300f\uff0c\u6240\u53d6\u7528\u795e\u4fbf\u662f\u6cbb\u75c5\u7684\u300e\u836f\u300f\u3002\u60a8\u8eab\u5f31\u4e3a\u300e\u75c5\u300f\uff0c\u5b9c\u53d6\u5370\u661f\u3001\u6bd4\u52ab\u6765\u300e\u6276\u300f\uff0c\u8fd9\u4fbf\u662f\u6cbb\u75c5\u7684\u300e\u836f\u300f\u3002","source":"\u7a77\u901a\u5b9d\u9274\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u7528\u795e","term":"\u5bf9\u60a8\u6700\u6709\u5229\u7684\u201c\u8865\u836f\u201d\uff08\u7528\u795e / \u559c\u795e / \u5fcc\u795e\uff09"},{"plain":"\u628a\u4e0a\u9762\u62bd\u8c61\u7684\u201c\u7528\u795e/\u559c\u5fcc\u201d\u7ffb\u8bd1\u6210\u60a8\u5173\u5fc3\u7684\u516d\u4e2a\u65b9\u9762\u3002\u603b\u539f\u5219\uff1a\u591a\u4eb2\u8fd1\u300c\u6728\u3001\u6c34\u300d\u7c7b\u7684\u4eba\u4e8b\u7269\u3001\u884c\u4e1a\u3001\u65b9\u4f4d\u4e0e\u5e74\u4efd\uff1b\u5c11\u78b0\u300c\u571f\u300d\u7c7b\u3002\u4e0b\u9762\u9010\u6761\u7ed3\u5408\u60a8\u8fd9\u4e00\u76d8\u7684\u771f\u5b9e\u4e94\u884c\u5f3a\u5f31\u8bf4\u2014\u2014\n\u3010\u8d22\u5bcc\u3011\u60a8\u662f\u706b\u65e5\u4e3b\uff0c\u201c\u6211\u514b\u8005\u201d\u4e3a\u8d22\u3002\u8d22\u661f\u6240\u5728\u7684\u300c\u6c34\u300d\u539f\u59cb\u5f97\u6c14\u4ec5 2.9\uff08\u504f\u5f31\uff09\uff0c\u800c\u504f\u8d22\u300c\u620a\u300d\u53c8\u662f\u5fcc\u795e\u4e14\u5f31\uff0c\u8bf4\u660e\u6b63\u8d22\u4e0d\u7b97\u4e30\u3001\u6a2a\u8d22\u66f4\u5b9c\u8c28\u614e\uff1b\u60a8\u6bd4\u52ab\uff08\u706b\uff09\u91cd\uff0c\u5408\u4f5c\u5171\u4e8b\u6613\u6709\u201c\u5206\u8d22\u201d\uff0c\u8d26\u76ee\u5b9c\u5206\u660e\u3001\u83ab\u7cca\u6d82\u5408\u4f19\u3002\n\u3010\u4e8b\u4e1a\u3011\u201c\u514b\u6211\u8005\u201d\u4e3a\u5b98\u6740\uff08\u4e8b\u4e1a\u3001\u540d\u671b\u3001\u4e0a\u53f8\uff09\u3002\u60a8\u6708\u5e72\u900f\u300c\u4e01\u300d\u4e3a\u300c\u52ab\u8d22\u300d\uff0c\u6709\u9b44\u529b\u62c5\u8d23\u4e4b\u8c61\uff1b\u7528\u795e\u300c\u7532\u300d\uff08\u5370\uff09\u4e3b\u8d35\u4eba\u5e73\u53f0\u6696\u5c40\u3002\u4f46\u4e8b\u4e1a\u7ade\u4e89\u529b\u6240\u5728\u7684\u300c\u6728\u300d\u5f97\u6c14\u4ec5 1.6\uff08\u504f\u5f31\uff09\uff0c\u4e34\u573a\u53d1\u6325\u4e0e\u5347\u8fc1\u9700\u501f\u5927\u8fd0\u6d41\u5e74\u8865\u6728\uff08\u559c\u7528\u795e\u4e2d\u7684\u6728\uff09\u65b9\u663e\u3002\n\u3010\u5065\u5eb7\uff08\u4f20\u7edf\u610f\u8c61\uff0c\u975e\u533b\u5b66\u8bca\u65ad\uff09\u3011\u4e94\u884c\u8bb2\u7a76\u5e73\u8861\uff1a\u60a8\u300c\u571f\u300d\u5f97\u6c14 0.3 \u8fc7\u91cd\uff0c\u4f20\u7edf\u4e0a\u5bf9\u5e94\u813e\u80c3\u539a\u5b9e\u6613\u6ede\uff1b\u300c\u6c34\u300d\u4ec5 2.9\uff08\u5f31\uff09\uff0c\u5bf9\u5e94\u80be\u7cfb/\u6ccc\u5c3f\u7cfb\u7edf\u3001\u754f\u5bd2\uff1b\u300c\u706b\u300d2.7\uff08\u504f\u5f31\uff09\uff0c\u5bf9\u5e94\u5fc3\u9633\u4e0e\u5faa\u73af\uff1b\u300c\u6728\u300d1.6\uff08\u5f31\uff09\uff0c\u5bf9\u5e94\u809d\u80c6\u758f\u6cc4\u3001\u60c5\u7eea\u6613\u90c1\u7ed3\u3002\u8c03\u5019\u7528\u300c\u7532\u300d\u6696\u5c40\uff0c\u6b63\u53ef\u9488\u5bf9\u201c\u571f\u91cd\u6c34\u5f31\u706b\u5f31\u201d\u7684\u504f\u5bd2\u504f\u6ede\u3002\n\u3010\u611f\u60c5\u5a5a\u59fb\u3011\u60a8\u7537\u547d\uff0c\u59bb\u661f\uff08\u6b63\u8d22\uff09\u4e3a\u300c\u91d1\u300d\uff08\u8f9b\uff09\uff0c\u672c\u76d8\u5f97\u6c14 1.0\uff08\u5c1a\u53ef\uff09\u3002\u504f\u8d22\u300c\u620a\u300d\u4e3a\u5fcc\u4e14\u85cf\u4e8e\u6708\u652f\uff08\u7236\u6bcd\u5bab\uff09\uff0c\u611f\u60c5\u4e2d\u6ce8\u610f\u8d22\u52a1\u8fb9\u754c\u4e0e\u6843\u82b1\u5206\u5bf8\u3002\n\u3010\u4eba\u9645\u3011\u60a8\u6bd4\u52ab\uff08\u540c\u8f88\u3001\u670b\u53cb\u3001\u540c\u4e8b\uff09\u591a\uff0c\u4eba\u7f18\u5e7f\u3001\u4e92\u52a9\u4e5f\u591a\uff0c\u4f46\u540c\u8f88\u95f4\u4e5f\u6613\u6709\u5229\u76ca\u7275\u626f\uff1b\u6708\u5e72\u900f\u4e03\u6740/\u5b98\uff0c\u5bf9\u4e0a\uff08\u4e0a\u53f8\u3001\u89c4\u5219\uff09\u65e2\u6709\u538b\u529b\u4e5f\u662f\u953b\u70bc\uff1b\u559c\u795e\u300c\u58ec\u300d\uff08\u5b98\uff09\u63d0\u793a\uff1a\u5b88\u89c4\u77e9\u3001\u5c0a\u6743\u5a01\uff0c\u53cd\u800c\u5f97\u52a9\u529b\u3002\n\u3010\u5b66\u4e1a\u3011\u5370\u661f\uff08\u559c\u7528\u795e\u4e2d\u7684\u706b\uff09\u4e3a\u5b66\u4e1a\u6839\u57fa\uff0c\u672c\u76d8\u706b\u504f\u5f31\uff0c\u9700\u4e3b\u52a8\u7528\u529f\u3001\u73af\u5883\u6696\u52a9\uff1b\u98df\u4f24\uff08\u91d1\uff09\u4e3a\u624d\u534e\u8f93\u51fa\uff0c\u91d1\u76f8\uff081.0\uff09\u5c1a\u53ef\uff0c\u6709\u4e00\u6280\u4e4b\u957f\u53ef\u53d1\u6325\uff1b\u5b98\u6740\uff08\u6728\uff09\u4e3a\u8003\u8bd5\u7ade\u4e89\u529b\uff0c\u6728\u504f\u5f31\uff0c\u4e34\u573a\u5b9c\u501f\u8fd0\u3002\u4e00\u53e5\u8bdd\uff1a\u60a8\u5e95\u5b50\u539a\uff08\u8eab\u65fa\uff09\uff0c\u6210\u4e8b\u9760\u201c\u5411\u5916\u8f93\u51fa\u624d\u534e + \u501f\u8d35\u4eba\u4e0e\u89c4\u5219\u201d\uff0c\u800c\u975e\u6b7b\u5b88\u3002","source":"\u7a77\u901a\u5b9d\u9274\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u8c61\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u516d\u4eb2/\u8bba\u4e94\u884c","term":"\u7528\u795e\u5982\u4f55\u5f71\u54cd\u60a8\u7684\u5177\u4f53\u4eba\u751f"},{"plain":"\u201c\u5927\u8fd0\u201d\u662f\u5341\u5e74\u4e00\u6362\u7684\u4eba\u751f\u9636\u6bb5\u5927\u73af\u5883\uff0c\u201c\u6d41\u5e74\u201d\u662f\u5177\u4f53\u67d0\u4e00\u5e74\u3002\n\u60a8\u73b0\u5e74\u7ea6 31 \u5c81\uff0c\u6b63\u884c\u300c\u7678\u672a\u300d\u5927\u8fd0\uff0c\u8fd9\u5341\u5e74\u57fa\u8c03\u51f6\uff1b2026 \u5e74\u6d41\u5e74\u4e3a\u300c\u4e19\u5348\u300d\uff0c\u6574\u4f53\u5e73\u3002\u6d41\u5e74\u5929\u5e72\u4e3a\u559c\u7528\uff0c\u6574\u4f53\u987a\u9042\uff0c\u5b9c\u79ef\u6781\u8fdb\u53d6\u3002\uff08\u4eca\u5e74\u5730\u652f\u4e0e\u547d\u5c40\u5173\u7cfb\uff1a\u5211\u65e5\u67f1\uff08\u81ea\u5211\uff09\uff09","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u5927\u8fd0\u6d41\u5e74\uff1b\u6ef4\u5929\u9ad3\u00b7\u4f53\u7528","term":"\u60a8\u7684\u5927\u8fd0\u4e0e\u4eca\u5e74\u6d41\u5e74"},{"plain":"\u4f20\u7edf\u795e\u715e\u6709\uff1a\u5929\u4e59\u8d35\u4eba, \u6843\u82b1, \u5c06\u661f, \u52ab\u715e, \u7f8a\u5203\uff1b\u5730\u652f\u95f4\u5b58\u5728\uff1a\u5929\u5e72\u4e94\u5408, \u516d\u51b2, \u5211\u3002\u8fd9\u4e9b\u5c5e\u4e8e\u4f20\u7edf\u9644\u52a0\u4fe1\u606f\uff0c\u53ef\u4f5c\u53c2\u8003\uff0c\u4e0d\u5fc5\u8fc7\u5ea6\u62c5\u5fe7\u3002","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u795e\u715e / \u8bba\u5211\u51b2\u5408\u5bb3","term":"\u547d\u5c40\u91cc\u7684\u7279\u6b8a\u4fe1\u53f7"},{"plain":"\u7eb3\u97f3\u4e94\u884c\uff0c\u662f\u516d\u5341\u7532\u5b50\u6bcf\u5bf9\u5e72\u652f\u88ab\u8d4b\u4e88\u7684\u53e6\u4e00\u4e2a\u201c\u4e94\u884c\u522b\u79f0\u201d\uff0c\u6e0a\u6d77\u5b50\u5e73\u4e0e\u4e09\u547d\u901a\u4f1a\u540c\u8f7d\u6b64\u8868\uff0c\u4e0e\u201c\u6b63\u4e94\u884c\u201d\u5e76\u884c\u4e0d\u6096\u3002\u60a8\u5e74\u67f1\u300c\u4e59\u4ea5\u300d\u7684\u7eb3\u97f3\u4e3a\u300c\u5c71\u5934\u706b\u300d\uff0c\u65e5\u67f1\u300c\u4e19\u5348\u300d\u7684\u7eb3\u97f3\u4e3a\u300c\u5929\u6cb3\u6c34\u300d\u3002\u6253\u4e2a\u6bd4\u65b9\uff1a\u6b63\u4e94\u884c\u662f\u60a8\u7684\u201c\u672c\u8272\u201d\uff0c\u7eb3\u97f3\u662f\u60a8\u7684\u201c\u96c5\u53f7\u201d\uff0c\u4e24\u8005\u5408\u770b\uff0c\u547d\u5c40\u610f\u8c61\u66f4\u4e30\u6ee1\u751f\u52a8\u3002\n\n\u3010\u201c\u672c\u8272\u4e0e\u96c5\u53f7\u201d\u5177\u4f53\u600e\u4e48\u7406\u89e3\u3011\u60a8\u7684\u6b63\u4e94\u884c\u65e5\u4e3b\u662f\u300c\u706b\u300d\uff08\u4e19\uff09\uff0c\u7eb3\u97f3\u4e5f\u5c5e\u300c\u706b\u300d\uff08\u5c71\u5934\u706b\uff09\uff0c\u672c\u8272\u4e0e\u96c5\u53f7\u540c\u6c14\uff0c\u4e3b\u60a8\u8868\u91cc\u5982\u4e00\u3001\u6839\u57fa\u539a\u91cd\uff0c\u8fd9\u201c\u706b\u201d\u7684\u610f\u8c61\uff08\u5982\u706b\u4e4b\u6c89\u7a33/\u751f\u53d1\uff09\u4f1a\u8d2f\u7a7f\u60a8\u7684\u5916\u5728\u6c14\u8d28\u4e0e\u5185\u5728\u5b9a\u529b\u3002\n\u7b80\u8a00\u4e4b\uff1a\u6b63\u4e94\u884c\u8bb2\u201c\u60a8\u662f\u4ec0\u4e48\u201d\uff0c\u7eb3\u97f3\u8bb2\u201c\u60a8\u50cf\u4ec0\u4e48\u201d\uff1b\u4e00\u4e2a\u662f\u4f53\u8d28\uff0c\u4e00\u4e2a\u662f\u6c14\u8d28\uff0c\u5408\u770b\u624d\u7acb\u4f53\u3002","source":"\u6e0a\u6d77\u5b50\u5e73\u00b7\u7eb3\u97f3\uff1b\u4e09\u547d\u901a\u4f1a\u00b7\u7eb3\u97f3","term":"\u60a8\u7684\u7eb3\u97f3\u4e94\u884c\uff08\u5e74\u547d / \u65e5\u67f1\uff09"},{"plain":"\u5510\u4ee3\u661f\u547d\u5bb6\u8881\u5929\u7f61\u7559\u4e0b\u4e00\u90e8\u300a\u79f0\u9aa8\u6b4c\u300b\uff0c\u628a\u4eba\u7684\u51fa\u751f\u5e74\u3001\u6708\u3001\u65e5\u3001\u65f6\u5404\u914d\u4e00\u4e2a\u201c\u9aa8\u91cd\u201d\uff08\u4ee5\u94b1\u8ba1\uff0c\u5341\u94b1\u4e3a\u4e00\u4e24\uff09\uff0c\u56db\u67f1\u76f8\u52a0\u4fbf\u662f\u60a8\u4e00\u751f\u7684\u201c\u603b\u91cd\u91cf\u201d\u3002\u60a8\u7684\u56db\u67f1\u9aa8\u91cd\u5206\u522b\u662f\u2014\u2014\u5e74\u67f1 9 \u94b1\u3001\u6708\u67f1 18 \u94b1\u3001\u65e5\u67f1 5 \u94b1\u3001\u65f6\u67f1 16 \u94b1\uff0c\u5408\u8ba1 4\u4e248\u94b1\u3002\n\u8881\u5929\u7f61\u636e\u6b64\u6279\u66f0\uff1a\u300c\u5e7c\u5e74\u8fd0\u9053\u672a\u66fe\u4eab\uff0c\u82e6\u662f\u8e49\u8dce\u518d\u4e0d\u5174\uff0c\u5144\u5f1f\u516d\u4eb2\u7686\u65e0\u9760\uff0c\u4e00\u8eab\u4e8b\u4e1a\u665a\u5e74\u6210\u3002\u300d\n\u8fd9\u4fbf\u662f\u4f20\u7edf\u79f0\u9aa8\u6cd5\u5bf9\u60a8\u547d\u683c\u6c14\u8d28\u7684\u4e00\u53e5\u53e4\u6279\u3002\u9700\u8bf4\u660e\uff1a\u79f0\u9aa8\u4e0e\u516b\u5b57\u662f\u4e24\u5957\u5e76\u884c\u7684\u53e4\u8001\u7b97\u6cd5\uff0c\u4e00\u4e2a\u79f0\u201c\u91cd\u91cf\u201d\u3001\u4e00\u4e2a\u8bba\u201c\u4e94\u884c\u751f\u514b\u201d\uff0c\u53ef\u4e92\u4e3a\u6620\u7167\uff1b\u5747\u5c5e\u53e4\u4eba\u7684\u7ecf\u9a8c\u603b\u7ed3\uff0c\u5b9c\u4ee5\u6587\u5316\u89c6\u89d2\u6b23\u8d4f\uff0c\u4e0d\u5fc5\u5949\u4e3a\u5b9a\u8bba\u3002\n\uff08\u8fd9\u9996\u53e4\u6279\u5982\u4f55\u4e0e\u60a8\u56db\u67f1\u7684\u201c\u6c14\u6570\u9636\u6bb5\u201d\u5408\u770b\u3001\u9010\u53e5\u7406\u89e3\uff0c\u8be6\u89c1\u4e0b\u65b9\u300e\u5341\u4e8c\u957f\u751f\u300f\u4e00\u8282\u2014\u2014\u90a3\u91cc\u4f1a\u628a\u60a8\u5e74/\u6708/\u65e5/\u65f6\u652f\u5206\u522b\u5904\u4e8e\u957f\u751f\u00b7\u5e1d\u65fa\u00b7\u5893\u00b7\u7edd\u7b49\u54ea\u4e00\u9636\u6bb5\u8bb2\u900f\uff0c\u5e76\u548c\u8fd9\u9996\u79f0\u9aa8\u6b4c\u4e92\u76f8\u5370\u8bc1\u3002\uff09","source":"\u8881\u5929\u7f61\u79f0\u9aa8\u6b4c","term":"\u8881\u5929\u7f61\u79f0\u9aa8\uff1a\u60a8\u547d\u4e2d\u51e0\u4e24\u51e0\u94b1"},{"plain":"\u300a\u4e09\u547d\u901a\u4f1a\u00b7\u5377\u4e8c\u300b\u7acb\u300e\u5bc4\u751f\u5341\u4e8c\u5bab\u300f\u4e13\u8bf4\uff0c\u628a\u4e94\u884c\u4e4b\u6c14\u5728\u5341\u4e8c\u5730\u652f\u91cc\u7684\u751f\u547d\u8282\u5f8b\u5206\u6210\u5341\u4e8c\u9636\u6bb5\uff1a\u957f\u751f\u3001\u6c90\u6d74\u3001\u51a0\u5e26\u3001\u4e34\u5b98\u3001\u5e1d\u65fa\u3001\u8870\u3001\u75c5\u3001\u6b7b\u3001\u5893\u3001\u7edd\u3001\u80ce\u3001\u517b\uff0c\u5faa\u73af\u65e0\u7aef\u3002\u63a8\u6cd5\u4ee5\u65e5\u5e72\u4e3a\u4e3b\uff1a\u60a8\u7684\u65e5\u5e72\u662f\u300c\u4e19\u300d\uff0c\u957f\u751f\u5728\u300c\u5bc5\u300d\uff08\u957f\u751f\u8bc0\uff1a\u7532\u4ea5\u4e59\u5348\u4e19\u620a\u5bc5\uff0c\u4e01\u5df1\u9149\u4f4d\u5e9a\u5df3\u5bfb\uff0c\u8f9b\u5b50\u58ec\u7533\u7678\u536f\u89c1\uff0c\u957f\u751f\u4e4b\u4f4d\u8bb0\u5206\u660e\u3002\uff09\uff0c\u9633\u5e72\u987a\u884c\u3002\n\u636e\u6b64\u770b\u60a8\u56db\u67f1\u5730\u652f\u6240\u5904\u7684\u6c14\u6570\u9636\u6bb5\u2014\u2014\u5e74\u67f1\u300c\u4ea5\u300d\u4e3a\u7edd\uff1b\u6708\u67f1\u300c\u4ea5\u300d\u4e3a\u7edd\uff1b\u65e5\u652f\u300c\u5348\u300d\u4e3a\u5e1d\u65fa\uff1b\u65f6\u67f1\u300c\u5b50\u300d\u4e3a\u80ce\u3002\n\u5341\u4e8c\u5bab\u4e2d\u957f\u751f\u3001\u4e34\u5b98(\u7984)\u3001\u5e1d\u65fa\u4e3a\u300e\u65fa\u76f8\u300f\uff0c\u597d\u6bd4\u4eba\u751f\u5f53\u6253\u4e4b\u5e74\uff1b\u5893\u3001\u7edd\u3001\u80ce\u3001\u517b\u4e3a\u6536\u85cf\u5b55\u80b2\uff0c\u5e76\u975e\u51f6\u9669\u3002\u53e4\u8bc0\u4e91\u300e\u751f\u65fa\u592a\u8fc7\u5b9c\u5236\u4f0f\uff0c\u6b7b\u7edd\u4e0d\u53ca\u5b9c\u751f\u6276\u300f\uff0c\u91cd\u5728\u8bc6\u5176\u901a\u53d8\uff0c\u4e0d\u53ef\u6267\u4e00\u800c\u8bba\u3002\n\n\u3010\u7528\u201c\u6c14\u6570\u201d\u89e3\u91ca\u60a8\u7684\u201c\u8eab\u65fa\u5e95\u6c14\u201d\u4ece\u54ea\u6765\u3011\u4e0a\u9762\u8bf4\u5230\u60a8\u8eab\u65fa\uff0c\u5e95\u6c14\u7684\u4e00\u4e2a\u91cd\u8981\u6765\u6e90\u5c31\u85cf\u5728\u5341\u4e8c\u957f\u751f\u91cc\uff1a\u60a8\u7684\u65e5\u652f\u300c\u5348\u300d\u4e0e\u65f6\u652f\u300c\u5b50\u300d\u90fd\u843d\u5728\u300c\u5e1d\u65fa\u300d\uff08\u5df1\u571f\u9634\u5e72\u9006\u884c\uff0c\u5e1d\u65fa\u5728\u5df3\uff09\u2014\u2014\u65e5\u652f\u662f\u201c\u81ea\u5df1\u5bab\u201d\u3001\u65f6\u652f\u662f\u201c\u7ed3\u5c40/\u5b50\u5b59\u5bab\u201d\uff0c\u81ea\u5750\u5e1d\u65fa\uff0c\u7b49\u4e8e\u60a8\u4e2d\u5e74\u5f53\u6253\u4e4b\u5e74\u6c14\u6570\u6b63\u65fa\u3001\u81ea\u8eab\u5b9a\u529b\u8db3\uff0c\u8fd9\u4e0e\u201c\u8eab\u65fa\u201d\u4e92\u76f8\u5370\u8bc1\uff1b\u800c\u6708\u652f\u300c\u4ea5\u300d\u4e3a\u300c\u7edd\u300d\u3001\u5e74\u652f\u300c\u4ea5\u300d\u4e3a\u300c\u7edd\u300d\u5c5e\u6536\u85cf\u84c4\u52bf\u4e4b\u4f4d\uff0c\u63d0\u793a\u65e9\u5c81\u5b9c\u84c4\u529b\u3001\u4e2d\u665a\u5e74\u65b9\u53d1\u3002\n\n\u3010\u628a\u8881\u5929\u7f61\u79f0\u9aa8\u6b4c \u4e0e \u5341\u4e8c\u957f\u751f \u5408\u770b\u3011\u60a8\u79f0\u9aa8 4\u4e248\u94b1\uff0c\u8881\u5929\u7f61\u6279\uff1a\u300c\u5e7c\u5e74\u8fd0\u9053\u672a\u66fe\u4eab\uff0c\u82e6\u662f\u8e49\u8dce\u518d\u4e0d\u5174\uff0c\u5144\u5f1f\u516d\u4eb2\u7686\u65e0\u9760\uff0c\u4e00\u8eab\u4e8b\u4e1a\u665a\u5e74\u6210\u3002\u300d\u3002\u8fd9\u9996\u53e4\u6279\u662f\u53e4\u4eba\u5bf9\u201c\u603b\u91cd\u91cf\u201d\u7684\u610f\u8c61\u603b\u8bc4\uff1b\u82e5\u7528\u5341\u4e8c\u957f\u751f\u6765\u8bfb\uff1a\u65e5\u65f6\u652f\u5750\u65fa\uff08\u5e1d\u65fa/\u4e34\u5b98\uff09\u6b63\u8bf4\u660e\u60a8\u81ea\u8eab\u6c14\u6570\u65fa\u3001\u5e95\u6c14\u8db3\uff0c\u4e0e\u79f0\u9aa8\u6b4c\u91cc\u90a3\u4efd\u201c\u81ea\u8eab\u7ad9\u5f97\u7a33\u3001\u4e0d\u9760\u4f9d\u9644\u201d\u7684\u610f\u8c61\u76f8\u5408\uff1b\u6708\u5e74\u652f\u5904\u6536\u85cf\u4e4b\u4f4d\uff0c\u5219\u547c\u5e94\u201c\u65e9\u5e74\u84c4\u52bf\u3001\u4e2d\u665a\u5e74\u53d1\u8d8a\u201d\u7684\u8282\u5f8b\u3002\u79f0\u9aa8\u662f\u201c\u603b\u91cd\u91cf\u201d\u3001\u5341\u4e8c\u957f\u751f\u662f\u201c\u6c14\u6570\u9636\u6bb5\u201d\uff0c\u4e24\u76f8\u4e92\u53c2\uff0c\u547d\u5c40\u610f\u8c61\u624d\u771f\u6b63\u6d3b\u8d77\u6765\u3002","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u5377\u4e8c\u00b7\u8bba\u4e94\u884c\u65fa\u76f8\u4f11\u56da\u6b7b\u5e76\u5bc4\u751f\u5341\u4e8c\u5bab\uff1b\u5341\u4e8c\u957f\u751f\u8bc0","term":"\u60a8\u7684\u751f\u547d\u8282\u5f8b\uff1a\u5341\u4e8c\u957f\u751f\uff08\u4e09\u547d\u901a\u4f1a\u00b7\u5bc4\u751f\u5341\u4e8c\u5bab\uff09"},{"plain":"\u300a\u4e09\u547d\u901a\u4f1a\u00b7\u5377\u4e03\u00b7\u8bba\u516d\u4eb2\u300b\u7684\u7b97\u6cd5\uff0c\u7528\u5927\u767d\u8bdd\u8bb2\u5c31\u662f\uff1a\u4ee5\u60a8\u81ea\u5df1\uff08\u65e5\u5e72\u300c\u4e19\u300d\uff09\u4e3a\u4e2d\u5fc3\uff0c\u628a\u201c\u8c01\u751f\u6211\u3001\u6211\u751f\u8c01\u3001\u8c01\u514b\u6211\u3001\u6211\u514b\u8c01\u3001\u8c01\u540c\u6211\u201d\u8f6c\u6210\u4eb2\u4eba\u89d2\u8272\u2014\u2014\u751f\u6211\u8005=\u7236\u6bcd\u957f\u8f88\u3001\u6211\u514b\u8005=\u59bb\u8d22\u3001\u514b\u6211\u8005=\u5b98\u6740\u4e08\u592b/\u5b50\u5973\u3001\u6211\u751f\u8005=\u98df\u4f24\u5b50\u5973\u3001\u540c\u6211\u8005=\u5144\u5f1f\u59d0\u59b9\u3002\u4e0b\u9762\u628a\u60a8\u8fd9\u4e00\u76d8\u91cc\u201c\u6bcf\u4f4d\u4eb2\u4eba\u5bf9\u5e94\u7684\u661f\u201d\u9010\u4e00\u627e\u51fa\u6765\u3001\u5e76\u770b\u5b83\u843d\u5728\u54ea\u4e00\u67f1\uff08\u5bab\u4f4d\uff09\uff0c\u8fd9\u5c31\u662f\u53e4\u4eba\u8bf4\u7684\u300e\u661f\u5bab\u540c\u53c2\u300f\uff1a\u661f\uff08\u5341\u795e\uff09\u770b\u5173\u7cfb\u597d\u574f\uff0c\u5bab\uff08\u5e74\u7956\u4e0a/\u6708\u7236\u6bcd/\u65e5\u592b\u59bb\u5df1\u8eab/\u65f6\u5b50\u5b59\uff09\u770b\u6761\u4ef6\u4f18\u52a3\u3002\n\u00b7 \u7236\u4eb2\uff08\u504f\u8d22\u4e3a\u7236\uff09\uff1a\u672c\u76d8\u89c1\u7236\u4eb2\u661f\u4e8e\u2014\u2014\u65f6\u67f1(\u5b50\u5b59\u5bab)\u5929\u5e72\u900f\u51fa\u300c\u5e9a\u300d\uff08\u73b0\u4e8e\u660e\u5904\uff0c\u529b\u91cf\u5f3a\u3001\u5173\u7cfb\u660e\u663e\uff09\u3002\n\u00b7 \u6bcd\u4eb2\uff08\u6b63\u5370\u4e3a\u6bcd\uff09\uff1a\u672c\u76d8\u89c1\u6bcd\u4eb2\u661f\u4e8e\u2014\u2014\u5e74\u67f1(\u7956\u4e0a/\u7236\u6bcd\u5bab)\u5929\u5e72\u900f\u51fa\u300c\u4e59\u300d\uff08\u73b0\u4e8e\u660e\u5904\uff0c\u529b\u91cf\u5f3a\u3001\u5173\u7cfb\u660e\u663e\uff09\u3002\n\u00b7 \u5144\u5f1f\u59d0\u59b9\uff08\u6bd4\u52ab\u4e3a\u5144\u5f1f\u59d0\u59b9\uff08\u7537\u5973\u540c\u65ad\uff09\uff09\uff1a\u672c\u76d8\u89c1\u5144\u5f1f\u59d0\u59b9\u661f\u4e8e\u2014\u2014\u65e5\u67f1(\u5df1\u8eab/\u592b\u59bb\u5bab)\u5929\u5e72\u900f\u51fa\u300c\u4e19\u300d\uff08\u73b0\u4e8e\u660e\u5904\uff0c\u529b\u91cf\u5f3a\u3001\u5173\u7cfb\u660e\u663e\uff09\uff1b\u6708\u67f1(\u7236\u6bcd\u5144\u5f1f\u5bab)\u5929\u5e72\u900f\u51fa\u300c\u4e01\u300d\uff08\u73b0\u4e8e\u660e\u5904\uff0c\u529b\u91cf\u5f3a\u3001\u5173\u7cfb\u660e\u663e\uff09\uff1b\u65e5\u67f1(\u5df1\u8eab/\u592b\u59bb\u5bab)\u5730\u652f\u85cf\u300c\u4e01\u300d\uff08\u85cf\u4e8e\u6697\u5904\uff0c\u529b\u91cf\u542b\u84c4\u3001\u7f18\u5206\u5185\u655b\uff09\u3002\n\u00b7 \u59bb\u5b50\uff08\u6b63\u8d22\u4e3a\u59bb\uff09\uff1a\u672c\u76d8\u5929\u5e72\u5730\u652f\u5747\u672a\u89c1\u660e\u663e\u59bb\u5b50\u661f\uff0c\u4e3b\u8fd9\u65b9\u9762\u7f18\u5206\u8f83\u6de1\u3001\u6216\u9700\u501f\u5927\u8fd0\u6d41\u5e74\u65b9\u663e\u3002\n\u00b7 \u513f\u5b50\uff08\u4e03\u6740\u4e3a\u5b50\uff08\u7537\u547d\uff09\uff09\uff1a\u672c\u76d8\u89c1\u513f\u5b50\u661f\u4e8e\u2014\u2014\u5e74\u67f1(\u7956\u4e0a/\u7236\u6bcd\u5bab)\u5730\u652f\u85cf\u300c\u58ec\u300d\uff08\u85cf\u4e8e\u6697\u5904\uff0c\u529b\u91cf\u542b\u84c4\u3001\u7f18\u5206\u5185\u655b\uff09\uff1b\u6708\u67f1(\u7236\u6bcd\u5144\u5f1f\u5bab)\u5730\u652f\u85cf\u300c\u58ec\u300d\uff08\u85cf\u4e8e\u6697\u5904\uff0c\u529b\u91cf\u542b\u84c4\u3001\u7f18\u5206\u5185\u655b\uff09\u3002\n\u00b7 \u5973\u513f\uff08\u6b63\u5b98\u4e3a\u5973\uff08\u7537\u547d\uff09\uff09\uff1a\u672c\u76d8\u89c1\u5973\u513f\u661f\u4e8e\u2014\u2014\u65f6\u67f1(\u5b50\u5b59\u5bab)\u5730\u652f\u85cf\u300c\u7678\u300d\uff08\u85cf\u4e8e\u6697\u5904\uff0c\u529b\u91cf\u542b\u84c4\u3001\u7f18\u5206\u5185\u655b\uff09\u3002\n\n\u3010\u661f\u5bab\u540c\u53c2\u600e\u4e48\u8bfb\u3011\u82e5\u67d0\u4f4d\u4eb2\u4eba\u7684\u201c\u661f\u201d\u900f\u5728\u5929\u5e72\uff08\u660e\u5904\uff09\uff0c\u5173\u7cfb\u660e\u663e\u3001\u529b\u91cf\u5f3a\uff1b\u82e5\u53ea\u85cf\u5728\u5730\u652f\uff08\u6697\u5904\uff09\uff0c\u5219\u7f18\u5206\u542b\u84c4\u5185\u655b\u3002\u661f\u843d\u4e4b\u5bab\u4e5f\u5b9a\u201c\u5728\u54ea\u65b9\u9762\u663e\u201d\uff1a\u5982\u7236\u661f\u843d\u6708\u67f1\u7236\u6bcd\u5bab\uff0c\u4e3b\u7236\u4eb2\u4e0e\u60a8\u65e9\u5e74\u5bb6\u5ead\u5173\u8054\u6df1\uff1b\u59bb\u661f\u843d\u65e5\u652f\u592b\u59bb\u5bab\uff0c\u4e3b\u914d\u5076\u8d34\u8fd1\u60a8\u81ea\u8eab\u3002\u628a\u201c\u661f\u201d\u4e0e\u201c\u5bab\u201d\u5408\u770b\uff0c\u6bd4\u5355\u770b\u4e00\u4e2a\u5b57\u51c6\u5f97\u591a\u3002\n\u3010\u843d\u5230\u4eba\u9645\u3011\u60a8\u6bd4\u52ab\uff08\u540c\u8f88\u670b\u53cb\uff09\u591a\uff0c\u4eba\u7f18\u5e7f\u3001\u4e92\u52a9\u4e5f\u591a\uff0c\u4f46\u540c\u8f88\u95f4\u6613\u6709\u5229\u76ca\u7275\u626f\uff1b\u5b98\u6740\uff08\u4e0a\u53f8/\u89c4\u5219/\u5b50\u5973\uff09\u900f\u5e72\uff0c\u5bf9\u4e0a\u65e2\u6709\u538b\u529b\u4e5f\u662f\u953b\u70bc\u3002\u5b88\u89c4\u77e9\u3001\u501f\u8d35\u4eba\uff08\u5370\uff09\u3001\u62e9\u660e\u53cb\uff08\u6bd4\u52ab\u6709\u5ea6\uff09\uff0c\u4eba\u9645\u4fbf\u987a\u3002","source":"\u4e09\u547d\u901a\u4f1a\u00b7\u5377\u4e03\u00b7\u8bba\u516d\u4eb2\uff08\u300c\u5370\u4e3a\u6bcd\uff0c\u8d22\u4e3a\u7236\uff0c\u6bd4\u52ab\u4e3a\u5144\u5f1f\uff0c\u5b98\u6740\u4e3a\u592b(\u5973)/\u5b50(\u7537)\uff0c\u98df\u4f24\u4e3a\u5b50\u300d\uff1b\u300c\u5973\u4eba\u53d6\u7528\u4e0e\u7537\u4e0d\u540c\uff0c\u6211\u751f\u8005\u4e3a\u5b50\uff0c\u514b\u6211\u8005\u4e3a\u592b\uff0c\u751f\u6211\u592b\u8005\u4e3a\u59d1\uff0c\u514b\u6211\u59d1\u8005\u4e3a\u516c\u300d\uff09","term":"\u60a8\u7684\u516d\u4eb2\u4e0e\u4eba\u9645\uff08\u4e09\u547d\u901a\u4f1a\u00b7\u8bba\u516d\u4eb2\uff09"}]},"source":"\u516d\u90e8\u8457\u4f5c\u7efc\u5408\uff08\u7a77\u901a\u5b9d\u9274\u3001\u6ef4\u5929\u9ad3\u3001\u4e09\u547d\u901a\u4f1a\u3001\u4e2d\u56fd\u53e4\u4ee3\u7b97\u547d\u672f\uff09","step":12,"summary":{"\u559c\u795e":"\u58ec","\u5f53\u524d\u5927\u8fd0":"\u7678\u672a","\u5fcc\u795e":"\u620a","\u65e5\u4e3b":"\u4e19","\u65e5\u4e3b\u5f3a\u5f31":"\u4e2d\u548c\u504f\u5f31","\u65e5\u67f1":"\u4e19\u5348","\u6708\u4ee4":"\u4ea5","\u683c\u5c40":"\u4e03\u6740\u683c","\u7528\u795e":"\u7532"}}],"ziwei":{"body_branch":"\u620c","body_index":8,"decadals":[{"age_range":[5,14],"branch":"\u620c","palace_index":8,"palace_name":"\u547d\u5bab","stem":"\u4e19"},{"age_range":[15,24],"branch":"\u9149","palace_index":7,"palace_name":"\u7236\u6bcd\u5bab","stem":"\u4e59"},{"age_range":[25,34],"branch":"\u7533","palace_index":6,"palace_name":"\u798f\u5fb7\u5bab","stem":"\u7532"},{"age_range":[35,44],"branch":"\u672a","palace_index":5,"palace_name":"\u7530\u5b85\u5bab","stem":"\u7678"},{"age_range":[45,54],"branch":"\u5348","palace_index":4,"palace_name":"\u5b98\u7984\u5bab","stem":"\u58ec"},{"age_range":[55,64],"branch":"\u5df3","palace_index":3,"palace_name":"\u4ea4\u53cb\u5bab","stem":"\u8f9b"},{"age_range":[65,74],"branch":"\u8fb0","palace_index":2,"palace_name":"\u8fc1\u79fb\u5bab","stem":"\u5e9a"},{"age_range":[75,84],"branch":"\u536f","palace_index":1,"palace_name":"\u75be\u5384\u5bab","stem":"\u5df1"},{"age_range":[85,94],"branch":"\u5bc5","palace_index":0,"palace_name":"\u8d22\u5e1b\u5bab","stem":"\u620a"},{"age_range":[95,104],"branch":"\u4e11","palace_index":11,"palace_name":"\u5b50\u5973\u5bab","stem":"\u5df1"},{"age_range":[105,114],"branch":"\u5b50","palace_index":10,"palace_name":"\u592b\u59bb\u5bab","stem":"\u620a"},{"age_range":[115,124],"branch":"\u4ea5","palace_index":9,"palace_name":"\u5144\u5f1f\u5bab","stem":"\u4e01"}],"input":{"birth_used":"1995-11-12\uff08\u665a\u5b50\u65f6\u5f52\u6b21\u65e5\u540e\uff09","day":11,"fix_leap":true,"gender":"\u7537","hour":23,"month":11,"year":1995},"interpretation":{"ju_name":"\u571f\u4e94\u5c40","ming_branch":"\u620c","ming_stars":[],"patterns":[{"desc":"\u592a\u9633\u4e0e\u5de8\u95e8\u540c\u5bab\uff08\u6216\u5bf9\u7167\uff09\uff0c\u4e3b\u53e3\u624d\u3001\u540d\u671b\u4e0e\u5b98\u8d35\uff0c\u5b9c\u4ee5\u8a00\u8bed\u3001\u58f0\u540d\u7acb\u8eab\u3002","name":"\u5de8\u65e5\u540c\u5bab"}],"shen_branch":"\u620c","shen_meaning":"\u5b98\u7984\u5bab\uff08\u4e8b\u4e1a\u5bab\uff09\uff1a\u4e8b\u4e1a\u65b9\u5411\u3001\u804c\u4e1a\u6210\u5c31\u4e0e\u540d\u671b\u3002","sihua":[{"hua":"\u5316\u7984","meaning":"\u5316\u7984\u4e3b\u300c\u7f18\u300d\u4e0e\u300c\u5f97\u300d\uff0c\u4f7f\u8be5\u661f\u6240\u7ba1\u4e4b\u4e8b\u5f97\u798f\u6c14\u3001\u987a\u9042\u3001\u8d44\u6e90\u4e30\u6c9b\uff0c\u591a\u4e3b\u5409\u5e86\u3001\u6613\u5f97\u624b\u3002","palace":"\u8fc1\u79fb\u5bab","short":"\u5f97 \u00b7 \u7f18 \u00b7 \u4e30","source":"\u300a\u7d2b\u5fae\u6597\u6570\u5168\u4e66\u00b7\u56db\u5316\u8d4b\u300b","star":"\u5929\u673a"},{"hua":"\u5316\u6743","meaning":"\u5316\u6743\u4e3b\u300c\u6267\u300d\u4e0e\u300c\u638c\u300d\uff0c\u4f7f\u8be5\u661f\u6240\u7ba1\u4e4b\u4e8b\u638c\u6743\u3001\u4e3b\u5bfc\u3001\u5177\u529b\u91cf\u4e0e\u638c\u63a7\u529b\uff0c\u4e3b\u80fd\u5e72\u3001\u6709\u4e3b\u89c1\u3002","palace":"\u8fc1\u79fb\u5bab","short":"\u6267 \u00b7 \u638c \u00b7 \u529b","source":"\u300a\u7d2b\u5fae\u6597\u6570\u5168\u4e66\u00b7\u56db\u5316\u8d4b\u300b","star":"\u5929\u6881"},{"hua":"\u5316\u79d1","meaning":"\u5316\u79d1\u4e3b\u300c\u540d\u300d\u4e0e\u300c\u663e\u300d\uff0c\u4f7f\u8be5\u661f\u6240\u7ba1\u4e4b\u4e8b\u5f97\u540d\u58f0\u3001\u6e05\u8a89\u3001\u8003\u8bd5\u5229\uff0c\u5e76\u80fd\u5316\u89e3\u51f6\u5384\uff0c\u4e3b\u6587\u91c7\u3001\u58f0\u671b\u3002","palace":"\u4ea4\u53cb\u5bab","short":"\u540d \u00b7 \u663e \u00b7 \u89e3","source":"\u300a\u7d2b\u5fae\u6597\u6570\u5168\u4e66\u00b7\u56db\u5316\u8d4b\u300b","star":"\u7d2b\u5fae"},{"hua":"\u5316\u5fcc","meaning":"\u5316\u5fcc\u4e3b\u300c\u6267\u300d\u4e0e\u300c\u6b20\u300d\uff0c\u4f7f\u8be5\u661f\u6240\u7ba1\u4e4b\u4e8b\u591a\u6ce2\u6298\u3001\u7275\u7eca\u3001\u6267\u5ff5\uff0c\u9700\u8c28\u614e\u7ecf\u8425\uff1b\u4ea6\u4e3b\u6df1\u523b\u3001\u96be\u5fd8\u3002","palace":"\u592b\u59bb\u5bab","short":"\u6267 \u00b7 \u6b20 \u00b7 \u7eca","source":"\u300a\u7d2b\u5fae\u6597\u6570\u5168\u4e66\u00b7\u56db\u5316\u8d4b\u300b","star":"\u592a\u9634"}],"triple":["\u547d\u5bab\uff08\u4e19\u620c\uff09\uff1a\u7a7a\u5bab\uff08\u501f\u661f\uff09","\u8d22\u5e1b\u5bab\uff08\u620a\u5bc5\uff09\uff1a\u592a\u9633\u3001\u5de8\u95e8","\u5b98\u7984\u5bab\uff08\u58ec\u5348\uff09\uff1a\u7a7a\u5bab\uff08\u501f\u661f\uff09","\u8fc1\u79fb\u5bab\uff08\u5e9a\u8fb0\uff09\uff1a\u5929\u673a\u3001\u5929\u6881"]},"lunar":{"lunar_day":20,"lunar_month":9,"time_branch":"\u5b50","year_branch":"\u4ea5","year_stem":"\u4e59"},"palaces":[{"branch":"\u5bc5","branch_idx":2,"empty":false,"index":0,"is_ming":false,"is_shen":false,"name":"\u8d22\u5e1b\u5bab","stars":[{"info":"\u9633\u521a\u00b7\u5b98\u8d35\u00b7\u6177\u6168\uff08\u706b\uff0c\u5409\uff09","name":"\u592a\u9633","type":"major"},{"info":"\u53e3\u820c\u00b7\u662f\u975e\u00b7\u5584\u8fa9\uff08\u6c34\uff0c\u51f6\u4e2d\u5e26\u5409\uff09","name":"\u5de8\u95e8","type":"major"},{"info":"","name":"\u5929\u9b41","type":"lucky"},{"info":"","name":"\u5de6\u8f85","type":"lucky"}],"stem":"\u620a","stem_idx":4},{"branch":"\u536f","branch_idx":3,"empty":false,"index":1,"is_ming":false,"is_shen":false,"name":"\u75be\u5384\u5bab","stars":[{"info":"\u8f85\u4f50\u00b7\u884c\u653f\u00b7\u5370\u7ef6\uff08\u6c34\uff0c\u5409\uff09","name":"\u5929\u76f8","type":"major"}],"stem":"\u5df1","stem_idx":5},{"branch":"\u8fb0","branch_idx":4,"empty":false,"index":2,"is_ming":false,"is_shen":false,"name":"\u8fc1\u79fb\u5bab","stars":[{"info":"\u667a\u6167\u00b7\u673a\u53d8\u00b7\u8c0b\u7565\uff08\u6728\uff0c\u5409\uff09","name":"\u5929\u673a","type":"major"},{"info":"\u836b\u62a4\u00b7\u533b\u836f\u00b7\u957f\u8f88\uff08\u571f\uff0c\u5409\uff09","name":"\u5929\u6881","type":"major"},{"info":"","name":"\u9640\u7f57","type":"sha"},{"info":"","name":"\u53f3\u5f3c","type":"lucky"}],"stem":"\u5e9a","stem_idx":6},{"branch":"\u5df3","branch_idx":5,"empty":false,"index":3,"is_ming":false,"is_shen":false,"name":"\u4ea4\u53cb\u5bab","stars":[{"info":"\u5e1d\u738b\u00b7\u5c0a\u8d35\u00b7\u72ec\u7acb\uff08\u571f\uff0c\u4e2d\u6027\u504f\u5409\uff09","name":"\u7d2b\u5fae","type":"major"},{"info":"\u5c06\u661f\u00b7\u679c\u51b3\u00b7\u5b64\u514b\uff08\u91d1\uff0c\u51f6\uff09","name":"\u4e03\u6740","type":"major"},{"info":"","name":"\u7984\u5b58","type":"lucky"}],"stem":"\u8f9b","stem_idx":7},{"branch":"\u5348","branch_idx":6,"empty":true,"index":4,"is_ming":false,"is_shen":false,"name":"\u5b98\u7984\u5bab","stars":[{"info":"","name":"\u64ce\u7f8a","type":"sha"},{"info":"","name":"\u6587\u66f2","type":"lucky"},{"info":"","name":"\u7ea2\u9e3e","type":"sha"}],"stem":"\u58ec","stem_idx":8},{"branch":"\u672a","branch_idx":7,"empty":true,"index":5,"is_ming":false,"is_shen":false,"name":"\u7530\u5b85\u5bab","stars":[{"info":"","name":"\u5929\u9a6c","type":"lucky"}],"stem":"\u7678","stem_idx":9},{"branch":"\u7533","branch_idx":8,"empty":true,"index":6,"is_ming":false,"is_shen":false,"name":"\u798f\u5fb7\u5bab","stars":[],"stem":"\u7532","stem_idx":0},{"branch":"\u9149","branch_idx":9,"empty":false,"index":7,"is_ming":false,"is_shen":false,"name":"\u7236\u6bcd\u5bab","stars":[{"info":"\u624d\u827a\u00b7\u5211\u56da\u00b7\u6843\u82b1\uff08\u706b\uff0c\u51f6\u4e2d\u5e26\u5409\uff09","name":"\u5ec9\u8d1e","type":"major"},{"info":"\u5f00\u521b\u00b7\u53d8\u52a8\u00b7\u7834\u574f\uff08\u6c34\uff0c\u51f6\uff09","name":"\u7834\u519b","type":"major"}],"stem":"\u4e59","stem_idx":1},{"branch":"\u620c","branch_idx":10,"empty":true,"index":8,"is_ming":true,"is_shen":true,"name":"\u547d\u5bab","stars":[{"info":"","name":"\u5929\u94ba","type":"lucky"}],"stem":"\u4e19","stem_idx":2},{"branch":"\u4ea5","branch_idx":11,"empty":false,"index":9,"is_ming":false,"is_shen":false,"name":"\u5144\u5f1f\u5bab","stars":[{"info":"\u8d22\u5e93\u00b7\u7a33\u91cd\u00b7\u4fdd\u5b88\uff08\u571f\uff0c\u5409\uff09","name":"\u5929\u5e9c","type":"major"},{"info":"","name":"\u706b\u661f","type":"sha"}],"stem":"\u4e01","stem_idx":3},{"branch":"\u5b50","branch_idx":0,"empty":false,"index":10,"is_ming":false,"is_shen":false,"name":"\u592b\u59bb\u5bab","stars":[{"info":"\u6e29\u548c\u00b7\u4eab\u798f\u00b7\u968f\u7f18\uff08\u6c34\uff0c\u5409\uff09","name":"\u5929\u540c","type":"major"},{"info":"\u67d4\u7f8e\u00b7\u8d22\u5bcc\u00b7\u9634\u67d4\uff08\u6c34\uff0c\u5409\uff09","name":"\u592a\u9634","type":"major"},{"info":"","name":"\u6587\u660c","type":"lucky"},{"info":"","name":"\u5929\u559c","type":"sha"},{"info":"","name":"\u94c3\u661f","type":"sha"}],"stem":"\u620a","stem_idx":4},{"branch":"\u4e11","branch_idx":1,"empty":false,"index":11,"is_ming":false,"is_shen":false,"name":"\u5b50\u5973\u5bab","stars":[{"info":"\u8d22\u5bcc\u00b7\u521a\u6bc5\u00b7\u679c\u65ad\uff08\u91d1\uff0c\u4e2d\u6027\uff09","name":"\u6b66\u66f2","type":"major"},{"info":"\u6b32\u671b\u00b7\u6843\u82b1\u00b7\u591a\u624d\uff08\u6728\uff0c\u4e2d\u6027\uff09","name":"\u8d2a\u72fc","type":"major"},{"info":"","name":"\u5730\u7a7a","type":"sha"},{"info":"","name":"\u5730\u52ab","type":"sha"}],"stem":"\u5df1","stem_idx":5}],"sihua":{"\u5316\u5fcc":"\u592a\u9634","\u5316\u6743":"\u5929\u6881","\u5316\u7984":"\u5929\u673a","\u5316\u79d1":"\u7d2b\u5fae"},"soul_branch":"\u620c","soul_index":8,"tianfu_branch":"\u4ea5","tianfu_index":9,"wuxing_ju":5,"wuxing_ju_name":"\u571f\u4e94\u5c40","ziwei_branch":"\u5df3","ziwei_index":3}},"success":true}
+{
+  "data": {
+    "input": {
+      "birth": "1995-11-11 23:00",
+      "corrected_birth": "1995-11-11 23:01",
+      "current_year": 2026,
+      "dst_warning": {
+        "is_dst": false,
+        "range": null
+      },
+      "gender": "男",
+      "late_zishi_rule": "current-day",
+      "longitude": 116.4
+    },
+    "pillars": {
+      "day": "丙午",
+      "month": "丁亥",
+      "time": "庚子",
+      "year": "乙亥"
+    },
+    "steps": [
+      {
+        "input": {
+          "公历(钟表时间)": "1995-11-11 23:01",
+          "历法": "公历/格里历"
+        },
+        "name": "历法转换",
+        "output": {
+          "八字": "乙亥 丁亥 丙午 庚子",
+          "农历": "一九九五年九月十九",
+          "年柱": "乙亥",
+          "日柱": "丙午",
+          "时柱": "庚子",
+          "月柱": "丁亥",
+          "生肖": "猪",
+          "节气信息": {
+            "上一节气": "立冬",
+            "下一节气": "小雪",
+            "当前节气": "无"
+          }
+        },
+        "source": "中国古代算命术·排八字；三命通会·论节候",
+        "step": 1,
+        "历法校正": {
+          "中国夏令时": {
+            "is_dst": false,
+            "range": null
+          },
+          "均时差(分)": 15.7,
+          "总修正(分)": 1.3,
+          "排盘日偏移": 0,
+          "是否校正真太阳时": true,
+          "晚子时口径": "当日（子时归本日，主流排盘口径）",
+          "经度修正(分)": -14.4
+        }
+      },
+      {
+        "baizi": "乙亥 丁亥 丙午 庚子",
+        "details": {
+          "day": {
+            "地支": "午",
+            "地支属性": {
+              "element": "火",
+              "order": 7,
+              "source": "三命通会·论地支",
+              "yin": false
+            },
+            "天干": "丙",
+            "天干属性": {
+              "element": "火",
+              "order": 3,
+              "source": "三命通会·论天干",
+              "yin": false
+            },
+            "纳音": "天河水"
+          },
+          "month": {
+            "地支": "亥",
+            "地支属性": {
+              "element": "水",
+              "order": 12,
+              "source": "三命通会·论地支",
+              "yin": false
+            },
+            "天干": "丁",
+            "天干属性": {
+              "element": "火",
+              "order": 4,
+              "source": "三命通会·论天干",
+              "yin": true
+            },
+            "纳音": "屋上土"
+          },
+          "time": {
+            "地支": "子",
+            "地支属性": {
+              "element": "水",
+              "order": 1,
+              "source": "三命通会·论地支",
+              "yin": false
+            },
+            "天干": "庚",
+            "天干属性": {
+              "element": "金",
+              "order": 7,
+              "source": "三命通会·论天干",
+              "yin": false
+            },
+            "纳音": "壁上土"
+          },
+          "year": {
+            "地支": "亥",
+            "地支属性": {
+              "element": "水",
+              "order": 12,
+              "source": "三命通会·论地支",
+              "yin": false
+            },
+            "天干": "乙",
+            "天干属性": {
+              "element": "木",
+              "order": 2,
+              "source": "三命通会·论天干",
+              "yin": true
+            },
+            "纳音": "山头火"
+          }
+        },
+        "name": "四柱排盘",
+        "nayin": "山头火 屋上土 天河水 壁上土",
+        "pillars": {
+          "day": "丙午",
+          "month": "丁亥",
+          "time": "庚子",
+          "year": "乙亥"
+        },
+        "source": "三命通会·论四柱；中国古代算命术·八字排法",
+        "step": 2
+      },
+      {
+        "dayun": [
+          {
+            "end_age": 10,
+            "gan": "丙",
+            "ganzhi": "丙戌",
+            "number": 1,
+            "start_age": 1,
+            "zhi": "戌"
+          },
+          {
+            "end_age": 20,
+            "gan": "乙",
+            "ganzhi": "乙酉",
+            "number": 2,
+            "start_age": 11,
+            "zhi": "酉"
+          },
+          {
+            "end_age": 30,
+            "gan": "甲",
+            "ganzhi": "甲申",
+            "number": 3,
+            "start_age": 21,
+            "zhi": "申"
+          },
+          {
+            "end_age": 40,
+            "gan": "癸",
+            "ganzhi": "癸未",
+            "number": 4,
+            "start_age": 31,
+            "zhi": "未"
+          },
+          {
+            "end_age": 50,
+            "gan": "壬",
+            "ganzhi": "壬午",
+            "number": 5,
+            "start_age": 41,
+            "zhi": "午"
+          },
+          {
+            "end_age": 60,
+            "gan": "辛",
+            "ganzhi": "辛巳",
+            "number": 6,
+            "start_age": 51,
+            "zhi": "巳"
+          },
+          {
+            "end_age": 70,
+            "gan": "庚",
+            "ganzhi": "庚辰",
+            "number": 7,
+            "start_age": 61,
+            "zhi": "辰"
+          },
+          {
+            "end_age": 80,
+            "gan": "己",
+            "ganzhi": "己卯",
+            "number": 8,
+            "start_age": 71,
+            "zhi": "卯"
+          },
+          {
+            "end_age": 90,
+            "gan": "戊",
+            "ganzhi": "戊寅",
+            "number": 9,
+            "start_age": 81,
+            "zhi": "寅"
+          },
+          {
+            "end_age": 100,
+            "gan": "丁",
+            "ganzhi": "丁丑",
+            "number": 10,
+            "start_age": 91,
+            "zhi": "丑"
+          },
+          {
+            "end_age": 110,
+            "gan": "丙",
+            "ganzhi": "丙子",
+            "number": 11,
+            "start_age": 101,
+            "zhi": "子"
+          },
+          {
+            "end_age": 120,
+            "gan": "乙",
+            "ganzhi": "乙亥",
+            "number": 12,
+            "start_age": 111,
+            "zhi": "亥"
+          }
+        ],
+        "direction": "逆行",
+        "direction_reason": "年干乙为阴干，男命逆行",
+        "jieqi": {
+          "days_to_jieqi": 3.73,
+          "forward": false,
+          "reference": "立冬",
+          "start_age": 1
+        },
+        "name": "大运排列",
+        "source": "中国古代算命术·大运排法；三命通会·论大运",
+        "step": 3
+      },
+      {
+        "day_branch": "午",
+        "day_stem": "丙",
+        "details": {
+          "day": {
+            "十神": "日主",
+            "十神代码": "ri_zhu",
+            "地支": "午",
+            "天干": "丙"
+          },
+          "month": {
+            "十神": "劫财",
+            "十神代码": "jie_cai",
+            "地支": "亥",
+            "天干": "丁"
+          },
+          "time": {
+            "十神": "偏财",
+            "十神代码": "pian_cai",
+            "地支": "子",
+            "天干": "庚"
+          },
+          "year": {
+            "十神": "正印",
+            "十神代码": "zheng_yin",
+            "地支": "亥",
+            "天干": "乙"
+          }
+        },
+        "hidden_tenshen": {
+          "day": [
+            {
+              "十神": "劫财",
+              "权重": 0.7,
+              "藏干": "丁"
+            },
+            {
+              "十神": "伤官",
+              "权重": 0.3,
+              "藏干": "己"
+            }
+          ],
+          "month": [
+            {
+              "十神": "七杀",
+              "权重": 0.7,
+              "藏干": "壬"
+            },
+            {
+              "十神": "偏印",
+              "权重": 0.3,
+              "藏干": "甲"
+            }
+          ],
+          "time": [
+            {
+              "十神": "正官",
+              "权重": 1.0,
+              "藏干": "癸"
+            }
+          ],
+          "year": [
+            {
+              "十神": "七杀",
+              "权重": 0.7,
+              "藏干": "壬"
+            },
+            {
+              "十神": "偏印",
+              "权重": 0.3,
+              "藏干": "甲"
+            }
+          ]
+        },
+        "name": "十神标注",
+        "source": "三命通会·十神论；滴天髓·六亲论",
+        "step": 4
+      },
+      {
+        "element_weight_from_hidden": {
+          "土": 0.3,
+          "木": 0.6,
+          "水": 2.4,
+          "火": 0.7,
+          "金": 0.0
+        },
+        "hidden": {
+          "day": {
+            "地支": "午",
+            "藏干": [
+              {
+                "五行": "火",
+                "干": "丁",
+                "权重": 0.7
+              },
+              {
+                "五行": "土",
+                "干": "己",
+                "权重": 0.3
+              }
+            ]
+          },
+          "month": {
+            "地支": "亥",
+            "藏干": [
+              {
+                "五行": "水",
+                "干": "壬",
+                "权重": 0.7
+              },
+              {
+                "五行": "木",
+                "干": "甲",
+                "权重": 0.3
+              }
+            ]
+          },
+          "time": {
+            "地支": "子",
+            "藏干": [
+              {
+                "五行": "水",
+                "干": "癸",
+                "权重": 1.0
+              }
+            ]
+          },
+          "year": {
+            "地支": "亥",
+            "藏干": [
+              {
+                "五行": "水",
+                "干": "壬",
+                "权重": 0.7
+              },
+              {
+                "五行": "木",
+                "干": "甲",
+                "权重": 0.3
+              }
+            ]
+          }
+        },
+        "name": "藏干展开",
+        "source": "三命通会·地支藏干",
+        "step": 5
+      },
+      {
+        "branches": {
+          "年支": "亥",
+          "日支": "午",
+          "时支": "子",
+          "月支": "亥"
+        },
+        "name": "刑冲合害",
+        "relations": [
+          {
+            "branches": [
+              "午",
+              "子"
+            ],
+            "meaning": "冲突、变动、分离、冲动、对立。",
+            "pair": [
+              "日支",
+              "时支"
+            ],
+            "source": "三命通会·论地支六冲",
+            "type": "六冲"
+          },
+          {
+            "branches": [
+              "亥",
+              "亥"
+            ],
+            "meaning": "刑罚、是非、矛盾、隐疾。",
+            "pair": [
+              "年支",
+              "月支"
+            ],
+            "source": "三命通会·论地支三刑",
+            "type": "刑",
+            "xing_name": "自刑"
+          },
+          {
+            "meaning": "化合、羁绊、性情转化。",
+            "pair": [
+              "年干",
+              "时干"
+            ],
+            "source": "三命通会·论天干五合",
+            "stems": [
+              "乙",
+              "庚"
+            ],
+            "type": "天干五合",
+            "化合五行": "金"
+          }
+        ],
+        "source": "三命通会·地支刑冲合害论；滴天髓·知命",
+        "step": 6
+      },
+      {
+        "name": "神煞计算",
+        "shensha": [
+          {
+            "matched": [
+              "日干丙 → 年支亥",
+              "日干丙 → 月支亥"
+            ],
+            "name": "天乙贵人",
+            "rule": "以日干查四柱地支",
+            "source": "三命通会·神煞·天乙贵人（采用「甲戊庚牛羊…六辛逢马虎」口诀：庚取丑未、辛取寅午；异本「庚辛逢虎马」将庚并入寅午，此处未采，属流派分歧）"
+          },
+          {
+            "matched": [
+              "年支亥 → 时支子"
+            ],
+            "name": "桃花",
+            "rule": "以年支或日支查三合局的沐浴位",
+            "source": "三命通会·神煞·桃花"
+          },
+          {
+            "matched": [
+              "日支午 → 日支午"
+            ],
+            "name": "将星",
+            "rule": "以年支或日支查三合局的中位",
+            "source": "三命通会·神煞·将星"
+          },
+          {
+            "matched": [
+              "日支午 → 年支亥",
+              "日支午 → 月支亥"
+            ],
+            "name": "劫煞",
+            "rule": "以年支或日支查三合局绝位后一位",
+            "source": "三命通会·神煞·劫煞"
+          },
+          {
+            "matched": [
+              "日干丙 → 日支午"
+            ],
+            "name": "羊刃",
+            "rule": "以日干查帝旺位（甲羊刃在卯，庚羊刃在酉等）",
+            "source": "三命通会·神煞·羊刃"
+          },
+          {
+            "matched": [
+              "日干丙 → 时支子"
+            ],
+            "name": "福星贵人",
+            "rule": "以日干查地支",
+            "source": "三命通会·神煞·福星贵人"
+          }
+        ],
+        "source": "三命通会·神煞篇",
+        "step": 7
+      },
+      {
+        "condition": {
+          "得令": false,
+          "得势": true,
+          "得地": true,
+          "得地位置": [
+            "日柱"
+          ]
+        },
+        "day_element": "火",
+        "day_score": 5.68,
+        "name": "五行强弱",
+        "raw_weight": {
+          "土": 0.3,
+          "木": 1.6,
+          "水": 2.9,
+          "火": 2.7,
+          "金": 1.0
+        },
+        "scores": {
+          "土": 1.26,
+          "木": 23.58,
+          "水": 61.05,
+          "火": 5.68,
+          "金": 8.42
+        },
+        "season": "冬",
+        "source": "滴天髓·体象；三命通会·五行旺相休囚",
+        "step": 8,
+        "strength": "中和偏弱",
+        "strength_reason": "失令（月令死）；得地（地支通根）；得势（天干有印比）。",
+        "support_vs_consume": {
+          "克泄耗日主": 70.73,
+          "生助日主": 29.26
+        },
+        "wangshuai": {
+          "土": "囚",
+          "木": "相",
+          "水": "旺",
+          "火": "死",
+          "金": "休"
+        }
+      },
+      {
+        "description": "月支七杀透出，主权威、压力、挑战。",
+        "name": "格局判定",
+        "pattern": "七杀格",
+        "reason": {
+          "月支": "亥",
+          "月支本气十神": "七杀",
+          "月支本气藏干": "壬",
+          "透出天干": []
+        },
+        "source": "三命通会·论七杀格",
+        "step": 9
+      },
+      {
+        "components": {
+          "格局用神": {
+            "出处": "三命通会·论七杀格",
+            "格局": "七杀格",
+            "格局用神": "印",
+            "说明": "官杀格身弱喜印化杀生身，身旺喜财滋杀"
+          },
+          "滴天髓扶抑": {
+            "出处": "滴天髓·体象",
+            "喜用五行": [
+              "土",
+              "火"
+            ],
+            "扶抑方向": "日主中和偏弱，喜印比生扶",
+            "扶抑用神": "印比（正印、偏印、比肩、劫财）",
+            "日主强弱": "中和偏弱"
+          },
+          "穷通宝鉴": {
+            "出处": "穷通宝鉴·丙日十月(梁湘润评注P70,81,丙火总提要补)",
+            "喜神": "壬",
+            "忌神": "戊",
+            "用神": "甲",
+            "用神五行": "木",
+            "说明": "十月丙火，太阳失令，休囚极弱，专用甲木，壬水为佐；水旺宜戊制。用甲、喜壬、水旺喜戊。"
+          }
+        },
+        "final_ji": "戊",
+        "final_xi": "壬",
+        "final_yong": "甲",
+        "method": "三源合参：穷通宝鉴调候 + 滴天髓扶抑 + 格局用神",
+        "name": "用神推荐",
+        "source": "穷通宝鉴；滴天髓·体象；三命通会·论用神",
+        "step": 10,
+        "synthesis": {
+          "扶抑用神": "印比（正印、偏印、比肩、劫财）",
+          "是否同向": {
+            "格局与扶抑一致": true,
+            "调候与扶抑一致": false
+          },
+          "格局用神": "印",
+          "综合建议": "调候用神为甲（木），扶抑喜用为印比（正印、偏印、比肩、劫财）。若命局寒暖燥湿失调明显，以调候甲为先；否则以扶抑为主。",
+          "调候用神": "甲"
+        }
+      },
+      {
+        "age": 31,
+        "comment": "大运与流年喜忌有交错，需结合具体事项判断。",
+        "current_dayun": {
+          "end_age": 40,
+          "gan": "癸",
+          "ganzhi": "癸未",
+          "number": 4,
+          "start_age": 31,
+          "zhi": "未"
+        },
+        "current_year": 2026,
+        "dayun_comment": "当前大运天干为忌神，十年整体压力较大，宜稳健。",
+        "dayun_judgment": "凶",
+        "judgment": "平",
+        "liunian": {
+          "gan": "丙",
+          "ganzhi": "丙午",
+          "zhi": "午"
+        },
+        "liunian_comment": "流年天干为喜用，整体顺遂，宜积极进取。",
+        "liunian_judgment": "吉",
+        "liunian_relations": [
+          "刑日柱（自刑）"
+        ],
+        "name": "大运流年",
+        "overall_judgment": "平",
+        "source": "三命通会·论大运流年；滴天髓·体用",
+        "step": 11
+      },
+      {
+        "cautions": [
+          "忌神：戊，流年逢之多需收敛。",
+          "流年地支关系：刑日柱（自刑）。"
+        ],
+        "chengu": {
+          "day_w": 5,
+          "hour_w": 16,
+          "month_w": 18,
+          "song": "幼年运道未曾享，苦是蹉跎再不兴，兄弟六亲皆无靠，一身事业晚年成。",
+          "song_band": 48,
+          "source": "袁天罡称骨歌",
+          "total_qian": 48,
+          "total_str": "4两8钱",
+          "year_w": 9
+        },
+        "key_observations": [
+          "日主丙（火）中和偏弱。失令（月令死）；得地（地支通根）；得势（天干有印比）。",
+          "月令亥为提纲，七杀格：月支七杀透出，主权威、压力、挑战。",
+          "用神三源：调候甲，扶抑印比（正印、偏印、比肩、劫财），格局印。调候用神为甲（木），扶抑喜用为印比（正印、偏印、比肩、劫财）。若命局寒暖燥湿失调明显，以调候甲为先；否则以扶抑为主。",
+          "命局存在：刑, 六冲, 天干五合",
+          "主要神煞：天乙贵人, 桃花, 将星, 劫煞, 羊刃"
+        ],
+        "name": "综合报告",
+        "plain_language": {
+          "glossary": [
+            {
+              "plain": "以“日主”为中心，其余七个字与您的关系角色（如比肩=同辈、正财=稳定收入、正官=事业规矩等）。就像您身边不同身份的人。",
+              "term": "十神"
+            },
+            {
+              "plain": "古人在干支组合上附加的一些吉凶标记（如天乙贵人、文昌等），属于传统辅助信息，仅供参考，不必迷信。",
+              "term": "神煞"
+            },
+            {
+              "plain": "地支之间的几种互动关系：“合”像亲近合作，“冲”像对冲冲突，“刑/害”像暗中摩擦。用来判断人际与事件的顺逆。",
+              "term": "刑冲合害"
+            },
+            {
+              "plain": "六十甲子每对干支被赋予的另一个五行名称（如丙午=天河水），常用于象义辅助，与“正五行”并行，不可混为一谈。",
+              "term": "纳音五行"
+            },
+            {
+              "plain": "因经度不同，各地的“真实太阳时”和钟表时间有差（约每差1度差4分钟）。出生地越偏西，真太阳时越晚。校正后才排得准。",
+              "term": "真太阳时"
+            }
+          ],
+          "overview": "简单来说：您是「丙」日主（五行属火），中和偏弱；生于「亥」月令，构成「七杀格」格局；对您最有利的用神是「甲」（喜壬、忌戊）。现年约 31 岁，行「癸未」大运，今年（2026）流年「丙午」整体平。下面分条用大白话给您讲清楚每个术语是什么意思。；另有唐代袁天罡《称骨歌》算得您命重 4两8钱，古批已附于下方分条解读中。",
+          "sections": [
+            {
+              "plain": "【性格底色】您是「丙」火日主，中和偏弱。《滴天髓》描其性情为「丙火猛烈，欺霜侮雪。能煅庚金，逢辛反怯。土众成慈，水猖显节。虎马犬乡，甲来有殃。」——身旺者底气足、敢担当；身弱者更需借力、善合作。本盘五行以「火」得气最厚（原始份数约 2.7），构成您行事稳健、重实际的基本盘。\n【事业成就】事业名望看「官杀」(水)：本盘时柱(子孙宫)地支藏「癸」、年柱(祖上/父母宫)地支藏「壬」、月柱(父母兄弟宫)地支藏「壬」，主您对规则、上司与责任既有压力也是锻炼；官杀透干者宜在体制、管理或专业权威上发力。用神「甲」主贵人平台暖局，事业宜借贵人与稳定平台，而非单打独斗。\n【财富格局】财富看「财星」(金)：本盘财星时柱(子孙宫)天干透「庚」，五行中金得气约 1.0。财星透干者进财有门路；只藏支者宜踏实积累、不宜冒进投机。您比劫(火)重，合作共事易有分财，账目与合伙宜分明。\n【感情婚姻】您男命，妻星(正财)为「金」；日支夫妻宫「午」未见明显妻星(正财)，缘分偏含蓄内敛。妻星(正财)透干者感情明朗、宜早遇；只藏支者宜晚婚或借大运流年补足。偏财/桃花为忌时，感情中注意财务边界与桃花分寸。\n【健康寿元·传统意象，非医学诊断】五行讲究平衡：本盘以「火」偏重（约 2.7），过旺之五行对应脏腑易滞；偏弱者（金约1.0、土约0.3）对应系统宜养护。调候用「甲」暖局，正可针对偏寒偏滞。此仅为传统象义提示，健康问题务必以现代医学为准。\n【人际关系】同辈朋友看「比劫」(火)：本盘日柱(己身/夫妻宫)天干透「丙」、月柱(父母兄弟宫)天干透「丁」、日柱(己身/夫妻宫)地支藏「丁」。比劫多则人缘广、互助多，但同辈间也易有利益牵扯；喜神含「官」，守规矩、尊权威反得助力。\n【学业才学】学业根基看「印星」(木)、才华输出看「食伤」(土)：本盘印星年柱(祖上/父母宫)天干透「乙」、年柱(祖上/父母宫)地支藏「甲」、月柱(父母兄弟宫)地支藏「甲」（木得气约 1.6），食伤日柱(己身/夫妻宫)地支藏「己」（土得气约 0.3）。印旺者善学、得师长缘；食伤旺者有一技之长可发挥；考试竞争力在官杀，偏弱则需借运。\n【大运走势】现年约 31 岁，行「癸未」大运（31-40岁）；今年(2026)流年「丙午」整体判定为「平」。大运流年喜用神到位则事半功倍，逢忌神之年宜守。整体看，早岁宜蓄力积累，中晚年（日时支坐旺之位发越）福禄渐丰——与称骨歌「少年做事废筹论，一朝福禄源源至」的节律相合。",
+              "source": "综合六部著作（穷通宝鉴/滴天髓/三命通会/子平真诠/神峰通考/渊海子平）+ 本盘实测数据",
+              "term": "总体总评（财富·事业·健康·婚姻·人际·学业·大运）"
+            },
+            {
+              "plain": "八字由四柱八个字组成，其中“日干”（出生那天的天干）代表您本人，叫「日主」。您的日主是「丙」，五行属火。看命，首先就是看这个“您”在整盘里的强弱与处境。",
+              "source": "三命通会·论日干；滴天髓·体象",
+              "term": "您是谁（日主）"
+            },
+            {
+              "plain": "您的「日主丙」（代表您自己）中和偏弱。通俗说，您天生底子偏薄，更需要外界助力——贵人、朋友、学习充电、稳定平台，来为您“补强”。遇大事宜借力、不宜硬扛；命理上把这叫“喜印比生扶”（印星、比肩劫财来帮您）。\n\n【底气从何而来——用数据说话】您这一盘五行原始得气份数为：木1.6、火2.7、土0.3、金1.0、水2.9。其中「火」独占 2.7、折算后得分约 5.68 分；生助您的力量占 29.26%，克泄耗您的只占 70.73%。命理判定根由有三：得令（月令「亥」当旺，否）、得地（地支通根于 日柱）、得势（天干有印比相助，是）。三者齐备，正是您“中和偏弱”的底气来源——不是空口说“您旺”，而是这盘火势厚实、自己就能站稳。\n\n【古诀逐句释义】《滴天髓·论十天干》对「丙」的八字真言是：「丙火猛烈，欺霜侮雪。能煅庚金，逢辛反怯。土众成慈，水猖显节。虎马犬乡，甲来有殃。」。\n把它拆开看：丙火是太阳。光明正大，能锻庚金成器、却怕与辛金相合而怯（逢辛反怯）；土众成慈、水猖显节。喜木来生、忌土重晦其光。\n\n【该如何顺势而为】您身弱，好比土薄之地，顺势的关键是“借力补强”：靠近贵人、扎进稳定平台、持续学习（印星生扶），与同辈抱团（比劫帮身），遇大事借势而不硬扛，方能把底气一点点养起来。\n\n【您这一盘的专属喜与忌】综合穷通宝鉴 / 滴天髓 / 三命通会三源合参，对您最有用的是「用神 甲」「喜神 壬」，给您添乱的是「忌神 戊」。下方“用神”一节会把它们逐字讲透，并落到财富、事业、健康、感情等具体角度。",
+              "source": "滴天髓·体象；三命通会·五行旺相休囚",
+              "term": "您的强弱（身旺 / 身弱）"
+            },
+            {
+              "plain": "八字里的“格局”，相当于给您的命局定一个基本类型与气质倾向。它主要看您出生的“月令”（出生那个月的地支，这里是「亥」）。月令就像当季的气候，决定哪种五行最旺，是定格局的“提纲”。您构成「七杀格」：月支七杀透出，主权威、压力、挑战。\n\n【“七杀格”是怎么定出来的】定格局以月令（月支「亥」）为提纲，本气藏干为「壬」（十神为七杀）；再看月支藏干哪个透出天干：本盘透出的是 月支本气壬（七杀），据此立为「七杀格」。简言之：月令给了一盘气的“主色调”，透干的那一神把格局“点”了出来。\n\n《子平真诠·论用神》把格局分作『善格』与『不善格』：您这「七杀格」属「不善格」中的「七杀格」，论其“取用之法”当『逆用』——喜食神以制伏，忌财星资扶、印星坏食。（注：此处的『顺用/逆用』是《子平真诠》对各格“如何取用神”的特定说法，指顺其性而生护、或逆其性而制约；与上方“格局用神与扶抑方向一致”所说的“顺”是不同层面的含义，并非矛盾。）",
+              "source": "三命通会·论七杀格",
+              "term": "您出生的时令与格局"
+            },
+            {
+              "plain": "取“用神”是八字的核心：用神就是对您最有帮助的五行/十神，相当于您的“补药”；喜神是帮用神一臂之力的；忌神是给您添乱的，逢之宜谨慎。\n古法有三套体系合参——穷通宝鉴看寒暖燥湿（调候用神）、滴天髓看强弱（扶抑用神）、三命通会看格局（格局用神）。三者合参后：您的用神是「甲」；喜神「壬」；忌神「戊」。\n\n【用神 / 喜神 / 忌神 逐字讲透】\n· 「用神 甲」（木）：在您盘里是「偏印」——偏印——偏门学识、冷贵人，是“生我而偏”的力量。木主生长、舒展、条达（对应事业、官杀、行动力）。尤其要靠近/多用。\n· 「喜神 壬」（水）：在您盘里是「七杀」——七杀——魄力、挑战、压力、儿子（男命）、偏夫（女命），是“克我而偏”的力量。水主流动、财富、智慧（对应财星、情感、灵动）。尤其要靠近/多用。\n· 「忌神 戊」（土）：在您盘里是「食神」——食神——才华、口福、女儿（女命）、温和输出，是“我生而正”的力量。土主承载、稳定、积藏（对应根基、比劫、务实）。要警惕/回避。\n\n【调候用神 与 扶抑用神，是两个不同维度，别混】\n· 调候（穷通宝鉴）：管“寒暖燥湿”的气候问题——像冬天生人冷，要火来暖；夏天生人燥，要水来润。您日主丙生于「亥」月（冬之令），全局水2.9、火2.7、土0.3——调候用神是「甲」（木），需要它来调候，正说明本局寒暖尚匀。\n· 扶抑（滴天髓）：管“身旺身弱”的强弱问题——您中和偏弱，喜生扶（借力补强）。\n· 两者是否同向：调候与扶抑一致=否；格局与扶抑一致=是。所以综合上：调候用神为甲（木），扶抑喜用为印比（正印、偏印、比肩、劫财）。若命局寒暖燥湿失调明显，以调候甲为先；否则以扶抑为主。。\n一句话记住：调候用神为甲（木），扶抑喜用为印比（正印、偏印、比肩、劫财）。若命局寒暖燥湿失调明显，以调候甲为先；否则以扶抑为主。\n\n若用明代张楠《神峰通考·病药说》来打比方：命局中『不妥当之处』便是『病』，所取用神便是治病的『药』。您身弱为『病』，宜取印星、比劫来『扶』，这便是治病的『药』。",
+              "source": "穷通宝鉴；滴天髓·体象；三命通会·论用神",
+              "term": "对您最有利的“补药”（用神 / 喜神 / 忌神）"
+            },
+            {
+              "plain": "把上面抽象的“用神/喜忌”翻译成您关心的六个方面。总原则：多亲近「木、水」类的人事物、行业、方位与年份；少碰「土」类。下面逐条结合您这一盘的真实五行强弱说——\n【财富】您是火日主，“我克者”为财。财星所在的「金」原始得气仅 1.0（偏弱），而偏财「戊」又是忌神且弱，说明正财不算丰、横财更宜谨慎；您比劫（火）重，合作共事易有“分财”，账目宜分明、莫糊涂合伙。\n【事业】“克我者”为官杀（事业、名望、上司）。您月干透「丁」为「劫财」，有魄力担责之象；用神「甲」（印）主贵人平台暖局。但事业竞争力所在的「水」得气仅 2.9（偏弱），临场发挥与升迁需借大运流年补水（喜用神中的水）方显。\n【健康（传统意象，非医学诊断）】五行讲究平衡：您「火」得气 2.7 过重，传统上对应脾胃厚实易滞；「金」仅 1.0（弱），对应肾系/泌尿系统、畏寒；「木」1.6（偏弱），对应心阳与循环；「水」2.9（弱），对应肝胆疏泄、情绪易郁结。调候用「甲」暖局，正可针对“火重偏弱”的偏寒偏滞。\n【感情婚姻】您男命，妻星（正财）为「金」（辛），本盘得气 1.0（尚可）。偏财「戊」为忌且藏于月支（父母宫），感情中注意财务边界与桃花分寸。\n【人际】您比劫（同辈、朋友、同事）多，人缘广、互助也多，但同辈间也易有利益牵扯；月干透七杀/官，对上（上司、规则）既有压力也是锻炼；喜神「壬」（水）提示：守规矩、尊权威，反而得助力。\n【学业】印星（喜用神中的木）为学业根基，本盘木偏弱，需主动用功、环境暖助；食伤（土）为才华输出，土相（0.3）尚可，有一技之长可发挥；官杀（水）为考试竞争力，水偏弱，临场宜借运。一句话：您底子厚（身旺），成事靠“向外输出才华 + 借贵人与规则”，而非死守。",
+              "source": "穷通宝鉴；滴天髓·体象；三命通会·论六亲/论五行",
+              "term": "用神如何影响您的具体人生"
+            },
+            {
+              "plain": "“大运”是十年一换的人生阶段大环境，“流年”是具体某一年。\n您现年约 31 岁，正行「癸未」大运，这十年基调凶；2026 年流年为「丙午」，整体平。流年天干为喜用，整体顺遂，宜积极进取。（今年地支与命局关系：刑日柱（自刑））",
+              "source": "三命通会·论大运流年；滴天髓·体用",
+              "term": "您的大运与今年流年"
+            },
+            {
+              "plain": "传统神煞有：天乙贵人, 桃花, 将星, 劫煞, 羊刃；地支间存在：刑, 六冲, 天干五合。这些属于传统附加信息，可作参考，不必过度担忧。",
+              "source": "三命通会·论神煞 / 论刑冲合害",
+              "term": "命局里的特殊信号"
+            },
+            {
+              "plain": "纳音五行，是六十甲子每对干支被赋予的另一个“五行别称”，渊海子平与三命通会同载此表，与“正五行”并行不悖。您年柱「乙亥」的纳音为「山头火」，日柱「丙午」的纳音为「天河水」。打个比方：正五行是您的“本色”，纳音是您的“雅号”，两者合看，命局意象更丰满生动。\n\n【“本色与雅号”具体怎么理解】您的正五行日主是「火」（丙），纳音也属「火」（山头火），本色与雅号同气，主您表里如一、根基厚重，这“火”的意象（如火之沉稳/生发）会贯穿您的外在气质与内在定力。\n简言之：正五行讲“您是什么”，纳音讲“您像什么”；一个是体质，一个是气质，合看才立体。",
+              "source": "渊海子平·纳音；三命通会·纳音",
+              "term": "您的纳音五行（年命 / 日柱）"
+            },
+            {
+              "plain": "唐代星命家袁天罡留下一部《称骨歌》，把人的出生年、月、日、时各配一个“骨重”（以钱计，十钱为一两），四柱相加便是您一生的“总重量”。您的四柱骨重分别是——年柱 9 钱、月柱 18 钱、日柱 5 钱、时柱 16 钱，合计 4两8钱。\n袁天罡据此批曰：「幼年运道未曾享，苦是蹉跎再不兴，兄弟六亲皆无靠，一身事业晚年成。」\n这便是传统称骨法对您命格气质的一句古批。需说明：称骨与八字是两套并行的古老算法，一个称“重量”、一个论“五行生克”，可互为映照；均属古人的经验总结，宜以文化视角欣赏，不必奉为定论。\n（这首古批如何与您四柱的“气数阶段”合看、逐句理解，详见下方『十二长生』一节——那里会把您年/月/日/时支分别处于长生·帝旺·墓·绝等哪一阶段讲透，并和这首称骨歌互相印证。）",
+              "source": "袁天罡称骨歌",
+              "term": "袁天罡称骨：您命中几两几钱"
+            },
+            {
+              "plain": "《三命通会·卷二》立『寄生十二宫』专说，把五行之气在十二地支里的生命节律分成十二阶段：长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝、胎、养，循环无端。推法以日干为主：您的日干是「丙」，长生在「寅」（长生诀：甲亥乙午丙戊寅，丁己酉位庚巳寻，辛子壬申癸卯见，长生之位记分明。），阳干顺行。\n据此看您四柱地支所处的气数阶段——年柱「亥」为绝；月柱「亥」为绝；日支「午」为帝旺；时柱「子」为胎。\n十二宫中长生、临官(禄)、帝旺为『旺相』，好比人生当打之年；墓、绝、胎、养为收藏孕育，并非凶险。古诀云『生旺太过宜制伏，死绝不及宜生扶』，重在识其通变，不可执一而论。\n\n【用“气数”解释您的“身旺底气”从哪来】上面说到您身旺，底气的一个重要来源就藏在十二长生里：您的日支「午」与时支「子」都落在「帝旺」（己土阴干逆行，帝旺在巳）——日支是“自己宫”、时支是“结局/子孙宫”，自坐帝旺，等于您中年当打之年气数正旺、自身定力足，这与“身旺”互相印证；而月支「亥」为「绝」、年支「亥」为「绝」属收藏蓄势之位，提示早岁宜蓄力、中晚年方发。\n\n【把袁天罡称骨歌 与 十二长生 合看】您称骨 4两8钱，袁天罡批：「幼年运道未曾享，苦是蹉跎再不兴，兄弟六亲皆无靠，一身事业晚年成。」。这首古批是古人对“总重量”的意象总评。若用十二长生回头读它：您日支「午」、时支「子」坐帝旺（旺相之位），正说明您自身气数旺、底气足（此“底气”由十二长生推得，并非称骨歌原文所言）；而歌中「少年做事废筹论，一朝福禄源源至」一句，恰与月支「亥」、年支「亥」处收藏蓄势之位、中晚年方发越的节律相呼应——早年宜蓄力积累，中晚年福禄渐丰。称骨是“总重量”、十二长生是“气数阶段”，两相互参，命局意象才真正活起来。",
+              "source": "三命通会·卷二·论五行旺相休囚死并寄生十二宫；十二长生诀",
+              "term": "您的生命节律：十二长生（三命通会·寄生十二宫）"
+            },
+            {
+              "plain": "《三命通会·卷七·论六亲》的算法，用大白话讲就是：以您自己（日干「丙」）为中心，把“谁生我、我生谁、谁克我、我克谁、谁同我”转成亲人角色——生我者=父母长辈、我克者=妻财、克我者=官杀丈夫/子女、我生者=食伤子女、同我者=兄弟姐妹。下面把您这一盘里“每位亲人对应的星”逐一找出来、并看它落在哪一柱（宫位），这就是古人说的『星宫同参』：星（十神）看关系好坏，宫（年祖上/月父母/日夫妻己身/时子孙）看条件优劣。\n· 父亲（偏财为父）：本盘见父亲星于——时柱(子孙宫)天干透出「庚」（现于明处，力量强、关系明显）。\n· 母亲（正印为母）：本盘见母亲星于——年柱(祖上/父母宫)天干透出「乙」（现于明处，力量强、关系明显）。\n· 兄弟姐妹（比劫为兄弟姐妹（男女同断））：本盘见兄弟姐妹星于——日柱(己身/夫妻宫)天干透出「丙」（现于明处，力量强、关系明显）；月柱(父母兄弟宫)天干透出「丁」（现于明处，力量强、关系明显）；日柱(己身/夫妻宫)地支藏「丁」（藏于暗处，力量含蓄、缘分内敛）。\n· 妻子（正财为妻）：本盘天干地支均未见明显妻子星，主这方面缘分较淡、或需借大运流年方显。\n· 儿子（七杀为子（男命））：本盘见儿子星于——年柱(祖上/父母宫)地支藏「壬」（藏于暗处，力量含蓄、缘分内敛）；月柱(父母兄弟宫)地支藏「壬」（藏于暗处，力量含蓄、缘分内敛）。\n· 女儿（正官为女（男命））：本盘见女儿星于——时柱(子孙宫)地支藏「癸」（藏于暗处，力量含蓄、缘分内敛）。\n\n【星宫同参怎么读】若某位亲人的“星”透在天干（明处），关系明显、力量强；若只藏在地支（暗处），则缘分含蓄内敛。星落之宫也定“在哪方面显”：如父星落月柱父母宫，主父亲与您早年家庭关联深；妻星落日支夫妻宫，主配偶贴近您自身。把“星”与“宫”合看，比单看一个字准得多。\n【落到人际】您比劫（同辈朋友）多，人缘广、互助也多，但同辈间易有利益牵扯；官杀（上司/规则/子女）透干，对上既有压力也是锻炼。守规矩、借贵人（印）、择明友（比劫有度），人际便顺。",
+              "source": "三命通会·卷七·论六亲（「印为母，财为父，比劫为兄弟，官杀为夫(女)/子(男)，食伤为子」；「女人取用与男不同，我生者为子，克我者为夫，生我夫者为姑，克我姑者为公」）",
+              "term": "您的六亲与人际（三命通会·论六亲）"
+            }
+          ]
+        },
+        "source": "六部著作综合（穷通宝鉴、滴天髓、三命通会、中国古代算命术）",
+        "step": 12,
+        "summary": {
+          "喜神": "壬",
+          "当前大运": "癸未",
+          "忌神": "戊",
+          "日主": "丙",
+          "日主强弱": "中和偏弱",
+          "日柱": "丙午",
+          "月令": "亥",
+          "格局": "七杀格",
+          "用神": "甲"
+        }
+      }
+    ],
+    "ziwei": {
+      "body_branch": "戌",
+      "body_index": 8,
+      "decadals": [
+        {
+          "age_range": [
+            5,
+            14
+          ],
+          "branch": "戌",
+          "palace_index": 8,
+          "palace_name": "命宫",
+          "stem": "丙"
+        },
+        {
+          "age_range": [
+            15,
+            24
+          ],
+          "branch": "酉",
+          "palace_index": 7,
+          "palace_name": "父母宫",
+          "stem": "乙"
+        },
+        {
+          "age_range": [
+            25,
+            34
+          ],
+          "branch": "申",
+          "palace_index": 6,
+          "palace_name": "福德宫",
+          "stem": "甲"
+        },
+        {
+          "age_range": [
+            35,
+            44
+          ],
+          "branch": "未",
+          "palace_index": 5,
+          "palace_name": "田宅宫",
+          "stem": "癸"
+        },
+        {
+          "age_range": [
+            45,
+            54
+          ],
+          "branch": "午",
+          "palace_index": 4,
+          "palace_name": "官禄宫",
+          "stem": "壬"
+        },
+        {
+          "age_range": [
+            55,
+            64
+          ],
+          "branch": "巳",
+          "palace_index": 3,
+          "palace_name": "交友宫",
+          "stem": "辛"
+        },
+        {
+          "age_range": [
+            65,
+            74
+          ],
+          "branch": "辰",
+          "palace_index": 2,
+          "palace_name": "迁移宫",
+          "stem": "庚"
+        },
+        {
+          "age_range": [
+            75,
+            84
+          ],
+          "branch": "卯",
+          "palace_index": 1,
+          "palace_name": "疾厄宫",
+          "stem": "己"
+        },
+        {
+          "age_range": [
+            85,
+            94
+          ],
+          "branch": "寅",
+          "palace_index": 0,
+          "palace_name": "财帛宫",
+          "stem": "戊"
+        },
+        {
+          "age_range": [
+            95,
+            104
+          ],
+          "branch": "丑",
+          "palace_index": 11,
+          "palace_name": "子女宫",
+          "stem": "己"
+        },
+        {
+          "age_range": [
+            105,
+            114
+          ],
+          "branch": "子",
+          "palace_index": 10,
+          "palace_name": "夫妻宫",
+          "stem": "戊"
+        },
+        {
+          "age_range": [
+            115,
+            124
+          ],
+          "branch": "亥",
+          "palace_index": 9,
+          "palace_name": "兄弟宫",
+          "stem": "丁"
+        }
+      ],
+      "input": {
+        "birth_used": "1995-11-12（晚子时归次日后）",
+        "day": 11,
+        "fix_leap": true,
+        "gender": "男",
+        "hour": 23,
+        "month": 11,
+        "year": 1995
+      },
+      "interpretation": {
+        "ju_name": "土五局",
+        "ming_branch": "戌",
+        "ming_stars": [],
+        "patterns": [
+          {
+            "desc": "太阳与巨门同宫（或对照），主口才、名望与官贵，宜以言语、声名立身。",
+            "name": "巨日同宫"
+          }
+        ],
+        "shen_branch": "戌",
+        "shen_meaning": "官禄宫（事业宫）：事业方向、职业成就与名望。",
+        "sihua": [
+          {
+            "hua": "化禄",
+            "meaning": "化禄主「缘」与「得」，使该星所管之事得福气、顺遂、资源丰沛，多主吉庆、易得手。",
+            "palace": "迁移宫",
+            "short": "得 · 缘 · 丰",
+            "source": "《紫微斗数全书·四化赋》",
+            "star": "天机"
+          },
+          {
+            "hua": "化权",
+            "meaning": "化权主「执」与「掌」，使该星所管之事掌权、主导、具力量与掌控力，主能干、有主见。",
+            "palace": "迁移宫",
+            "short": "执 · 掌 · 力",
+            "source": "《紫微斗数全书·四化赋》",
+            "star": "天梁"
+          },
+          {
+            "hua": "化科",
+            "meaning": "化科主「名」与「显」，使该星所管之事得名声、清誉、考试利，并能化解凶厄，主文采、声望。",
+            "palace": "交友宫",
+            "short": "名 · 显 · 解",
+            "source": "《紫微斗数全书·四化赋》",
+            "star": "紫微"
+          },
+          {
+            "hua": "化忌",
+            "meaning": "化忌主「执」与「欠」，使该星所管之事多波折、牵绊、执念，需谨慎经营；亦主深刻、难忘。",
+            "palace": "夫妻宫",
+            "short": "执 · 欠 · 绊",
+            "source": "《紫微斗数全书·四化赋》",
+            "star": "太阴"
+          }
+        ],
+        "triple": [
+          "命宫（丙戌）：空宫（借星）",
+          "财帛宫（戊寅）：太阳、巨门",
+          "官禄宫（壬午）：空宫（借星）",
+          "迁移宫（庚辰）：天机、天梁"
+        ]
+      },
+      "lunar": {
+        "lunar_day": 20,
+        "lunar_month": 9,
+        "time_branch": "子",
+        "year_branch": "亥",
+        "year_stem": "乙"
+      },
+      "palaces": [
+        {
+          "branch": "寅",
+          "branch_idx": 2,
+          "empty": false,
+          "index": 0,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "财帛宫",
+          "stars": [
+            {
+              "info": "阳刚·官贵·慷慨（火，吉）",
+              "name": "太阳",
+              "type": "major"
+            },
+            {
+              "info": "口舌·是非·善辩（水，凶中带吉）",
+              "name": "巨门",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "天魁",
+              "type": "lucky"
+            },
+            {
+              "info": "",
+              "name": "左辅",
+              "type": "lucky"
+            }
+          ],
+          "stem": "戊",
+          "stem_idx": 4
+        },
+        {
+          "branch": "卯",
+          "branch_idx": 3,
+          "empty": false,
+          "index": 1,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "疾厄宫",
+          "stars": [
+            {
+              "info": "辅佐·行政·印绶（水，吉）",
+              "name": "天相",
+              "type": "major"
+            }
+          ],
+          "stem": "己",
+          "stem_idx": 5
+        },
+        {
+          "branch": "辰",
+          "branch_idx": 4,
+          "empty": false,
+          "index": 2,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "迁移宫",
+          "stars": [
+            {
+              "info": "智慧·机变·谋略（木，吉）",
+              "name": "天机",
+              "type": "major"
+            },
+            {
+              "info": "荫护·医药·长辈（土，吉）",
+              "name": "天梁",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "陀罗",
+              "type": "sha"
+            },
+            {
+              "info": "",
+              "name": "右弼",
+              "type": "lucky"
+            }
+          ],
+          "stem": "庚",
+          "stem_idx": 6
+        },
+        {
+          "branch": "巳",
+          "branch_idx": 5,
+          "empty": false,
+          "index": 3,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "交友宫",
+          "stars": [
+            {
+              "info": "帝王·尊贵·独立（土，中性偏吉）",
+              "name": "紫微",
+              "type": "major"
+            },
+            {
+              "info": "将星·果决·孤克（金，凶）",
+              "name": "七杀",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "禄存",
+              "type": "lucky"
+            }
+          ],
+          "stem": "辛",
+          "stem_idx": 7
+        },
+        {
+          "branch": "午",
+          "branch_idx": 6,
+          "empty": true,
+          "index": 4,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "官禄宫",
+          "stars": [
+            {
+              "info": "",
+              "name": "擎羊",
+              "type": "sha"
+            },
+            {
+              "info": "",
+              "name": "文曲",
+              "type": "lucky"
+            },
+            {
+              "info": "",
+              "name": "红鸾",
+              "type": "sha"
+            }
+          ],
+          "stem": "壬",
+          "stem_idx": 8
+        },
+        {
+          "branch": "未",
+          "branch_idx": 7,
+          "empty": true,
+          "index": 5,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "田宅宫",
+          "stars": [
+            {
+              "info": "",
+              "name": "天马",
+              "type": "lucky"
+            }
+          ],
+          "stem": "癸",
+          "stem_idx": 9
+        },
+        {
+          "branch": "申",
+          "branch_idx": 8,
+          "empty": true,
+          "index": 6,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "福德宫",
+          "stars": [],
+          "stem": "甲",
+          "stem_idx": 0
+        },
+        {
+          "branch": "酉",
+          "branch_idx": 9,
+          "empty": false,
+          "index": 7,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "父母宫",
+          "stars": [
+            {
+              "info": "才艺·刑囚·桃花（火，凶中带吉）",
+              "name": "廉贞",
+              "type": "major"
+            },
+            {
+              "info": "开创·变动·破坏（水，凶）",
+              "name": "破军",
+              "type": "major"
+            }
+          ],
+          "stem": "乙",
+          "stem_idx": 1
+        },
+        {
+          "branch": "戌",
+          "branch_idx": 10,
+          "empty": true,
+          "index": 8,
+          "is_ming": true,
+          "is_shen": true,
+          "name": "命宫",
+          "stars": [
+            {
+              "info": "",
+              "name": "天钺",
+              "type": "lucky"
+            }
+          ],
+          "stem": "丙",
+          "stem_idx": 2
+        },
+        {
+          "branch": "亥",
+          "branch_idx": 11,
+          "empty": false,
+          "index": 9,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "兄弟宫",
+          "stars": [
+            {
+              "info": "财库·稳重·保守（土，吉）",
+              "name": "天府",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "火星",
+              "type": "sha"
+            }
+          ],
+          "stem": "丁",
+          "stem_idx": 3
+        },
+        {
+          "branch": "子",
+          "branch_idx": 0,
+          "empty": false,
+          "index": 10,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "夫妻宫",
+          "stars": [
+            {
+              "info": "温和·享福·随缘（水，吉）",
+              "name": "天同",
+              "type": "major"
+            },
+            {
+              "info": "柔美·财富·阴柔（水，吉）",
+              "name": "太阴",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "文昌",
+              "type": "lucky"
+            },
+            {
+              "info": "",
+              "name": "天喜",
+              "type": "sha"
+            },
+            {
+              "info": "",
+              "name": "铃星",
+              "type": "sha"
+            }
+          ],
+          "stem": "戊",
+          "stem_idx": 4
+        },
+        {
+          "branch": "丑",
+          "branch_idx": 1,
+          "empty": false,
+          "index": 11,
+          "is_ming": false,
+          "is_shen": false,
+          "name": "子女宫",
+          "stars": [
+            {
+              "info": "财富·刚毅·果断（金，中性）",
+              "name": "武曲",
+              "type": "major"
+            },
+            {
+              "info": "欲望·桃花·多才（木，中性）",
+              "name": "贪狼",
+              "type": "major"
+            },
+            {
+              "info": "",
+              "name": "地空",
+              "type": "sha"
+            },
+            {
+              "info": "",
+              "name": "地劫",
+              "type": "sha"
+            }
+          ],
+          "stem": "己",
+          "stem_idx": 5
+        }
+      ],
+      "sihua": {
+        "化忌": "太阴",
+        "化权": "天梁",
+        "化禄": "天机",
+        "化科": "紫微"
+      },
+      "soul_branch": "戌",
+      "soul_index": 8,
+      "tianfu_branch": "亥",
+      "tianfu_index": 9,
+      "wuxing_ju": 5,
+      "wuxing_ju_name": "土五局",
+      "ziwei_branch": "巳",
+      "ziwei_index": 3
+    }
+  },
+  "success": true
+}
