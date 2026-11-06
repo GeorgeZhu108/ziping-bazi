@@ -93,9 +93,38 @@ def test_full_chart_invariants():
     assert fy is not None and "palace_name" in fy
 
 
+def test_interpret_ziwei():
+    c = calculate_ziwei(1989, 1, 9, 10, "男")
+    it = c["interpretation"]
+    # 命宫主星释义：至少一条，且字段齐全
+    assert it["ming_stars"], "命宫主星释义不应为空"
+    for m in it["ming_stars"]:
+        assert all(k in m for k in ("name", "nature", "meaning", "source")), f"释义字段缺失: {m}"
+        assert m["meaning"], f"释义内容不应为空: {m['name']}"
+    # 四化释义：4 条，且能定位到落宫（非空）
+    assert len(it["sihua"]) == 4
+    for s in it["sihua"]:
+        assert s["hua"] in ("化禄", "化权", "化科", "化忌")
+        assert s["palace"] != "—", f"四化 {s['hua']}{s['star']} 应定位到落宫"
+        assert s["meaning"]
+    # 身宫释义非空
+    assert it["shen_meaning"]
+    # 整体可 JSON 序列化（供 Web API 透传）
+    import json
+    json.dumps(it)
+    # 例：1989-01-09 命宫申，主星天同+天梁 → 应识别「机月同梁」格
+    names = {p["name"]: [s["name"] for s in p["stars"] if s["type"] == "major"]
+             for p in c["palaces"]}
+    triple = set(names.get("命宫", [])) | set(names.get("财帛宫", [])) | \
+             set(names.get("官禄宫", [])) | set(names.get("迁移宫", []))
+    if {"天机", "太阴", "天同", "天梁"} & triple:
+        assert any(p["name"] == "机月同梁" for p in it["patterns"]), "三方四正含机月同梁应被识别"
+
+
 if __name__ == "__main__":
     n = 0
     for fn in (test_ziwei_placement_examples, test_wuxing_ju_examples,
-               test_sihua_table, test_soul_body, test_full_chart_invariants):
+               test_sihua_table, test_soul_body, test_full_chart_invariants,
+               test_interpret_ziwei):
         fn(); n += 1; print(f"  [OK] {fn.__name__}")
-    print(f"紫微核心测试 {n}/5 全部通过 ✅")
+    print(f"紫微核心测试 {n}/6 全部通过 ✅")

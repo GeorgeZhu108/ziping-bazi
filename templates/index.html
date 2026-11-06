@@ -482,6 +482,37 @@
             }
             html += '</div>';
 
+            // 详细释义（标准斗数赋文，逐条标出来源）
+            const it = zw.interpretation || {};
+            if (it.ming_stars && it.ming_stars.length) {
+                html += '<h3 class="zi-sub">命宫主星释义</h3><div class="zi-interp">';
+                for (const m of it.ming_stars) {
+                    html += '<div class="zi-star-interp"><div class="zi-si-head"><b>' + esc(m.name) + '</b> <span class="zi-si-nature">' + esc(m.nature) + '</span></div>'
+                        + '<p class="zi-si-meaning">' + esc(m.meaning) + '</p>'
+                        + '<span class="source-tag">来源：' + esc(m.source) + '</span></div>';
+                }
+                html += '</div>';
+            }
+            if (it.patterns && it.patterns.length) {
+                html += '<h3 class="zi-sub">命盘格局</h3><div class="zi-interp">';
+                for (const p of it.patterns) {
+                    html += '<div class="zi-star-interp"><div class="zi-si-head"><b>' + esc(p.name) + '</b></div><p class="zi-si-meaning">' + esc(p.desc) + '</p></div>';
+                }
+                html += '</div>';
+            }
+            if (it.sihua && it.sihua.length) {
+                html += '<h3 class="zi-sub">四化飞星释义</h3><div class="zi-interp">';
+                for (const s of it.sihua) {
+                    html += '<div class="zi-star-interp"><div class="zi-si-head"><b>' + esc(s.hua) + '</b> ' + esc(s.star) + '（' + esc(s.palace) + '） <span class="zi-si-nature">' + esc(s.short) + '</span></div>'
+                        + '<p class="zi-si-meaning">' + esc(s.meaning) + '</p>'
+                        + '<span class="source-tag">来源：' + esc(s.source) + '</span></div>';
+                }
+                html += '</div>';
+            }
+            if (it.shen_meaning) {
+                html += '<h3 class="zi-sub">身宫释义</h3><div class="zi-interp"><div class="zi-star-interp"><div class="zi-si-head"><b>身宫在' + esc(it.shen_branch) + '</b></div><p class="zi-si-meaning">' + esc(it.shen_meaning) + '</p></div></div>';
+            }
+
             body.innerHTML = html;
         }
 
@@ -731,7 +762,7 @@
                     </div>
                     <div class="yongshen-source">
                         <h4>二、滴天髓（扶抑用神）</h4>
-                        <p>${fy.说明}。喜用五行：${fy.喜用五行.join('、') || fy.扶抑用神}。</p>
+                        <p>${fy.扶抑方向 || '—'}。喜用五行：${fy.喜用五行.join('、') || fy.扶抑用神}。</p>
                         <p>扶抑用神：${fy.扶抑用神}</p>
                         <span class="source-tag">来源：${fy.出处}</span>
                     </div>

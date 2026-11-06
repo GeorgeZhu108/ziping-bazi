@@ -261,7 +261,7 @@ def calculate_ziwei(year, month, day, hour, gender, fix_leap=True, current_year=
             "age_range": [start_age, start_age + 9],
         })
 
-    return {
+    chart = {
         "input": {"year": year, "month": month, "day": day, "hour": hour,
                   "gender": gender, "fix_leap": fix_leap,
                   "birth_used": f"{d.year}-{d.month:02d}-{d.day:02d}（晚子时归次日后）" if hour == 23 else f"{year}-{month:02d}-{day:02d}"},
@@ -278,6 +278,8 @@ def calculate_ziwei(year, month, day, hour, gender, fix_leap=True, current_year=
         "sihua": sihua,
         "decadals": decadals,
     }
+    chart["interpretation"] = interpret_ziwei(chart)
+    return chart
 
 
 def flow_year(chart, flow_year_gregorian, month=1, day=1):
@@ -293,6 +295,161 @@ def flow_year(chart, flow_year_gregorian, month=1, day=1):
             return {"year": flow_year_gregorian, "stem": fy[0], "branch": fy[1],
                     "palace_name": p["name"], "sihua": dict(zip(["化禄", "化权", "化科", "化忌"], SI_HUA_TABLE[fy_stem]))}
     return None
+
+
+# ───────────────────────── 释义知识库（标准斗数赋文释义） ─────────────────────────
+# 星曜性质与释义：综合《紫微斗数全书》星曜赋文与中州/倪师一脉释义（与 STAR_INFO 同源）。
+STAR_INTERP = {
+    "紫微": {"nature": "北斗帝星（土，尊贵）",
+             "meaning": "紫微为北斗主星，化气曰「尊」，主领导力、格局与自我要求。喜左辅右弼「文武相佐」、天相昌曲「禄马侍从」则格局清贵；独坐无辅易流于孤高。《紫微斗数全书》云：「紫微居子午，位至公卿」。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "天机": {"nature": "南斗善星（木，智慧）",
+             "meaning": "天机化气曰「善」，主智慧、机变与策划；庙旺则灵巧多谋，陷地则思虑过多、易犹豫。与天梁或太阴同度，多主术数、参谋之才。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "太阳": {"nature": "中天正极（火，光明）",
+             "meaning": "太阳化气曰「贵」，主光明、权威、名声与慷慨；庙旺则显达、得人敬重，陷地则辛劳、付出多而收获缓。父子、男亲缘分亦看此星。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "武曲": {"nature": "北斗财星（金，刚毅）",
+             "meaning": "武曲化气曰「财」，主财富、刚毅与行动力；庙旺善理财、白手起家，陷地则求财辛苦。性刚果决，宜专业技艺立身。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "天同": {"nature": "南斗福星（水，温和）",
+             "meaning": "天同化气曰「福」，主温和、享福与随缘；庙旺主安逸人缘、知足常乐，陷地则懒散、优柔。最喜见禄存、化禄增福。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "廉贞": {"nature": "北斗次桃花（火，才艺）",
+             "meaning": "廉贞化气曰「囚」，主才艺、情感与是非；见吉（禄权科）则显贵多才，见煞（羊陀火铃）易纠结、官非。为「囚」星，亦主约束力。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "天府": {"nature": "南斗财库（土，稳重）",
+             "meaning": "天府化气曰「令」，为南斗主星、财库之府，主稳重、包容与积蓄；庙旺主富足保守、有掌财之能，陷地则过于保守、错失时机。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "太阴": {"nature": "中天水星（水，柔美）",
+             "meaning": "太阴化气曰「富」，主柔美、财富、田宅与阴性缘分；庙旺（夜生、水乡）富厚内敛，陷地则浮动、多思虑。母缘、妻缘、居家亦看此星。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "贪狼": {"nature": "北斗桃花（木，欲望）",
+             "meaning": "贪狼化气曰「桃花」，主欲望、才艺与交际；庙旺多才多艺、善应变，陷地则贪酒色、浮荡。为「杀破狼」之一，主开创与变化。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "巨门": {"nature": "北斗暗星（水，口舌）",
+             "meaning": "巨门化气曰「暗」，主口舌、思辨与是非；庙旺善辩、以口才立身（教师、法律、传播），陷地则多疑、惹是非。喜太阳同度解暗。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "天相": {"nature": "南斗印星（水，辅佐）",
+             "meaning": "天相化气曰「印」，主辅佐、行政与服务；庙旺主掌印、协调得宜，如「命宫之宰辅」。最喜紫微、禄存夹护，忌刑忌冲破。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "天梁": {"nature": "南斗荫星（土，荫护）",
+             "meaning": "天梁化气曰「荫」，主荫护、医药、长辈与化解；庙旺主清高、逢凶化吉、得长辈贵人，陷地则孤高、好说教。喜见天同增福。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "七杀": {"nature": "南斗将星（金，果决）",
+             "meaning": "七杀化气曰「将」，主威权、开创与孤克；庙旺主将才、开拓，陷地则刚暴、波折。为「杀破狼」之一，主人生起伏与变动。",
+             "source": "《紫微斗数全书·星曜释义》"},
+    "破军": {"nature": "北斗耗星（水，开创）",
+             "meaning": "破军化气曰「耗」，主破旧立新、变动与消耗；庙旺主开创有成，陷地则破耗、反复。为「杀破狼」之一，主先破后立。",
+             "source": "《紫微斗数全书·星曜释义》"},
+}
+
+# 四化通用释义（本命年干四化落星所主之事的倾向）
+SIHUA_INTERP = {
+    "化禄": {"short": "得 · 缘 · 丰", "meaning": "化禄主「缘」与「得」，使该星所管之事得福气、顺遂、资源丰沛，多主吉庆、易得手。",
+             "source": "《紫微斗数全书·四化赋》"},
+    "化权": {"short": "执 · 掌 · 力", "meaning": "化权主「执」与「掌」，使该星所管之事掌权、主导、具力量与掌控力，主能干、有主见。",
+             "source": "《紫微斗数全书·四化赋》"},
+    "化科": {"short": "名 · 显 · 解", "meaning": "化科主「名」与「显」，使该星所管之事得名声、清誉、考试利，并能化解凶厄，主文采、声望。",
+             "source": "《紫微斗数全书·四化赋》"},
+    "化忌": {"short": "执 · 欠 · 绊", "meaning": "化忌主「执」与「欠」，使该星所管之事多波折、牵绊、执念，需谨慎经营；亦主深刻、难忘。",
+             "source": "《紫微斗数全书·四化赋》"},
+}
+
+# 十二宫基本含义
+PALACE_INTERP = {
+    0: "命宫：先天禀赋、性格气质、外貌与健康根基，统御全盘。",
+    1: "兄弟宫：手足情分、同辈助力与朋友缘分。",
+    2: "夫妻宫：婚姻、伴侣性格与感情相处模式。",
+    3: "子女宫：子女缘分、晚辈与桃花（亦看生育、创造力）。",
+    4: "财帛宫：财运格局、理财方式与求财态度。",
+    5: "疾厄宫：体质强弱、易感病位与养生重点。",
+    6: "迁移宫：外出际遇、环境适应力与对外形象。",
+    7: "交友宫（奴仆宫）：部属、社交圈与服务对象。",
+    8: "官禄宫（事业宫）：事业方向、职业成就与名望。",
+    9: "田宅宫：房产、家运根基与不动产。",
+    10: "福德宫：精神世界、享乐态度与潜意识倾向。",
+    11: "父母宫：长辈荫庇、父母缘分与学业根基。",
+}
+
+
+def _find_palace_of_star(chart, star_name):
+    for p in chart["palaces"]:
+        if any(s["name"] == star_name for s in p["stars"]):
+            return p
+    return None
+
+
+def detect_patterns(chart):
+    """识别常见格局（基于三方四正主星）。返回 [(名称, 描述), ...]。"""
+    names = {"命宫": None, "财帛宫": None, "官禄宫": None, "迁移宫": None}
+    for p in chart["palaces"]:
+        if p["name"] in names:
+            names[p["name"]] = set(s["name"] for s in p["stars"] if s["type"] == "major")
+    triple = set()
+    for v in names.values():
+        if v:
+            triple |= v
+    patterns = []
+    sha = {"七杀", "破军", "贪狼"}
+    if triple & sha:
+        patterns.append(("杀破狼", "命宫三方四正见七杀、破军或贪狼，主开创、变动与起伏较大的人生节奏，宜把握转折、忌守旧。"))
+    wen = {"天机", "太阴", "天同", "天梁"}
+    if len(triple & wen) >= 3:
+        patterns.append(("机月同梁", "命宫三方四正聚天机、太阴、天同、天梁之三以上，主文职、谋划与服务型格局，宜专业、稳定。"))
+    if "紫微" in triple and "天府" in triple:
+        patterns.append(("紫府朝垣", "紫微与天府同宫或对拱，财官双美、格局清贵，主有地位与积蓄。"))
+    if "太阳" in triple and "巨门" in triple:
+        patterns.append(("巨日同宫", "太阳与巨门同宫（或对照），主口才、名望与官贵，宜以言语、声名立身。"))
+    return patterns
+
+
+def interpret_ziwei(chart):
+    """生成结构化释义，供 Web 与报告渲染。所有释义均基于标准斗数赋文。"""
+    ming = next(p for p in chart["palaces"] if p["is_ming"])
+    shen = next(p for p in chart["palaces"] if p["is_shen"])
+    ming_stars = [s for s in ming["stars"] if s["type"] == "major"]
+
+    ming_interp = []
+    for s in ming_stars:
+        info = STAR_INTERP.get(s["name"], {})
+        ming_interp.append({
+            "name": s["name"],
+            "nature": info.get("nature", ""),
+            "meaning": info.get("meaning", ""),
+            "source": info.get("source", ""),
+        })
+
+    sihua_list = []
+    for hua, star in chart["sihua"].items():
+        p = _find_palace_of_star(chart, star)
+        info = SIHUA_INTERP.get(hua, {})
+        sihua_list.append({
+            "hua": hua,
+            "star": star,
+            "palace": p["name"] if p else "—",
+            "short": info.get("short", ""),
+            "meaning": info.get("meaning", ""),
+            "source": info.get("source", ""),
+        })
+
+    patterns = [{"name": n, "desc": d} for n, d in detect_patterns(chart)]
+    triple_stars = []
+    for nm in ["命宫", "财帛宫", "官禄宫", "迁移宫"]:
+        p = next(x for x in chart["palaces"] if x["name"] == nm)
+        stars = "、".join(s["name"] for s in p["stars"] if s["type"] == "major") or "空宫（借星）"
+        triple_stars.append(f"{nm}（{p['stem']}{p['branch']}）：{stars}")
+
+    return {
+        "ming_branch": chart["soul_branch"],
+        "shen_branch": chart["body_branch"],
+        "ju_name": chart["wuxing_ju_name"],
+        "ming_stars": ming_interp,
+        "shen_meaning": PALACE_INTERP.get(shen["index"], ""),
+        "sihua": sihua_list,
+        "patterns": patterns,
+        "triple": triple_stars,
+    }
 
 
 def to_text(chart):

@@ -221,6 +221,13 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","STSong",ser
 .dxc.cur .ar{color:var(--zi-rose);}
 .dxc .pn{color:var(--zi-silver-b);font-size:12px;margin-bottom:3px;}
 .dxc .st{color:var(--zi-silver);font-size:11px;line-height:1.4;}
+.zi-interp-block{margin-top:30px;}
+.zi-si{background:var(--zi-card);border:1px solid var(--zi-border);border-radius:8px;padding:14px 16px;margin-bottom:12px;break-inside:avoid;}
+.zi-si-h{color:var(--zi-silver-b);font-size:14px;margin-bottom:6px;line-height:1.5;}
+.zi-si-h b{color:var(--zi-gold);}
+.zi-si-n{color:var(--zi-dim);font-size:11px;margin-left:6px;}
+.zi-si-m{color:var(--zi-silver);font-size:13px;line-height:1.85;margin:0;}
+.zi-src{margin-top:6px;font-size:11px;color:var(--zi-dim);}
 .disclaimer{margin-top:50px;padding:16px 22px;background:rgba(196,74,60,.06);
   border:1px dashed rgba(196,74,60,.3);border-radius:8px;font-size:12px;color:var(--bazi-dim);line-height:1.7;}
 .pdf-btn{position:fixed;right:24px;bottom:24px;background:var(--bazi-gold);color:#0e0b08;
@@ -242,6 +249,8 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","STSong",ser
   .pdf-btn{display:none;}
   .zi-section{background:#0a0e2a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .section,.card,.pillar,.el,.zi-si,.zi-cell,.hua-card,.dxc,.tc{break-inside:avoid;}
+  h2,h3,.sec-title{page-break-after:avoid;page-break-inside:avoid;}
 }
 """
 
@@ -371,6 +380,33 @@ for d in decadals:
                    f'<div class="st">{esc(ms)}</div></div>')
 dx_html = "".join(dx_html)
 
+# 紫微释义（标准斗数赋文，逐条标出来源）
+it = zw.get("interpretation", {})
+interp_html = []
+if it.get("ming_stars"):
+    interp_html.append('<div class="zi-interp-block"><div class="sec-title">命宫主星释义 <small>STAR INTERP</small></div>')
+    for m in it["ming_stars"]:
+        interp_html.append(f'<div class="zi-si"><div class="zi-si-h"><b>{esc(m["name"])}</b> <span class="zi-si-n">{esc(m["nature"])}</span></div>'
+                           f'<p class="zi-si-m">{esc(m["meaning"])}</p>'
+                           f'<div class="zi-src">来源：{esc(m["source"])}</div></div>')
+    interp_html.append('</div>')
+if it.get("patterns"):
+    interp_html.append('<div class="zi-interp-block"><div class="sec-title">命盘格局 <small>PATTERN</small></div>')
+    for p in it["patterns"]:
+        interp_html.append(f'<div class="zi-si"><div class="zi-si-h"><b>{esc(p["name"])}</b></div><p class="zi-si-m">{esc(p["desc"])}</p></div>')
+    interp_html.append('</div>')
+if it.get("sihua"):
+    interp_html.append('<div class="zi-interp-block"><div class="sec-title">四化飞星释义 <small>SIHUA INTERP</small></div>')
+    for s in it["sihua"]:
+        interp_html.append(f'<div class="zi-si"><div class="zi-si-h"><b>{esc(s["hua"])}</b> {esc(s["star"])}（{esc(s["palace"])}） <span class="zi-si-n">{esc(s["short"])}</span></div>'
+                           f'<p class="zi-si-m">{esc(s["meaning"])}</p>'
+                           f'<div class="zi-src">来源：{esc(s["source"])}</div></div>')
+    interp_html.append('</div>')
+if it.get("shen_meaning"):
+    interp_html.append(f'<div class="zi-interp-block"><div class="sec-title">身宫释义 <small>BODY PALACE</small></div>'
+                       f'<div class="zi-si"><div class="zi-si-h"><b>身宫在{esc(it["shen_branch"])}</b></div><p class="zi-si-m">{esc(it["shen_meaning"])}</p></div></div>')
+interp_html = "".join(interp_html)
+
 # 农历 / 生肖 / 口径
 lunar = Solar.fromYmdHms(Y, M, D, H, 0, 0).getLunar()
 lunar_str = f"{zw['lunar']['year_stem']}{zw['lunar']['year_branch']}年{zw['lunar']['lunar_month']}月{zw['lunar']['lunar_day']}日 {zw['lunar']['time_branch']}时"
@@ -442,6 +478,8 @@ HTML = f"""<!DOCTYPE html>
       <div class="sec-title">大限十二阶段 <small>DECADE FORTUNE</small></div>
       <div class="dx-grid">{dx_html}</div>
     </div>
+
+    {interp_html}
   </div>
 
   <div class="disclaimer">
